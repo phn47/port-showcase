@@ -1,20 +1,76 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# 9F Universe
 
-# Run and deploy your AI Studio app
+An avant-garde contemporary art portfolio featuring parallax scrolling, magnetic interactions, and a stark black-and-white aesthetic.
 
-This contains everything you need to run your app locally.
+## Tech Stack
 
-View your app in AI Studio: https://ai.studio/apps/drive/1DT31X-4k_PqSbBwcexecehyuu3XHuqbU
+- **React 19**: Modern UI library for building user interfaces.
+- **TypeScript**: Static typing for better developer experience and code verification.
+- **Vite**: Ultra-fast build tool and dev server.
+- **Tailwind CSS**: Utility-first CSS framework for styling.
+- **Framer Motion**: Production-ready animation library.
+- **Lucide React**: Beautiful & consistent icons.
 
-## Run Locally
+## Project Structure
 
-**Prerequisites:**  Node.js
+The project has been refactored for scalability:
 
+```text
+src/
+├── components/
+│   ├── layout/    # Navigation, Footer
+│   ├── sections/  # Hero, Gallery, Timeline, etc.
+│   ├── ui/        # Reusable UI (Buttons, Marquee, Cursor)
+│   └── common/    # Utilities (Preloader)
+├── data/          # Static data assets (JSON/TS)
+├── App.tsx        # Main application entry
+├── index.css      # Global styles & Tailwind directives
+└── index.tsx      # Entry point
+```
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v18+ recommended)
+
+### Installation
+
+1. Clone the repository.
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Set up environment variables:
+   - Create a `.env.local` file.
+   - Add your keys (e.g., `GEMINI_API_KEY`) if using AI features.
+
+### Development
+
+Start the local development server:
+
+```bash
+npm run dev
+```
+
+### Build
+
+Build for production:
+
+```bash
+npm run build
+```
+
+Preview the production build:
+
+```bash
+npm run preview
+```
+
+## Features
+
+- **Preloader**: Progressive loading with visual feedback.
+- **Custom Cursor**: Magnetic interactions and custom states.
+- **Parallax Scroll**: Smooth scrolling effects using Framer Motion.
+- **Interactive Gallery**: Filterable and searchable artwork showcase.
+- **Floating Controls**: Quick access chat and scroll-to-top.
