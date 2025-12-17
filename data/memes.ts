@@ -2,7 +2,7 @@ export const memes = [
   {
     "id": "meme-1",
     "filename": "5.png",
-    "image_url": "https://i.ibb.co/chrzVfr8/5.png",
+    "image_url": "https://i.ibb.co/jPTfM0kK/96-result.webp",
     "alt_text": "Anime meme reaction image with surprised expression",
     "tags": [
       "meme",
@@ -70,7 +70,7 @@ export const memes = [
   {
     "id": "meme-2",
     "filename": "6.png",
-    "image_url": "https://i.ibb.co/HDSBT0vT/6.png",
+    "image_url": "https://i.ibb.co/9HPrnX44/98-result.webp",
     "alt_text": "Anime meme with confused character reaction",
     "tags": [
       "meme",
@@ -138,7 +138,7 @@ export const memes = [
   {
     "id": "meme-3",
     "filename": "8.png",
-    "image_url": "https://i.ibb.co/dJt4ZMSr/8.png",
+    "image_url": "https://i.ibb.co/svh0ZxqZ/97-result.webp",
     "alt_text": "Anime meme showing happy cheerful reaction",
     "tags": [
       "meme",
@@ -206,7 +206,7 @@ export const memes = [
   {
     "id": "meme-4",
     "filename": "12.png",
-    "image_url": "https://i.ibb.co/PGVNdPHr/12.png",
+    "image_url": "https://i.ibb.co/39pLZd93/95-result.webp",
     "alt_text": "Anime meme with crying emotional reaction",
     "tags": [
       "meme",
@@ -273,7 +273,7 @@ export const memes = [
   {
     "id": "meme-5",
     "filename": "19.png",
-    "image_url": "https://i.ibb.co/3y7gvTsq/19.png",
+    "image_url": "https://i.ibb.co/BHzmjpGZ/91-result.webp",
     "alt_text": "Anime meme with angry frustrated expression",
     "tags": [
       "meme",
@@ -341,7 +341,7 @@ export const memes = [
   {
     "id": "meme-6",
     "filename": "25.png",
-    "image_url": "https://i.ibb.co/XfDZCMkm/25.png",
+    "image_url": "https://i.ibb.co/wNZ21mJ2/94-result.webp",
     "alt_text": "Anime meme showing embarrassed blushing reaction",
     "tags": [
       "meme",
@@ -409,7 +409,7 @@ export const memes = [
   {
     "id": "meme-7",
     "filename": "54.png",
-    "image_url": "https://i.ibb.co/CpG8xN1d/54.png",
+    "image_url": "https://i.ibb.co/QFsPXBHn/86-result.webp",
     "alt_text": "Anime meme with shocked amazed expression",
     "tags": [
       "meme",
@@ -477,7 +477,7 @@ export const memes = [
   {
     "id": "meme-8",
     "filename": "58.png",
-    "image_url": "https://i.ibb.co/0jPxTY5G/58.png",
+    "image_url": "https://i.ibb.co/4Rq3dhB4/88-result.webp",
     "alt_text": "Anime meme showing tired sleepy reaction",
     "tags": [
       "meme",
@@ -543,7 +543,7 @@ export const memes = [
   {
     "id": "meme-9",
     "filename": "59.png",
-    "image_url": "https://i.ibb.co/Z176mz3H/59.png",
+    "image_url": "https://i.ibb.co/tTx3ndVQ/8-result.webp",
     "alt_text": "Anime meme with thinking pondering expression",
     "tags": [
       "meme",
@@ -611,7 +611,7 @@ export const memes = [
   {
     "id": "meme-10",
     "filename": "60.png",
-    "image_url": "https://i.ibb.co/7dp5mv6K/60.png",
+    "image_url": "https://i.ibb.co/mVwdHZyJ/70-result.webp",
     "alt_text": "Anime meme showing excited enthusiastic reaction",
     "tags": [
       "meme",
@@ -679,7 +679,7 @@ export const memes = [
   {
     "id": "meme-11",
     "filename": "61 (1).png",
-    "image_url": "https://i.ibb.co/sdTyBhsd/61-1.png",
+    "image_url": "https://i.ibb.co/JWf56dWx/74-result.webp",
     "alt_text": "Anime meme with smug confident expression",
     "tags": [
       "meme",
@@ -747,7 +747,7 @@ export const memes = [
   {
     "id": "meme-12",
     "filename": "62.png",
-    "image_url": "https://i.ibb.co/Mkt1S89H/62.png",
+    "image_url": "https://i.ibb.co/ZRxmKpQy/67-result.webp",
     "alt_text": "Anime meme showing nervous anxious reaction",
     "tags": [
       "meme",
@@ -815,7 +815,7 @@ export const memes = [
   {
     "id": "meme-13",
     "filename": "63.png",
-    "image_url": "https://i.ibb.co/Zp8RFKkk/63.png",
+    "image_url": "https://i.ibb.co/fGYtZctv/68-result.webp",
     "alt_text": "Anime meme with laughing amused expression",
     "tags": [
       "meme",
@@ -883,7 +883,7 @@ export const memes = [
   {
     "id": "meme-14",
     "filename": "65.png",
-    "image_url": "https://i.ibb.co/5Qmb6VF/65.png",
+    "image_url": "https://i.ibb.co/wrjkfXqH/66-result.webp",
     "alt_text": "Anime meme showing disappointed sad reaction",
     "tags": [
       "meme",
@@ -951,7 +951,7 @@ export const memes = [
   {
     "id": "meme-15",
     "filename": "66.png",
-    "image_url": "https://i.ibb.co/p6QP5mX9/66.png",
+    "image_url": "https://i.ibb.co/VcN8jG82/63-result.webp",
     "alt_text": "Anime meme with determined serious expression",
     "tags": [
       "meme",
@@ -1019,7 +1019,7 @@ export const memes = [
   {
     "id": "meme-16",
     "filename": "67.png",
-    "image_url": "https://i.ibb.co/8nFb22S9/67.png",
+    "image_url": "https://i.ibb.co/kV7GV8XM/65-result.webp",
     "alt_text": "Anime meme showing panicked stressed reaction",
     "tags": [
       "meme",
@@ -1087,7 +1087,7 @@ export const memes = [
   {
     "id": "meme-17",
     "filename": "68.png",
-    "image_url": "https://i.ibb.co/QG3Nrxk/68.png",
+    "image_url": "https://i.ibb.co/PvQLBWPf/61-result.webp",
     "alt_text": "Anime meme with cool relaxed expression",
     "tags": [
       "meme",
@@ -1155,7 +1155,7 @@ export const memes = [
   {
     "id": "meme-18",
     "filename": "70.png",
-    "image_url": "https://i.ibb.co/23RFs9B0/70.png",
+    "image_url": "https://i.ibb.co/LdQ1fwg8/62-result.webp",
     "alt_text": "Anime meme showing annoyed irritated reaction",
     "tags": [
       "meme",
@@ -1223,7 +1223,7 @@ export const memes = [
   {
     "id": "meme-19",
     "filename": "74.png",
-    "image_url": "https://i.ibb.co/pjLTX3Nf/74.png",
+    "image_url": "https://i.ibb.co/yBFt3f5v/6-result.webp",
     "alt_text": "Anime meme with proud satisfied expression",
     "tags": [
       "meme",
@@ -1291,7 +1291,7 @@ export const memes = [
   {
     "id": "meme-20",
     "filename": "86.png",
-    "image_url": "https://i.ibb.co/BVtQxtT9/86.png",
+    "image_url": "https://i.ibb.co/Hp2V1vsw/60-result.webp",
     "alt_text": "Anime meme showing scared frightened reaction",
     "tags": [
       "meme",
@@ -1357,7 +1357,7 @@ export const memes = [
   {
     "id": "meme-21",
     "filename": "88.png",
-    "image_url": "https://i.ibb.co/QFkCq8db/88.png",
+    "image_url": "https://i.ibb.co/WWjNzfkd/58-result.webp",
     "alt_text": "Anime meme with bored uninterested expression",
     "tags": [
       "meme",
@@ -1423,7 +1423,7 @@ export const memes = [
   {
     "id": "meme-22",
     "filename": "91.png",
-    "image_url": "https://i.ibb.co/67N2TDQk/91.png",
+    "image_url": "https://i.ibb.co/CK9Xq270/59-result.webp",
     "alt_text": "Anime meme showing disgusted grossed out reaction",
     "tags": [
       "meme",
@@ -1492,7 +1492,7 @@ export const memes = [
   {
     "id": "meme-23",
     "filename": "94.png",
-    "image_url": "https://i.ibb.co/1G4HQ4VR/94.png",
+    "image_url": "https://i.ibb.co/rGNH4b9j/54-result.webp",
     "alt_text": "Anime meme with hopeful optimistic expression",
     "tags": [
       "meme",
@@ -1560,7 +1560,7 @@ export const memes = [
   {
     "id": "meme-24",
     "filename": "95.png",
-    "image_url": "https://i.ibb.co/nsD63jpy/95.png",
+    "image_url": "https://i.ibb.co/r2yLzR83/5-result.webp",
     "alt_text": "Anime meme showing jealous envious reaction",
     "tags": [
       "meme",
@@ -1628,7 +1628,7 @@ export const memes = [
   {
     "id": "meme-25",
     "filename": "96.png",
-    "image_url": "https://i.ibb.co/hJ78CTPj/96.png",
+    "image_url": "https://i.ibb.co/QjtvgSMY/25-result.webp",
     "alt_text": "Anime meme with playful teasing expression",
     "tags": [
       "meme",
@@ -1696,7 +1696,7 @@ export const memes = [
   {
     "id": "meme-26",
     "filename": "97.png",
-    "image_url": "https://i.ibb.co/84GSVJqt/97.png",
+    "image_url": "https://i.ibb.co/Wpy80TF3/12-result.webp",
     "alt_text": "Anime meme showing regretful apologetic reaction",
     "tags": [
       "meme",
@@ -1764,7 +1764,7 @@ export const memes = [
   {
     "id": "meme-27",
     "filename": "98.png",
-    "image_url": "https://i.ibb.co/Hfd7dqh1/98.png",
+    "image_url": "https://i.ibb.co/Ndc3D9dg/19-result.webp",
     "alt_text": "Anime meme with grateful thankful expression",
     "tags": [
       "meme",
@@ -1832,7 +1832,7 @@ export const memes = [
   {
     "id": "meme-28",
     "filename": "101.png",
-    "image_url": "https://i.ibb.co/235nHYbn/101.png",
+    "image_url": "https://i.ibb.co/C5cXxXdB/118-result.webp",
     "alt_text": "Anime meme showing curious interested reaction",
     "tags": [
       "meme",
@@ -1900,7 +1900,7 @@ export const memes = [
   {
     "id": "meme-29",
     "filename": "102.png",
-    "image_url": "https://i.ibb.co/ccnQKBdb/102.png",
+    "image_url": "https://i.ibb.co/whBdgnv7/116-result.webp",
     "alt_text": "Anime meme with stubborn defiant expression",
     "tags": [
       "meme",
@@ -1968,7 +1968,7 @@ export const memes = [
   {
     "id": "meme-30",
     "filename": "103.png",
-    "image_url": "https://i.ibb.co/TM2kCrm7/103.png",
+    "image_url": "https://i.ibb.co/p623LYjK/117-result.webp",
     "alt_text": "Anime meme showing content peaceful reaction",
     "tags": [
       "meme",
@@ -2036,7 +2036,7 @@ export const memes = [
   {
     "id": "meme-31",
     "filename": "107.png",
-    "image_url": "https://i.ibb.co/6c16X4Gb/107.png",
+    "image_url": "https://i.ibb.co/jZkHmYcT/115-result.webp",
     "alt_text": "Anime meme with skeptical doubtful expression",
     "tags": [
       "meme",
@@ -2104,7 +2104,7 @@ export const memes = [
   {
     "id": "meme-32",
     "filename": "108.png",
-    "image_url": "https://i.ibb.co/HTfBJ406/108.png",
+    "image_url": "https://i.ibb.co/Fktd4k8s/112-result.webp",
     "alt_text": "Anime meme showing cheerful upbeat reaction",
     "tags": [
       "meme",
@@ -2172,7 +2172,7 @@ export const memes = [
   {
     "id": "meme-33",
     "filename": "112.png",
-    "image_url": "https://i.ibb.co/SDFbVt2R/112.png",
+    "image_url": "https://i.ibb.co/6cns3j6K/114-result.webp",
     "alt_text": "Anime meme with grumpy cranky expression",
     "tags": [
       "meme",
@@ -2240,7 +2240,7 @@ export const memes = [
   {
     "id": "meme-34",
     "filename": "114.png",
-    "image_url": "https://i.ibb.co/3mSw1jP1/114.png",
+    "image_url": "https://i.ibb.co/60LK3rZX/107-result.webp",
     "alt_text": "Anime meme showing loving affectionate reaction",
     "tags": [
       "meme",
@@ -2308,7 +2308,7 @@ export const memes = [
   {
     "id": "meme-35",
     "filename": "115.png",
-    "image_url": "https://i.ibb.co/2YndKyvW/115.png",
+    "image_url": "https://i.ibb.co/kgRqxWbQ/108-result.webp",
     "alt_text": "Anime meme with mischievous naughty expression",
     "tags": [
       "meme",
@@ -2376,7 +2376,7 @@ export const memes = [
   {
     "id": "meme-36",
     "filename": "116.png",
-    "image_url": "https://i.ibb.co/r9962gP/116.png",
+    "image_url": "https://i.ibb.co/N6nBy2M0/102-result.webp",
     "alt_text": "Anime meme showing innocent pure reaction",
     "tags": [
       "meme",
@@ -2444,7 +2444,7 @@ export const memes = [
   {
     "id": "meme-37",
     "filename": "117.png",
-    "image_url": "https://i.ibb.co/xKScH4t1/117.png",
+    "image_url": "https://i.ibb.co/R49MP0Df/103-result.webp",
     "alt_text": "Anime meme with sarcastic ironic expression",
     "tags": [
       "meme",
@@ -2512,7 +2512,7 @@ export const memes = [
   {
     "id": "meme-38",
     "filename": "118.png",
-    "image_url": "https://i.ibb.co/XZ9m0rSN/118.png",
+    "image_url": "https://i.ibb.co/hJw6FmbH/101-result.webp",
     "alt_text": "Anime meme showing dramatic theatrical reaction",
     "tags": [
       "meme",

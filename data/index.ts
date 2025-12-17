@@ -41,7 +41,7 @@ export const galleryData = allRawAssets.map(asset => {
   // Logos, Stickers, NFTs, and Memes usually look better contained
   const shouldContain = 
     (asset as any).contain === true || 
-    ['Logo', 'Sticker', 'Animated Sticker', 'NFT', 'Meme', 'GIF'].includes(asset.category);
+    ['Logo', 'Sticker', 'Animated Sticker', 'NFT', 'Meme', 'GIF', 'Animation'].includes(asset.category);
 
   return {
     id: asset.id,

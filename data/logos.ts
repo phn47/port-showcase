@@ -2,7 +2,7 @@ export const logos = [
   {
     "id": "logo-1",
     "filename": "01.png",
-    "image_url": "https://i.ibb.co/RkDKbyzL/01.png",
+    "image_url": "https://i.ibb.co/kkHmfFq/ver-1-result.webp",
     "alt_text": "Professional logo design with modern minimalist style",
     "tags": [
       "logo",
@@ -70,7 +70,7 @@ export const logos = [
   {
     "id": "logo-2",
     "filename": "02.png",
-    "image_url": "https://i.ibb.co/G4ZqCqqM/02.png",
+    "image_url": "https://i.ibb.co/Fk048PdS/untitled-artwork-1-result.webp",
     "alt_text": "Creative logo design with geometric elements",
     "tags": [
       "logo",
@@ -138,7 +138,7 @@ export const logos = [
   {
     "id": "logo-3",
     "filename": "2.jpg",
-    "image_url": "https://i.ibb.co/LDggKmSs/2.jpg",
+    "image_url": "https://i.ibb.co/39gt9WzS/ngu-logo-result.webp",
     "alt_text": "Brand logo with colorful vibrant design",
     "tags": [
       "logo",
@@ -207,7 +207,7 @@ export const logos = [
   {
     "id": "logo-4",
     "filename": "03.png",
-    "image_url": "https://i.ibb.co/RfDDFNZ/03.png",
+    "image_url": "https://i.ibb.co/JRxqY77Y/pepe-logo-game-result.webp",
     "alt_text": "Elegant logo design with sophisticated typography",
     "tags": [
       "logo",
@@ -274,7 +274,7 @@ export const logos = [
   {
     "id": "logo-5",
     "filename": "04.png",
-    "image_url": "https://i.ibb.co/vgpcXH0/04.png",
+    "image_url": "https://i.ibb.co/JbgYJqJ/logo-tubby-11-result.webp",
     "alt_text": "Bold logo design with strong visual impact",
     "tags": [
       "logo",
@@ -343,7 +343,7 @@ export const logos = [
   {
     "id": "logo-6",
     "filename": "05.png",
-    "image_url": "https://i.ibb.co/9mV2SsTH/05.png",
+    "image_url": "https://i.ibb.co/1fPmzskh/main-logo-result.webp",
     "alt_text": "Minimalist logo with clean simple design",
     "tags": [
       "logo",
@@ -410,7 +410,7 @@ export const logos = [
   {
     "id": "logo-7",
     "filename": "06.png",
-    "image_url": "https://i.ibb.co/XZ4c3Bk3/06.png",
+    "image_url": "https://i.ibb.co/rGS2dC7R/logo-xanh-result.webp",
     "alt_text": "Dynamic logo design with motion elements",
     "tags": [
       "logo",
@@ -478,7 +478,7 @@ export const logos = [
   {
     "id": "logo-8",
     "filename": "12-1.png",
-    "image_url": "https://i.ibb.co/fVr7QLB0/12-1.png",
+    "image_url": "https://i.ibb.co/FL6vZM92/logo-text-result.webp",
     "alt_text": "Corporate logo with professional business identity",
     "tags": [
       "logo",
@@ -545,7 +545,7 @@ export const logos = [
   {
     "id": "logo-9",
     "filename": "180.png",
-    "image_url": "https://i.ibb.co/WWG2j7mc/180.png",
+    "image_url": "https://i.ibb.co/7xTfG06D/logo-sweb-1-result.webp",
     "alt_text": "Circular logo design with balanced composition",
     "tags": [
       "logo",
@@ -613,7 +613,7 @@ export const logos = [
   {
     "id": "logo-10",
     "filename": "273.png",
-    "image_url": "https://i.ibb.co/bRQj9kmD/273.png",
+    "image_url": "https://i.ibb.co/TBCsds0s/logo-skull-vr-blue-grunge-result.webp",
     "alt_text": "Abstract logo with artistic creative elements",
     "tags": [
       "logo",
@@ -681,7 +681,7 @@ export const logos = [
   {
     "id": "logo-11",
     "filename": "asdsa.jpg",
-    "image_url": "https://i.ibb.co/wN9fmY8X/asdsa.jpg",
+    "image_url": "https://i.ibb.co/Z6tv43xF/logo-shore-03-result.webp",
     "alt_text": "Custom brand logo with unique identity",
     "tags": [
       "logo",
@@ -749,7 +749,7 @@ export const logos = [
   {
     "id": "logo-12",
     "filename": "asset 10.png",
-    "image_url": "https://i.ibb.co/5gnkM1nv/asset-10.png",
+    "image_url": "https://i.ibb.co/XxqQqYtZ/logo-mat-phat-sang-02-result.webp",
     "alt_text": "Brand asset logo for marketing materials",
     "tags": [
       "logo",
@@ -814,7 +814,7 @@ export const logos = [
   {
     "id": "logo-13",
     "filename": "cao.png",
-    "image_url": "https://i.ibb.co/k2kpZcgK/cao.png",
+    "image_url": "https://i.ibb.co/MxZNx8g4/logo-khi-result.webp",
     "alt_text": "Logo design with Vietnamese cultural elements",
     "tags": [
       "logo",
@@ -882,7 +882,7 @@ export const logos = [
   {
     "id": "logo-14",
     "filename": "cat logo remake 1.png",
-    "image_url": "https://i.ibb.co/Wp5K9W66/cat-logo-remake-1.png",
+    "image_url": "https://i.ibb.co/Jw7bQ3jz/logo-security-result.webp",
     "alt_text": "Cat mascot logo with playful character design",
     "tags": [
       "logo",
@@ -947,7 +947,7 @@ export const logos = [
   {
     "id": "logo-15",
     "filename": "glow primary logo 15.png",
-    "image_url": "https://i.ibb.co/4ZG7pK0t/glow-primary-logo-15.png",
+    "image_url": "https://i.ibb.co/KxZKJRGz/logo-copy-result.webp",
     "alt_text": "Glowing neon-style logo with vibrant effects",
     "tags": [
       "logo",
@@ -1015,7 +1015,7 @@ export const logos = [
   {
     "id": "logo-16",
     "filename": "img 7229.png",
-    "image_url": "https://i.ibb.co/Ngwq9bqf/img-7229.png",
+    "image_url": "https://i.ibb.co/CGrZxb0/logo-etf-result.webp",
     "alt_text": "Professional brand logo for business identity",
     "tags": [
       "logo",
@@ -1079,7 +1079,7 @@ export const logos = [
   {
     "id": "logo-17",
     "filename": "img 7367.png",
-    "image_url": "https://i.ibb.co/PsgSHYrQ/img-7367.png",
+    "image_url": "https://i.ibb.co/B26JZQzy/logo-chatbot-result.webp",
     "alt_text": "Modern logo design with contemporary style",
     "tags": [
       "logo",
@@ -1143,7 +1143,7 @@ export const logos = [
   {
     "id": "logo-18",
     "filename": "img 7746.png",
-    "image_url": "https://i.ibb.co/C3GS9FPQ/img-7746.png",
+    "image_url": "https://i.ibb.co/pjQyBjkV/logo-cat-2-result.webp",
     "alt_text": "Creative logo with innovative design concept",
     "tags": [
       "logo",
@@ -1206,7 +1206,7 @@ export const logos = [
   {
     "id": "logo-19",
     "filename": "img 7748.png",
-    "image_url": "https://i.ibb.co/fdqNKVhG/img-7748.png",
+    "image_url": "https://i.ibb.co/YTPsfdKf/logo-cat-2-op2-result.webp",
     "alt_text": "Elegant brand logo with refined aesthetics",
     "tags": [
       "logo",
@@ -1271,7 +1271,7 @@ export const logos = [
   {
     "id": "logo-20",
     "filename": "img 7749.png",
-    "image_url": "https://i.ibb.co/dsbBgHSw/img-7749.png",
+    "image_url": "https://i.ibb.co/XZ3J5XzD/logo-bricks-02-result.webp",
     "alt_text": "Bold logo design with strong brand presence",
     "tags": [
       "logo",
@@ -1335,7 +1335,7 @@ export const logos = [
   {
     "id": "logo-21",
     "filename": "img 7750.png",
-    "image_url": "https://i.ibb.co/whNNyxwX/img-7750.png",
+    "image_url": "https://i.ibb.co/nty0qt9/logo-castlesword-result.webp",
     "alt_text": "Minimalist logo with clean professional look",
     "tags": [
       "logo",
@@ -1398,7 +1398,7 @@ export const logos = [
   {
     "id": "logo-22",
     "filename": "img 7751.png",
-    "image_url": "https://i.ibb.co/tp7V6CFK/img-7751.png",
+    "image_url": "https://i.ibb.co/x8JSsF6B/logo-alligator-20-result.webp",
     "alt_text": "Dynamic brand logo with energetic design",
     "tags": [
       "logo",
@@ -1462,7 +1462,7 @@ export const logos = [
   {
     "id": "logo-23",
     "filename": "img 7752.png",
-    "image_url": "https://i.ibb.co/nNCHVphf/img-7752.png",
+    "image_url": "https://i.ibb.co/Y6DW3KG/logo-2-result.webp",
     "alt_text": "Corporate logo for professional business branding",
     "tags": [
       "logo",
@@ -1525,7 +1525,7 @@ export const logos = [
   {
     "id": "logo-24",
     "filename": "img 7753.png",
-    "image_url": "https://i.ibb.co/CTvJhyr/img-7753.png",
+    "image_url": "https://i.ibb.co/4ZgF5Rfv/logo-1-result.webp",
     "alt_text": "Creative logo with artistic visual elements",
     "tags": [
       "logo",
@@ -1589,7 +1589,7 @@ export const logos = [
   {
     "id": "logo-25",
     "filename": "img 7754.png",
-    "image_url": "https://i.ibb.co/dwDPSXxz/img-7754.png",
+    "image_url": "https://i.ibb.co/GfQ7DGFW/img-7753-result.webp",
     "alt_text": "Modern brand logo with contemporary design",
     "tags": [
       "logo",
@@ -1653,7 +1653,7 @@ export const logos = [
   {
     "id": "logo-26",
     "filename": "logo 01.png",
-    "image_url": "https://i.ibb.co/Fbq4kfBG/logo-01.png",
+    "image_url": "https://i.ibb.co/KjQnXfX7/img-7754-result.webp",
     "alt_text": "Primary brand logo for company identity",
     "tags": [
       "logo",
@@ -1717,7 +1717,7 @@ export const logos = [
   {
     "id": "logo-27",
     "filename": "logo 1.png",
-    "image_url": "https://i.ibb.co/wrpvBqHb/logo-1.png",
+    "image_url": "https://i.ibb.co/359JGJB2/logo-01-result.webp",
     "alt_text": "Main company logo with brand identity",
     "tags": [
       "logo",
@@ -1780,7 +1780,7 @@ export const logos = [
   {
     "id": "logo-28",
     "filename": "logo 1 mau.png",
-    "image_url": "https://i.ibb.co/21PG12pg/logo-1-mau.png",
+    "image_url": "https://i.ibb.co/fYs3fPsq/logo-1-mau-result.webp",
     "alt_text": "Colorful version of brand logo design",
     "tags": [
       "logo",
@@ -1845,7 +1845,7 @@ export const logos = [
   {
     "id": "logo-29",
     "filename": "logo 2.png",
-    "image_url": "https://i.ibb.co/MktY4YG1/logo-2.png",
+    "image_url": "https://i.ibb.co/wh6njQXv/img-7751-result.webp",
     "alt_text": "Secondary brand logo variation",
     "tags": [
       "logo",
@@ -1908,7 +1908,7 @@ export const logos = [
   {
     "id": "logo-30",
     "filename": "logo alligator 20.png",
-    "image_url": "https://i.ibb.co/CsPTdGJ1/logo-alligator-20.png",
+    "image_url": "https://i.ibb.co/Z1LpWN33/img-7752-result.webp",
     "alt_text": "Alligator mascot logo with reptile character",
     "tags": [
       "logo",
@@ -1973,7 +1973,7 @@ export const logos = [
   {
     "id": "logo-31",
     "filename": "logo bricks 02.png",
-    "image_url": "https://i.ibb.co/XrGKG3Rv/logo-bricks-02.png",
+    "image_url": "https://i.ibb.co/6cp9qbX4/img-7748-result.webp",
     "alt_text": "Construction-themed logo with brick elements",
     "tags": [
       "logo",
@@ -2039,7 +2039,7 @@ export const logos = [
   {
     "id": "logo-32",
     "filename": "logo castlesword.png",
-    "image_url": "https://i.ibb.co/v4xFLDft/logo-castlesword.png",
+    "image_url": "https://i.ibb.co/VpWhMJyb/img-7749-result.webp",
     "alt_text": "Medieval castle and sword gaming logo",
     "tags": [
       "logo",
@@ -2104,7 +2104,7 @@ export const logos = [
   {
     "id": "logo-33",
     "filename": "logo cat 2.png",
-    "image_url": "https://i.ibb.co/nqMQGySY/logo-cat-2.png",
+    "image_url": "https://i.ibb.co/5WfvWxnn/img-7750-result.webp",
     "alt_text": "Cat character logo with feline mascot design",
     "tags": [
       "logo",
@@ -2169,7 +2169,7 @@ export const logos = [
   {
     "id": "logo-34",
     "filename": "logo cat 2 op2.png",
-    "image_url": "https://i.ibb.co/ch7y7gK8/logo-cat-2-op2.png",
+    "image_url": "https://i.ibb.co/gM3b4nzD/img-7746-result.webp",
     "alt_text": "Alternative cat logo design variation",
     "tags": [
       "logo",
@@ -2234,7 +2234,7 @@ export const logos = [
   {
     "id": "logo-35",
     "filename": "logo chatbot.jpg",
-    "image_url": "https://i.ibb.co/yBKRF6D2/logo-chatbot.jpg",
+    "image_url": "https://i.ibb.co/PZYm03xT/img-7229-result.webp",
     "alt_text": "AI chatbot logo for technology brand",
     "tags": [
       "logo",
@@ -2300,7 +2300,7 @@ export const logos = [
   {
     "id": "logo-36",
     "filename": "logo copy.png",
-    "image_url": "https://i.ibb.co/MxLKj99X/logo-copy.png",
+    "image_url": "https://i.ibb.co/JwFMPpdG/img-7367-result.webp",
     "alt_text": "Brand logo duplicate for various uses",
     "tags": [
       "logo",
@@ -2364,7 +2364,7 @@ export const logos = [
   {
     "id": "logo-37",
     "filename": "logo etf.jpg",
-    "image_url": "https://i.ibb.co/PZTxpbpm/logo-etf.jpg",
+    "image_url": "https://i.ibb.co/vxD3nCRh/cat-logo-remake-1-result.webp",
     "alt_text": "ETF financial services logo design",
     "tags": [
       "logo",
@@ -2430,7 +2430,7 @@ export const logos = [
   {
     "id": "logo-38",
     "filename": "logo khi.jpg",
-    "image_url": "https://i.ibb.co/HL0mB3zB/logo-khi.jpg",
+    "image_url": "https://i.ibb.co/Q3Q8bkLp/glow-primary-logo-15-result.webp",
     "alt_text": "Monkey mascot logo with primate character",
     "tags": [
       "logo",
@@ -2495,7 +2495,7 @@ export const logos = [
   {
     "id": "logo-39",
     "filename": "logo mat phat sang 02.jpg",
-    "image_url": "https://i.ibb.co/5XkVQjPX/logo-mat-phat-sang-02.jpg",
+    "image_url": "https://i.ibb.co/qMF4brZ5/asset-10-result.webp",
     "alt_text": "Glowing eye logo with illuminated design",
     "tags": [
       "logo",
@@ -2560,7 +2560,7 @@ export const logos = [
   {
     "id": "logo-40",
     "filename": "logo security.jpg",
-    "image_url": "https://i.ibb.co/7tmWPnqN/logo-security.jpg",
+    "image_url": "https://i.ibb.co/Rpx95ryX/cao-result.webp",
     "alt_text": "Security services logo with protection theme",
     "tags": [
       "logo",
@@ -2627,7 +2627,7 @@ export const logos = [
   {
     "id": "logo-41",
     "filename": "logo shore 03.jpg",
-    "image_url": "https://i.ibb.co/1Gnmntb5/logo-shore-03.jpg",
+    "image_url": "https://i.ibb.co/VcS63fHk/asdsa-result.webp",
     "alt_text": "Coastal beach-themed logo design",
     "tags": [
       "logo",
@@ -2693,7 +2693,7 @@ export const logos = [
   {
     "id": "logo-42",
     "filename": "logo skull vr blue grunge.png",
-    "image_url": "https://i.ibb.co/9mF2g39Z/logo-skull-vr-blue-grunge.png",
+    "image_url": "https://i.ibb.co/qMbPNKN1/273-result.webp",
     "alt_text": "Skull VR gaming logo with grunge style",
     "tags": [
       "logo",
@@ -2759,7 +2759,7 @@ export const logos = [
   {
     "id": "logo-43",
     "filename": "logo sweb 1.png",
-    "image_url": "https://i.ibb.co/XmPdKS6/logo-sweb-1.png",
+    "image_url": "https://i.ibb.co/zV4hf6h3/2-result.webp",
     "alt_text": "Web development company logo design",
     "tags": [
       "logo",
@@ -2825,7 +2825,7 @@ export const logos = [
   {
     "id": "logo-44",
     "filename": "logo text.png",
-    "image_url": "https://i.ibb.co/MxhZYDSc/logo-text.png",
+    "image_url": "https://i.ibb.co/0pkw2vDD/180-result.webp",
     "alt_text": "Text-based logo with typography focus",
     "tags": [
       "logo",
@@ -2892,7 +2892,7 @@ export const logos = [
   {
     "id": "logo-45",
     "filename": "logo tubby 11.png",
-    "image_url": "https://i.ibb.co/RGhzFkyC/logo-tubby-11.png",
+    "image_url": "https://i.ibb.co/j9qDgBjm/12-1-result.webp",
     "alt_text": "Tubby character mascot logo design",
     "tags": [
       "logo",
@@ -2957,7 +2957,7 @@ export const logos = [
   {
     "id": "logo-46",
     "filename": "logo xanh.png",
-    "image_url": "https://i.ibb.co/TxLZq02X/logo-xanh.png",
+    "image_url": "https://i.ibb.co/4nVZS0R6/05-result.webp",
     "alt_text": "Blue-themed brand logo design",
     "tags": [
       "logo",
@@ -3022,7 +3022,7 @@ export const logos = [
   {
     "id": "logo-47",
     "filename": "main logo.png",
-    "image_url": "https://i.ibb.co/LX66LR6r/main-logo.png",
+    "image_url": "https://i.ibb.co/yczfBLg5/06-result.webp",
     "alt_text": "Main primary brand logo for company",
     "tags": [
       "logo",
@@ -3087,7 +3087,7 @@ export const logos = [
   {
     "id": "logo-48",
     "filename": "ngu logo.png",
-    "image_url": "https://i.ibb.co/5hJjczZD/ngu-logo.png",
+    "image_url": "https://i.ibb.co/Jww4RMmp/04-result.webp",
     "alt_text": "Custom brand logo with unique design",
     "tags": [
       "logo",
@@ -3150,7 +3150,7 @@ export const logos = [
   {
     "id": "logo-49",
     "filename": "pepe logo game.jpg",
-    "image_url": "https://i.ibb.co/27YYKCgW/pepe-logo-game.jpg",
+    "image_url": "https://i.ibb.co/zWdcZc6j/02-result.webp",
     "alt_text": "Pepe meme character gaming logo",
     "tags": [
       "logo",
@@ -3215,7 +3215,7 @@ export const logos = [
   {
     "id": "logo-50",
     "filename": "untitled artwork 1.png",
-    "image_url": "https://i.ibb.co/3Y9GrVWx/untitled-artwork-1.png",
+    "image_url": "https://i.ibb.co/hxKN4ktZ/03-result.webp",
     "alt_text": "Artistic logo design with creative concept",
     "tags": [
       "logo",
@@ -3280,7 +3280,7 @@ export const logos = [
   {
     "id": "logo-51",
     "filename": "ver 1.jpg",
-    "image_url": "https://i.ibb.co/Pvg4vLPg/ver-1.jpg",
+    "image_url": "https://i.ibb.co/YF3SCxVk/01-result.webp",
     "alt_text": "Version 1 of brand logo design",
     "tags": [
       "logo",

@@ -2,7 +2,7 @@ export const nfts = [
   {
     "id": "nft-1",
     "filename": "2.png",
-    "image_url": "https://i.ibb.co/XZf67wsB/2.png",
+    "image_url": "https://i.ibb.co/kg3c0bfG/untitled-7-1-result.webp",
     "alt_text": "NFT collectible digital art piece",
     "tags": [
       "nft",
@@ -69,7 +69,7 @@ export const nfts = [
   {
     "id": "nft-2",
     "filename": "4.png",
-    "image_url": "https://i.ibb.co/6RSMXp1R/4.png",
+    "image_url": "https://i.ibb.co/JjYdDSP2/untitled-6-result.webp",
     "alt_text": "NFT collection artwork design",
     "tags": [
       "nft",
@@ -134,7 +134,7 @@ export const nfts = [
   {
     "id": "nft-3",
     "filename": "4penguins.png",
-    "image_url": "https://i.ibb.co/xSf3hP1d/4penguins.png",
+    "image_url": "https://i.ibb.co/kg2sj8WX/untitled-5-result.webp",
     "alt_text": "Four penguins NFT collection characters",
     "tags": [
       "nft",
@@ -202,7 +202,7 @@ export const nfts = [
   {
     "id": "nft-4",
     "filename": "6.png",
-    "image_url": "https://i.ibb.co/LGJQfn7/6.png",
+    "image_url": "https://i.ibb.co/rR1q0p3g/untitled-4-result.webp",
     "alt_text": "NFT digital collectible art",
     "tags": [
       "nft",
@@ -267,7 +267,7 @@ export const nfts = [
   {
     "id": "nft-5",
     "filename": "9.png",
-    "image_url": "https://i.ibb.co/wFLGyWFj/9.png",
+    "image_url": "https://i.ibb.co/3m4f8MYh/untitled-3-result.webp",
     "alt_text": "NFT collection unique artwork",
     "tags": [
       "nft",
@@ -332,7 +332,7 @@ export const nfts = [
   {
     "id": "nft-6",
     "filename": "10.png",
-    "image_url": "https://i.ibb.co/HLJdB6kH/10.png",
+    "image_url": "https://i.ibb.co/5hXHTQ71/robot-result.webp",
     "alt_text": "NFT digital art collectible",
     "tags": [
       "nft",
@@ -398,7 +398,7 @@ export const nfts = [
   {
     "id": "nft-7",
     "filename": "14.png",
-    "image_url": "https://i.ibb.co/B5vRmQ2M/14.png",
+    "image_url": "https://i.ibb.co/M5M2VXgc/puma-9-result.webp",
     "alt_text": "NFT collection artwork piece",
     "tags": [
       "nft",
@@ -464,7 +464,7 @@ export const nfts = [
   {
     "id": "nft-8",
     "filename": "16.png",
-    "image_url": "https://i.ibb.co/GvqN07kb/16.png",
+    "image_url": "https://i.ibb.co/MkmqS7cV/puma-8-result.webp",
     "alt_text": "NFT digital collectible design",
     "tags": [
       "nft",
@@ -529,7 +529,7 @@ export const nfts = [
   {
     "id": "nft-9",
     "filename": "duck-1.png",
-    "image_url": "https://i.ibb.co/fGtf0gDQ/duck-1.png",
+    "image_url": "https://i.ibb.co/8LH8gshc/puma-6-result.webp",
     "alt_text": "Duck NFT character collectible #1",
     "tags": [
       "nft",
@@ -596,7 +596,7 @@ export const nfts = [
   {
     "id": "nft-10",
     "filename": "duck-2.png",
-    "image_url": "https://i.ibb.co/67j72jbN/duck-2.png",
+    "image_url": "https://i.ibb.co/QFZ0qZGb/puma-7-result.webp",
     "alt_text": "Duck NFT character collectible #2",
     "tags": [
       "nft",
@@ -663,7 +663,7 @@ export const nfts = [
   {
     "id": "nft-11",
     "filename": "duck-3.png",
-    "image_url": "https://i.ibb.co/YB28k2Rn/duck-3.png",
+    "image_url": "https://i.ibb.co/KcR5zj01/puma-5-result.webp",
     "alt_text": "Duck NFT character collectible #3",
     "tags": [
       "nft",
@@ -730,7 +730,7 @@ export const nfts = [
   {
     "id": "nft-12",
     "filename": "element-3.png",
-    "image_url": "https://i.ibb.co/d4ygpkYm/element-3.png",
+    "image_url": "https://i.ibb.co/CpqKkbmK/puma-4-result.webp",
     "alt_text": "NFT elemental design collectible #3",
     "tags": [
       "nft",
@@ -796,7 +796,7 @@ export const nfts = [
   {
     "id": "nft-13",
     "filename": "element-4.png",
-    "image_url": "https://i.ibb.co/C3fWG57Z/element-4.png",
+    "image_url": "https://i.ibb.co/twVQJkCC/puma-3-result.webp",
     "alt_text": "NFT elemental design collectible #4",
     "tags": [
       "nft",
@@ -862,7 +862,7 @@ export const nfts = [
   {
     "id": "nft-14",
     "filename": "element-5.png",
-    "image_url": "https://i.ibb.co/27xxfDGK/element-5.png",
+    "image_url": "https://i.ibb.co/xSS3gx6j/puma-2-result.webp",
     "alt_text": "NFT elemental design collectible #5",
     "tags": [
       "nft",
@@ -928,7 +928,7 @@ export const nfts = [
   {
     "id": "nft-15",
     "filename": "element-6.png",
-    "image_url": "https://i.ibb.co/tTNSqZNS/element-6.png",
+    "image_url": "https://i.ibb.co/ycgNQgw1/puma-12-result.webp",
     "alt_text": "NFT elemental design collectible #6",
     "tags": [
       "nft",
@@ -994,7 +994,7 @@ export const nfts = [
   {
     "id": "nft-16",
     "filename": "genshin-1.png",
-    "image_url": "https://i.ibb.co/1Yd4d8KP/genshin-1.png",
+    "image_url": "https://i.ibb.co/RpgGBszN/puma-11-result.webp",
     "alt_text": "Genshin Impact inspired NFT collectible #1",
     "tags": [
       "nft",
@@ -1061,7 +1061,7 @@ export const nfts = [
   {
     "id": "nft-17",
     "filename": "ghensin-2.png",
-    "image_url": "https://i.ibb.co/9HKRMs7M/ghensin-2.png",
+    "image_url": "https://i.ibb.co/B5bt7MkT/puma-10-result.webp",
     "alt_text": "Genshin Impact inspired NFT collectible #2",
     "tags": [
       "nft",
@@ -1128,7 +1128,7 @@ export const nfts = [
   {
     "id": "nft-18",
     "filename": "ghensin-3.png",
-    "image_url": "https://i.ibb.co/yKkv9VR/ghensin-3.png",
+    "image_url": "https://i.ibb.co/MxfC5f4h/puma-1-result.webp",
     "alt_text": "Genshin Impact inspired NFT collectible #3",
     "tags": [
       "nft",
@@ -1195,7 +1195,7 @@ export const nfts = [
   {
     "id": "nft-19",
     "filename": "ghensin-4.png",
-    "image_url": "https://i.ibb.co/Kp1tc33N/ghensin-4.png",
+    "image_url": "https://i.ibb.co/k6BnscVn/group-4-1-result.webp",
     "alt_text": "Genshin Impact inspired NFT collectible #4",
     "tags": [
       "nft",
@@ -1262,7 +1262,7 @@ export const nfts = [
   {
     "id": "nft-20",
     "filename": "ghensin-5.png",
-    "image_url": "https://i.ibb.co/1G3h6yvm/ghensin-5.png",
+    "image_url": "https://i.ibb.co/G4bwXbYp/group-3-1-result.webp",
     "alt_text": "Genshin Impact inspired NFT collectible #5",
     "tags": [
       "nft",
@@ -1329,7 +1329,7 @@ export const nfts = [
   {
     "id": "nft-21",
     "filename": "group-1-1.png",
-    "image_url": "https://i.ibb.co/Vp9GP1S7/group-1-1.png",
+    "image_url": "https://i.ibb.co/xWF2Kvn/group-1-1-result.webp",
     "alt_text": "NFT collection group artwork #1",
     "tags": [
       "nft",
@@ -1394,7 +1394,7 @@ export const nfts = [
   {
     "id": "nft-22",
     "filename": "group-3-1.png",
-    "image_url": "https://i.ibb.co/Q79JYFN5/group-3-1.png",
+    "image_url": "https://i.ibb.co/WT9hk4k/ghensin-5-result.webp",
     "alt_text": "NFT collection group artwork #3",
     "tags": [
       "nft",
@@ -1459,7 +1459,7 @@ export const nfts = [
   {
     "id": "nft-23",
     "filename": "group-4-1.png",
-    "image_url": "https://i.ibb.co/zH5Vr1sF/group-4-1.png",
+    "image_url": "https://i.ibb.co/ZzCKnyDM/ghensin-4-result.webp",
     "alt_text": "NFT collection group artwork #4",
     "tags": [
       "nft",
@@ -1524,7 +1524,7 @@ export const nfts = [
   {
     "id": "nft-24",
     "filename": "puma-1.png",
-    "image_url": "https://i.ibb.co/LD2g1rf4/puma-1.png",
+    "image_url": "https://i.ibb.co/bR3JTsmc/ghensin-3-result.webp",
     "alt_text": "Puma NFT collection character #1",
     "tags": [
       "nft",
@@ -1592,7 +1592,7 @@ export const nfts = [
   {
     "id": "nft-25",
     "filename": "puma-2.png",
-    "image_url": "https://i.ibb.co/9HLSFc1z/puma-2.png",
+    "image_url": "https://i.ibb.co/Zp7TPfjQ/ghensin-2-result.webp",
     "alt_text": "Puma NFT collection character #2",
     "tags": [
       "nft",
@@ -1660,7 +1660,7 @@ export const nfts = [
   {
     "id": "nft-26",
     "filename": "puma-3.png",
-    "image_url": "https://i.ibb.co/5hf9FMKG/puma-3.png",
+    "image_url": "https://i.ibb.co/bgXBzWcb/genshin-1-result.webp",
     "alt_text": "Puma NFT collection character #3",
     "tags": [
       "nft",
@@ -1728,7 +1728,7 @@ export const nfts = [
   {
     "id": "nft-27",
     "filename": "puma-4.png",
-    "image_url": "https://i.ibb.co/8DwSTmnQ/puma-4.png",
+    "image_url": "https://i.ibb.co/5gYbmZqz/element-6-result.webp",
     "alt_text": "Puma NFT collection character #4",
     "tags": [
       "nft",
@@ -1796,7 +1796,7 @@ export const nfts = [
   {
     "id": "nft-28",
     "filename": "puma-5.png",
-    "image_url": "https://i.ibb.co/jkCvZsPW/puma-5.png",
+    "image_url": "https://i.ibb.co/WvvqHB9d/element-5-result.webp",
     "alt_text": "Puma NFT collection character #5",
     "tags": [
       "nft",
@@ -1864,7 +1864,7 @@ export const nfts = [
   {
     "id": "nft-29",
     "filename": "puma-6.png",
-    "image_url": "https://i.ibb.co/FLMMzJ9t/puma-6.png",
+    "image_url": "https://i.ibb.co/1fPp6dq7/element-4-result.webp",
     "alt_text": "Puma NFT collection character #6",
     "tags": [
       "nft",
@@ -1932,7 +1932,7 @@ export const nfts = [
   {
     "id": "nft-30",
     "filename": "puma-7.png",
-    "image_url": "https://i.ibb.co/1YQYGkbj/puma-7.png",
+    "image_url": "https://i.ibb.co/b5xrTvQd/duck-3-result.webp",
     "alt_text": "Puma NFT collection character #7",
     "tags": [
       "nft",
@@ -2000,7 +2000,7 @@ export const nfts = [
   {
     "id": "nft-31",
     "filename": "puma-8.png",
-    "image_url": "https://i.ibb.co/nNLDSbRY/puma-8.png",
+    "image_url": "https://i.ibb.co/xS4zrs7L/duck-2-result.webp",
     "alt_text": "Puma NFT collection character #8",
     "tags": [
       "nft",
@@ -2068,7 +2068,7 @@ export const nfts = [
   {
     "id": "nft-32",
     "filename": "puma-9.png",
-    "image_url": "https://i.ibb.co/CKbDsZpH/puma-9.png",
+    "image_url": "https://i.ibb.co/nqRn25Dk/element-3-result.webp",
     "alt_text": "Puma NFT collection character #9",
     "tags": [
       "nft",
@@ -2136,7 +2136,7 @@ export const nfts = [
   {
     "id": "nft-33",
     "filename": "puma-10.png",
-    "image_url": "https://i.ibb.co/8pFHt28/puma-10.png",
+    "image_url": "https://i.ibb.co/TBvs1LQH/9-result.webp",
     "alt_text": "Puma NFT collection character #10",
     "tags": [
       "nft",
@@ -2204,7 +2204,7 @@ export const nfts = [
   {
     "id": "nft-34",
     "filename": "puma-11.png",
-    "image_url": "https://i.ibb.co/qYs9pRpL/puma-11.png",
+    "image_url": "https://i.ibb.co/Y7YdGdPz/duck-1-result.webp",
     "alt_text": "Puma NFT collection character #11",
     "tags": [
       "nft",
@@ -2272,7 +2272,7 @@ export const nfts = [
   {
     "id": "nft-35",
     "filename": "puma-12.png",
-    "image_url": "https://i.ibb.co/qMxY0VZp/puma-12.png",
+    "image_url": "https://i.ibb.co/mr7bhnfQ/6-result.webp",
     "alt_text": "Puma NFT collection character #12",
     "tags": [
       "nft",
@@ -2340,7 +2340,7 @@ export const nfts = [
   {
     "id": "nft-36",
     "filename": "robot.png",
-    "image_url": "https://i.ibb.co/j922X4Kt/robot.png",
+    "image_url": "https://i.ibb.co/pBS1zq8Y/4penguins-result.webp",
     "alt_text": "Robot NFT digital collectible character",
     "tags": [
       "nft",
@@ -2408,7 +2408,7 @@ export const nfts = [
   {
     "id": "nft-37",
     "filename": "untitled-3.png",
-    "image_url": "https://i.ibb.co/vvmvX84Q/untitled-3.png",
+    "image_url": "https://i.ibb.co/p6Vq0jYd/4-result.webp",
     "alt_text": "NFT digital art collectible piece #3",
     "tags": [
       "nft",
@@ -2475,7 +2475,7 @@ export const nfts = [
   {
     "id": "nft-38",
     "filename": "untitled-4.png",
-    "image_url": "https://i.ibb.co/5xFHB1vd/untitled-4.png",
+    "image_url": "https://i.ibb.co/XrTDQHdG/2-result.webp",
     "alt_text": "NFT digital art collectible piece #4",
     "tags": [
       "nft",
@@ -2542,7 +2542,7 @@ export const nfts = [
   {
     "id": "nft-39",
     "filename": "untitled-5.png",
-    "image_url": "https://i.ibb.co/KxLd9vW5/untitled-5.png",
+    "image_url": "https://i.ibb.co/m5XG0Sk5/16-result.webp",
     "alt_text": "NFT digital art collectible piece #5",
     "tags": [
       "nft",
@@ -2609,7 +2609,7 @@ export const nfts = [
   {
     "id": "nft-40",
     "filename": "untitled-6.png",
-    "image_url": "https://i.ibb.co/dvfCq5J/untitled-6.png",
+    "image_url": "https://i.ibb.co/Q3tRpvym/14-result.webp",
     "alt_text": "NFT digital art collectible piece #6",
     "tags": [
       "nft",
@@ -2676,7 +2676,7 @@ export const nfts = [
   {
     "id": "nft-41",
     "filename": "untitled-7-1.png",
-    "image_url": "https://i.ibb.co/nNz77nFc/untitled-7-1.png",
+    "image_url": "https://i.ibb.co/7J0CmbPn/10-result.webp",
     "alt_text": "NFT digital art collectible piece #7",
     "tags": [
       "nft",

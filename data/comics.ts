@@ -2,7 +2,7 @@ export const comics = [
   {
     "id": "comic-1",
     "filename": "1.jpg",
-    "image_url": "https://i.ibb.co/1fCCFNjW/1.jpg",
+    "image_url": "https://i.ibb.co/sp0nZnx2/3-result.webp",
     "alt_text": "Comic page 1 with sequential art storytelling",
     "tags": [
       "comic",
@@ -68,7 +68,7 @@ export const comics = [
   {
     "id": "comic-2",
     "filename": "2.jpg",
-    "image_url": "https://i.ibb.co/gL88d2Kd/2.jpg",
+    "image_url": "https://i.ibb.co/wrJ22KpV/2-result.webp",
     "alt_text": "Comic page 2 with narrative panels",
     "tags": [
       "comic",
@@ -135,7 +135,7 @@ export const comics = [
   {
     "id": "comic-3",
     "filename": "3.jpg",
-    "image_url": "https://i.ibb.co/ycPM5jNN/3.jpg",
+    "image_url": "https://i.ibb.co/YBtTyM0B/1-result.webp",
     "alt_text": "Comic page 3 with story continuation",
     "tags": [
       "comic",

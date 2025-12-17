@@ -12,7 +12,7 @@ export const stickers = [
       "expression",
       "emotion"
     ],
-    "image_url": "https://i.ibb.co/21J0krC9/1.png",
+    "image_url": "https://i.ibb.co/SX3P35CF/an-5-result.webp",
     "alt_text": "Chibi anime character with happy excited expression",
     "dimensions": {
       "width": 2000,
@@ -82,7 +82,7 @@ export const stickers = [
       "friendly",
       "cute"
     ],
-    "image_url": "https://i.ibb.co/2383qcCW/2.png",
+    "image_url": "https://i.ibb.co/pjwKyyGc/an-9-result.webp",
     "alt_text": "Chibi anime character waving hello greeting",
     "dimensions": {
       "width": 2000,
@@ -153,7 +153,7 @@ export const stickers = [
       "emotion",
       "cute"
     ],
-    "image_url": "https://i.ibb.co/BVCMvdVs/3.png",
+    "image_url": "https://i.ibb.co/qLWqTwJC/an-6-result.webp",
     "alt_text": "Chibi anime character with surprised shocked expression",
     "dimensions": {
       "width": 2000,
@@ -224,7 +224,7 @@ export const stickers = [
       "emotion",
       "upset"
     ],
-    "image_url": "https://i.ibb.co/Pq3fsMS/4.png",
+    "image_url": "https://i.ibb.co/WQqDCfG/an-2-result.webp",
     "alt_text": "Chibi anime character crying sad tears",
     "dimensions": {
       "width": 2000,
@@ -294,7 +294,7 @@ export const stickers = [
       "emotion",
       "cheerful"
     ],
-    "image_url": "https://i.ibb.co/v0NdW61/5.png",
+    "image_url": "https://i.ibb.co/RkmsC5Rj/an-4-result.webp",
     "alt_text": "Chibi anime character laughing with joy",
     "dimensions": {
       "width": 2000,
@@ -364,7 +364,7 @@ export const stickers = [
       "tired",
       "zzz"
     ],
-    "image_url": "https://i.ibb.co/23MprwTp/6.png",
+    "image_url": "https://i.ibb.co/JwZhjZXr/an-11-result.webp",
     "alt_text": "Chibi anime character sleeping peacefully",
     "dimensions": {
       "width": 2000,
@@ -433,7 +433,7 @@ export const stickers = [
       "emotion",
       "frustrated"
     ],
-    "image_url": "https://i.ibb.co/Xr2Lmw5s/7.png",
+    "image_url": "https://i.ibb.co/W4PpbNBP/9-result.webp",
     "alt_text": "Chibi anime character angry mad expression",
     "dimensions": {
       "width": 2000,
@@ -504,7 +504,7 @@ export const stickers = [
       "affection",
       "cute"
     ],
-    "image_url": "https://i.ibb.co/XZyZMFqZ/8.png",
+    "image_url": "https://i.ibb.co/GvgKX6p5/an-1-result.webp",
     "alt_text": "Chibi anime character with love hearts",
     "dimensions": {
       "width": 2000,
@@ -574,7 +574,7 @@ export const stickers = [
       "wondering",
       "question"
     ],
-    "image_url": "https://i.ibb.co/F40R35b4/9.png",
+    "image_url": "https://i.ibb.co/fJDRqMT/84-result.webp",
     "alt_text": "Chibi anime character thinking pondering",
     "dimensions": {
       "width": 1500,
@@ -644,7 +644,7 @@ export const stickers = [
       "happy",
       "meal"
     ],
-    "image_url": "https://i.ibb.co/jv8VLX6k/10.png",
+    "image_url": "https://i.ibb.co/HpR01KRf/82-result.webp",
     "alt_text": "Chibi anime character eating food happily",
     "dimensions": {
       "width": 2000,
@@ -715,7 +715,7 @@ export const stickers = [
       "fun",
       "energetic"
     ],
-    "image_url": "https://i.ibb.co/hRZcjN4r/11.png",
+    "image_url": "https://i.ibb.co/C5ZQR3Ct/83-result.webp",
     "alt_text": "Chibi anime character dancing with music",
     "dimensions": {
       "width": 2000,
@@ -785,7 +785,7 @@ export const stickers = [
       "flustered",
       "cute"
     ],
-    "image_url": "https://i.ibb.co/mV1XMpJX/12.png",
+    "image_url": "https://i.ibb.co/5VrdWkB/81-result.webp",
     "alt_text": "Chibi anime character embarrassed blushing",
     "dimensions": {
       "width": 2000,
@@ -853,7 +853,7 @@ export const stickers = [
       "winner",
       "happy"
     ],
-    "image_url": "https://i.ibb.co/d0hnphDN/13.png",
+    "image_url": "https://i.ibb.co/84mBJrfc/8-result.webp",
     "alt_text": "Chibi anime character celebrating victory",
     "dimensions": {
       "width": 2000,
@@ -923,7 +923,7 @@ export const stickers = [
       "typing",
       "focused"
     ],
-    "image_url": "https://i.ibb.co/bMFTrGj5/14.png",
+    "image_url": "https://i.ibb.co/k6Ppkb2J/80-result.webp",
     "alt_text": "Chibi anime character working on computer",
     "dimensions": {
       "width": 2000,
@@ -993,7 +993,7 @@ export const stickers = [
       "learning",
       "smart"
     ],
-    "image_url": "https://i.ibb.co/qXB7BkQ/15.png",
+    "image_url": "https://i.ibb.co/TD2pF6px/79-result.webp",
     "alt_text": "Chibi anime character reading book studying",
     "dimensions": {
       "width": 2000,
@@ -1063,7 +1063,7 @@ export const stickers = [
       "okay",
       "positive"
     ],
-    "image_url": "https://i.ibb.co/cSpFJWH6/16.png",
+    "image_url": "https://i.ibb.co/vCwDq04k/77-result.webp",
     "alt_text": "Chibi anime character with thumbs up approval",
     "dimensions": {
       "width": 2000,
@@ -1134,7 +1134,7 @@ export const stickers = [
       "fast",
       "late"
     ],
-    "image_url": "https://i.ibb.co/wNVkhSjb/17.png",
+    "image_url": "https://i.ibb.co/cKdTsnLn/78-result.webp",
     "alt_text": "Chibi anime character running in hurry",
     "dimensions": {
       "width": 2000,
@@ -1204,7 +1204,7 @@ export const stickers = [
       "beautiful",
       "cute"
     ],
-    "image_url": "https://i.ibb.co/0RrYWkwQ/18.png",
+    "image_url": "https://i.ibb.co/xK9kc39S/75-result.webp",
     "alt_text": "Chibi anime character with sparkles shining",
     "dimensions": {
       "width": 2000,
@@ -1274,7 +1274,7 @@ export const stickers = [
       "exhausted",
       "rest"
     ],
-    "image_url": "https://i.ibb.co/ynwXxzFf/20.png",
+    "image_url": "https://i.ibb.co/Xxg54KPv/76-result.webp",
     "alt_text": "Chibi anime character yawning tired sleepy",
     "dimensions": {
       "width": 1500,
@@ -1342,7 +1342,7 @@ export const stickers = [
       "puzzled",
       "unsure"
     ],
-    "image_url": "https://i.ibb.co/XkpcWVBD/21.png",
+    "image_url": "https://i.ibb.co/Hp1Sj7T4/73-result.webp",
     "alt_text": "Chibi anime character with question mark confused",
     "dimensions": {
       "width": 2000,
@@ -1412,7 +1412,7 @@ export const stickers = [
       "enthusiastic",
       "energetic"
     ],
-    "image_url": "https://i.ibb.co/1JhzLdgq/22.png",
+    "image_url": "https://i.ibb.co/bjFKqF58/71-result.webp",
     "alt_text": "Chibi anime character cheering with pompoms",
     "dimensions": {
       "width": 2000,
@@ -1482,7 +1482,7 @@ export const stickers = [
       "energized",
       "morning"
     ],
-    "image_url": "https://i.ibb.co/LznKtVSB/23.png",
+    "image_url": "https://i.ibb.co/DPp1y3bR/72-result.webp",
     "alt_text": "Chibi anime character with coffee drink",
     "dimensions": {
       "width": 2000,
@@ -1552,7 +1552,7 @@ export const stickers = [
       "controller",
       "fun"
     ],
-    "image_url": "https://i.ibb.co/mVTNzKV2/24.png",
+    "image_url": "https://i.ibb.co/PZk4H1cv/70-result.webp",
     "alt_text": "Chibi anime character playing video games",
     "dimensions": {
       "width": 2000,
@@ -1624,7 +1624,7 @@ export const stickers = [
       "party",
       "happy"
     ],
-    "image_url": "https://i.ibb.co/zV27V9R8/25.png",
+    "image_url": "https://i.ibb.co/RxZjcWb/7-result.webp",
     "alt_text": "Chibi anime character with birthday cake celebration",
     "dimensions": {
       "width": 2000,
@@ -1694,7 +1694,7 @@ export const stickers = [
       "wet",
       "cute"
     ],
-    "image_url": "https://i.ibb.co/Z68507Hc/26.png",
+    "image_url": "https://i.ibb.co/rRbSHrPr/68-result.webp",
     "alt_text": "Chibi anime character with umbrella in rain",
     "dimensions": {
       "width": 2000,
@@ -1764,7 +1764,7 @@ export const stickers = [
       "healthy",
       "active"
     ],
-    "image_url": "https://i.ibb.co/dsrXV6Lw/27.png",
+    "image_url": "https://i.ibb.co/8n2dwHmz/64-result.webp",
     "alt_text": "Chibi anime character exercising workout",
     "dimensions": {
       "width": 2000,
@@ -1835,7 +1835,7 @@ export const stickers = [
       "giving",
       "celebration"
     ],
-    "image_url": "https://i.ibb.co/gM2yTLSD/28.png",
+    "image_url": "https://i.ibb.co/q3DHw8zm/67-result.webp",
     "alt_text": "Chibi anime character with gift present",
     "dimensions": {
       "width": 2000,
@@ -1905,7 +1905,7 @@ export const stickers = [
       "relaxed",
       "enjoying"
     ],
-    "image_url": "https://i.ibb.co/wNGvqCkS/29.png",
+    "image_url": "https://i.ibb.co/fYNXG7kn/63-result.webp",
     "alt_text": "Chibi anime character with headphones listening music",
     "dimensions": {
       "width": 2000,
@@ -1975,7 +1975,7 @@ export const stickers = [
       "picture",
       "creative"
     ],
-    "image_url": "https://i.ibb.co/k2x8Sz6Q/30.png",
+    "image_url": "https://i.ibb.co/7xwMfYKn/6-result.webp",
     "alt_text": "Chibi anime character with camera taking photo",
     "dimensions": {
       "width": 2000,
@@ -2044,7 +2044,7 @@ export const stickers = [
       "treat",
       "happy"
     ],
-    "image_url": "https://i.ibb.co/kVBHvJTk/31.png",
+    "image_url": "https://i.ibb.co/HLq6bLV3/60-result.webp",
     "alt_text": "Chibi anime character with ice cream dessert",
     "dimensions": {
       "width": 2000,
@@ -2115,7 +2115,7 @@ export const stickers = [
       "beautiful",
       "romantic"
     ],
-    "image_url": "https://i.ibb.co/G4JNfktW/32.png",
+    "image_url": "https://i.ibb.co/HpK6Xvyf/59-result.webp",
     "alt_text": "Chibi anime character with flower bouquet",
     "dimensions": {
       "width": 2000,
@@ -2185,7 +2185,7 @@ export const stickers = [
       "communication",
       "modern"
     ],
-    "image_url": "https://i.ibb.co/cKspPDLt/33.png",
+    "image_url": "https://i.ibb.co/tMpnhx6n/57-result.webp",
     "alt_text": "Chibi anime character with phone texting",
     "dimensions": {
       "width": 2000,
@@ -2255,7 +2255,7 @@ export const stickers = [
       "journey",
       "explorer"
     ],
-    "image_url": "https://i.ibb.co/yF8zYRq7/34.png",
+    "image_url": "https://i.ibb.co/20BHSbf5/58-result.webp",
     "alt_text": "Chibi anime character with backpack traveling",
     "dimensions": {
       "width": 2000,
@@ -2325,7 +2325,7 @@ export const stickers = [
       "creative",
       "artistic"
     ],
-    "image_url": "https://i.ibb.co/N67P9M6g/36.png",
+    "image_url": "https://i.ibb.co/9JVgVTB/56-result.webp",
     "alt_text": "Chibi anime character with paint brush art",
     "dimensions": {
       "width": 2000,
@@ -2395,7 +2395,7 @@ export const stickers = [
       "wish",
       "magical"
     ],
-    "image_url": "https://i.ibb.co/dwp2TB2Z/38.png",
+    "image_url": "https://i.ibb.co/qL3myc5c/53-result.webp",
     "alt_text": "Chibi anime character with stars dreaming",
     "dimensions": {
       "width": 2000,
@@ -2465,7 +2465,7 @@ export const stickers = [
       "confident",
       "swag"
     ],
-    "image_url": "https://i.ibb.co/JRkfK124/39.png",
+    "image_url": "https://i.ibb.co/0pKjcGYZ/55-result.webp",
     "alt_text": "Chibi anime character with sunglasses cool",
     "dimensions": {
       "width": 2000,
@@ -2535,7 +2535,7 @@ export const stickers = [
       "melody",
       "happy"
     ],
-    "image_url": "https://i.ibb.co/N60FhcqZ/40.png",
+    "image_url": "https://i.ibb.co/7dJXbdGc/52-result.webp",
     "alt_text": "Chibi anime character with musical note singing",
     "dimensions": {
       "width": 1500,
@@ -2606,7 +2606,7 @@ export const stickers = [
       "comfortable",
       "rest"
     ],
-    "image_url": "https://i.ibb.co/ybj8YVK/41.png",
+    "image_url": "https://i.ibb.co/dsgDrSMz/50-result.webp",
     "alt_text": "Chibi anime character with pillow sleeping cozy",
     "dimensions": {
       "width": 2000,
@@ -2676,7 +2676,7 @@ export const stickers = [
       "success",
       "victory"
     ],
-    "image_url": "https://i.ibb.co/JRzFG3kX/42.png",
+    "image_url": "https://i.ibb.co/Pvjk5j6h/51-result.webp",
     "alt_text": "Chibi anime character with trophy winning",
     "dimensions": {
       "width": 2000,
@@ -2746,7 +2746,7 @@ export const stickers = [
       "celebration",
       "fun"
     ],
-    "image_url": "https://i.ibb.co/DPsWSgMJ/45.png",
+    "image_url": "https://i.ibb.co/FS2hNC5/5-result.webp",
     "alt_text": "Chibi anime character with balloon floating",
     "dimensions": {
       "width": 2000,
@@ -2816,7 +2816,7 @@ export const stickers = [
       "friendly",
       "cute"
     ],
-    "image_url": "https://i.ibb.co/ks7Kp1hh/47.png",
+    "image_url": "https://i.ibb.co/9kXJk8C2/47-result.webp",
     "alt_text": "Chibi anime character with peace sign gesture",
     "dimensions": {
       "width": 1500,
@@ -2887,7 +2887,7 @@ export const stickers = [
       "queen",
       "elegant"
     ],
-    "image_url": "https://i.ibb.co/WWfYgX0J/50.png",
+    "image_url": "https://i.ibb.co/3YjspbHg/45-result.webp",
     "alt_text": "Chibi anime character with crown royal",
     "dimensions": {
       "width": 2000,
@@ -2957,7 +2957,7 @@ export const stickers = [
       "sweet",
       "treat"
     ],
-    "image_url": "https://i.ibb.co/n8jLQYpY/51.png",
+    "image_url": "https://i.ibb.co/9khvZSKH/41-result.webp",
     "alt_text": "Chibi anime character with cookie snack",
     "dimensions": {
       "width": 2000,
@@ -3027,7 +3027,7 @@ export const stickers = [
       "beautiful",
       "delicate"
     ],
-    "image_url": "https://i.ibb.co/zhDzS4rr/52.png",
+    "image_url": "https://i.ibb.co/zTPdSvyt/42-result.webp",
     "alt_text": "Chibi anime character with butterfly nature",
     "dimensions": {
       "width": 2000,
@@ -3097,7 +3097,7 @@ export const stickers = [
       "happy",
       "cheerful"
     ],
-    "image_url": "https://i.ibb.co/20Xtpmf1/53.png",
+    "image_url": "https://i.ibb.co/kgsBJySk/40-result.webp",
     "alt_text": "Chibi anime character with rainbow colorful",
     "dimensions": {
       "width": 2000,
@@ -3168,7 +3168,7 @@ export const stickers = [
       "cuddly",
       "adorable"
     ],
-    "image_url": "https://i.ibb.co/dJxMSgb3/55.png",
+    "image_url": "https://i.ibb.co/Ndp76KJ2/4-result.webp",
     "alt_text": "Chibi anime character with teddy bear cute",
     "dimensions": {
       "width": 2000,
@@ -3239,7 +3239,7 @@ export const stickers = [
       "snow",
       "seasonal"
     ],
-    "image_url": "https://i.ibb.co/j9SS1NnJ/56.png",
+    "image_url": "https://i.ibb.co/HsRDFkQ/39-result.webp",
     "alt_text": "Chibi anime character with snowflake winter",
     "dimensions": {
       "width": 2000,
@@ -3309,7 +3309,7 @@ export const stickers = [
       "pink",
       "beautiful"
     ],
-    "image_url": "https://i.ibb.co/JFMFH56B/57.png",
+    "image_url": "https://i.ibb.co/S74sGPM2/36-result.webp",
     "alt_text": "Chibi anime character with cherry blossom spring",
     "dimensions": {
       "width": 2000,
@@ -3379,7 +3379,7 @@ export const stickers = [
       "dreamy",
       "peaceful"
     ],
-    "image_url": "https://i.ibb.co/C3fzmKx4/58.png",
+    "image_url": "https://i.ibb.co/0y2fRhhP/38-result.webp",
     "alt_text": "Chibi anime character with moon night",
     "dimensions": {
       "width": 2000,
@@ -3449,7 +3449,7 @@ export const stickers = [
       "warm",
       "happy"
     ],
-    "image_url": "https://i.ibb.co/twG52Ky7/59.png",
+    "image_url": "https://i.ibb.co/j9gQG05M/34-result.webp",
     "alt_text": "Chibi anime character with sun sunshine",
     "dimensions": {
       "width": 2000,
@@ -3519,7 +3519,7 @@ export const stickers = [
       "floating",
       "peaceful"
     ],
-    "image_url": "https://i.ibb.co/0yw4pY2v/60.png",
+    "image_url": "https://i.ibb.co/whQ4MyyN/32-result.webp",
     "alt_text": "Chibi anime character with cloud dreamy",
     "dimensions": {
       "width": 2000,
@@ -3589,7 +3589,7 @@ export const stickers = [
       "sparkle",
       "enchanted"
     ],
-    "image_url": "https://i.ibb.co/QFtDw1BR/63.png",
+    "image_url": "https://i.ibb.co/VYcjctsD/33-result.webp",
     "alt_text": "Chibi anime character with magic wand magical",
     "dimensions": {
       "width": 2000,
@@ -3660,7 +3660,7 @@ export const stickers = [
       "kawaii",
       "playful"
     ],
-    "image_url": "https://i.ibb.co/Z6h5Rf5r/64.png",
+    "image_url": "https://i.ibb.co/rK28QDpr/31-result.webp",
     "alt_text": "Chibi anime character with cat ears neko",
     "dimensions": {
       "width": 2000,
@@ -3730,7 +3730,7 @@ export const stickers = [
       "divine",
       "pure"
     ],
-    "image_url": "https://i.ibb.co/zhw6s6Q0/67.png",
+    "image_url": "https://i.ibb.co/1JB7B7h2/3-result.webp",
     "alt_text": "Chibi anime character with wings angel",
     "dimensions": {
       "width": 2000,
@@ -3800,7 +3800,7 @@ export const stickers = [
       "naughty",
       "fun"
     ],
-    "image_url": "https://i.ibb.co/Kp6kQSdb/68.png",
+    "image_url": "https://i.ibb.co/jvb7JnXk/30-result.webp",
     "alt_text": "Chibi anime character with devil horns mischievous",
     "dimensions": {
       "width": 2000,
@@ -3872,7 +3872,7 @@ export const stickers = [
       "fantasy",
       "cute"
     ],
-    "image_url": "https://i.ibb.co/JS7srmF/70.png",
+    "image_url": "https://i.ibb.co/jZZ18wb3/28-result.webp",
     "alt_text": "Chibi anime character with witch hat magical",
     "dimensions": {
       "width": 2000,
@@ -3943,7 +3943,7 @@ export const stickers = [
       "adorable",
       "playful"
     ],
-    "image_url": "https://i.ibb.co/N6xv1vcZ/71.png",
+    "image_url": "https://i.ibb.co/84sYbTmz/29-result.webp",
     "alt_text": "Chibi anime character with bunny ears rabbit",
     "dimensions": {
       "width": 2000,
@@ -4014,7 +4014,7 @@ export const stickers = [
       "adorable",
       "animal"
     ],
-    "image_url": "https://i.ibb.co/Mk64Y51j/72.png",
+    "image_url": "https://i.ibb.co/1YrGVGjr/27-result.webp",
     "alt_text": "Chibi anime character with panda bear cute",
     "dimensions": {
       "width": 1500,
@@ -4084,7 +4084,7 @@ export const stickers = [
       "cute",
       "japanese"
     ],
-    "image_url": "https://i.ibb.co/RG85gKq6/73.png",
+    "image_url": "https://i.ibb.co/dwTYCsyn/25-result.webp",
     "alt_text": "Chibi anime character with fox ears kitsune",
     "dimensions": {
       "width": 1500,
@@ -4154,7 +4154,7 @@ export const stickers = [
       "loyal",
       "playful"
     ],
-    "image_url": "https://i.ibb.co/NgPFLkCj/75.png",
+    "image_url": "https://i.ibb.co/QFGxZtXb/26-result.webp",
     "alt_text": "Chibi anime character with dog ears puppy",
     "dimensions": {
       "width": 2000,
@@ -4224,7 +4224,7 @@ export const stickers = [
       "soft",
       "adorable"
     ],
-    "image_url": "https://i.ibb.co/jvz1HqZw/76.png",
+    "image_url": "https://i.ibb.co/TD2rnjNh/24-result.webp",
     "alt_text": "Chibi anime character with bear ears kawaii",
     "dimensions": {
       "width": 2000,
@@ -4294,7 +4294,7 @@ export const stickers = [
       "strong",
       "wild"
     ],
-    "image_url": "https://i.ibb.co/kVqGc9zF/77.png",
+    "image_url": "https://i.ibb.co/DHpg4c2J/22-result.webp",
     "alt_text": "Chibi anime character with tiger stripes fierce",
     "dimensions": {
       "width": 2000,
@@ -4364,7 +4364,7 @@ export const stickers = [
       "soft",
       "cute"
     ],
-    "image_url": "https://i.ibb.co/KzQfmzQQ/78.png",
+    "image_url": "https://i.ibb.co/6RW7dVb2/23-result.webp",
     "alt_text": "Chibi anime character with sheep wool fluffy",
     "dimensions": {
       "width": 2000,
@@ -4434,7 +4434,7 @@ export const stickers = [
       "fantasy",
       "powerful"
     ],
-    "image_url": "https://i.ibb.co/xq9bTW3p/79.png",
+    "image_url": "https://i.ibb.co/sJyvxdns/21-result.webp",
     "alt_text": "Chibi anime character with dragon horns mythical",
     "dimensions": {
       "width": 2000,
@@ -4504,7 +4504,7 @@ export const stickers = [
       "fantasy",
       "rainbow"
     ],
-    "image_url": "https://i.ibb.co/6011ddpc/80.png",
+    "image_url": "https://i.ibb.co/PZYc9Gqc/2-result.webp",
     "alt_text": "Chibi anime character with unicorn horn magical",
     "dimensions": {
       "width": 2000,
@@ -4574,7 +4574,7 @@ export const stickers = [
       "water",
       "fantasy"
     ],
-    "image_url": "https://i.ibb.co/N2Z9CXMf/81.png",
+    "image_url": "https://i.ibb.co/ZRfm4Qqj/20-result.webp",
     "alt_text": "Chibi anime character with mermaid tail ocean",
     "dimensions": {
       "width": 2000,
@@ -4644,7 +4644,7 @@ export const stickers = [
       "magical",
       "delicate"
     ],
-    "image_url": "https://i.ibb.co/q3wvMp3N/82.png",
+    "image_url": "https://i.ibb.co/1fWw2bs3/18-result.webp",
     "alt_text": "Chibi anime character with fairy wings enchanted",
     "dimensions": {
       "width": 2000,
@@ -4714,7 +4714,7 @@ export const stickers = [
       "magical",
       "mystical"
     ],
-    "image_url": "https://i.ibb.co/wh7dkfj7/83.png",
+    "image_url": "https://i.ibb.co/yFPgXPHd/17-result.webp",
     "alt_text": "Chibi anime character with elf ears fantasy",
     "dimensions": {
       "width": 2000,
@@ -4784,7 +4784,7 @@ export const stickers = [
       "dark",
       "mysterious"
     ],
-    "image_url": "https://i.ibb.co/hRTvBrdy/84.png",
+    "image_url": "https://i.ibb.co/4R3bGQBw/14-result.webp",
     "alt_text": "Chibi anime character with vampire fangs gothic",
     "dimensions": {
       "width": 2000,
@@ -4854,7 +4854,7 @@ export const stickers = [
       "lively",
       "energetic"
     ],
-    "image_url": "https://i.ibb.co/CK2HSq0M/an-1.png",
+    "image_url": "https://i.ibb.co/PsWLGmBX/16-result.webp",
     "alt_text": "Animated chibi character with dynamic movement",
     "dimensions": {
       "width": 2000,
@@ -4924,7 +4924,7 @@ export const stickers = [
       "fun",
       "cute"
     ],
-    "image_url": "https://i.ibb.co/N2y4MWrL/an-2.png",
+    "image_url": "https://i.ibb.co/FkWHMqfy/15-result.webp",
     "alt_text": "Animated chibi character with bouncing motion",
     "dimensions": {
       "width": 2000,
@@ -4995,7 +4995,7 @@ export const stickers = [
       "dizzy",
       "playful"
     ],
-    "image_url": "https://i.ibb.co/8DdW8Dht/an-4.png",
+    "image_url": "https://i.ibb.co/JRGjDrBt/12-result.webp",
     "alt_text": "Animated chibi character with spinning action",
     "dimensions": {
       "width": 1500,
@@ -5066,7 +5066,7 @@ export const stickers = [
       "excited",
       "happy"
     ],
-    "image_url": "https://i.ibb.co/DgDZL3mk/an-5.png",
+    "image_url": "https://i.ibb.co/JWJgLCZ2/13-result.webp",
     "alt_text": "Animated chibi character with jumping motion",
     "dimensions": {
       "width": 1500,
@@ -5137,7 +5137,7 @@ export const stickers = [
       "friendly",
       "hello"
     ],
-    "image_url": "https://i.ibb.co/F4nZ1B5c/an-6.png",
+    "image_url": "https://i.ibb.co/xt4LDm1n/11-result.webp",
     "alt_text": "Animated chibi character with waving gesture",
     "dimensions": {
       "width": 2000,
@@ -5208,7 +5208,7 @@ export const stickers = [
       "rhythm",
       "fun"
     ],
-    "image_url": "https://i.ibb.co/svTJky5j/an-9.png",
+    "image_url": "https://i.ibb.co/PZ0XvWC2/10-result.webp",
     "alt_text": "Animated chibi character with dancing movement",
     "dimensions": {
       "width": 2000,
@@ -5279,7 +5279,7 @@ export const stickers = [
       "peaceful",
       "gentle"
     ],
-    "image_url": "https://i.ibb.co/qYNQdQdB/an-11.png",
+    "image_url": "https://i.ibb.co/TqthwwLW/1-result.webp",
     "alt_text": "Animated chibi character with floating motion",
     "dimensions": {
       "width": 2000,

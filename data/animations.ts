@@ -2,7 +2,7 @@ export const animations = [
   {
     "id": "animation-1",
     "filename": "29.gif",
-    "image_url": "https://i.ibb.co/XkdppDcj/29.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765941008/29_xmo1oe.mp4",
     "alt_text": "Animated loop showing smooth motion graphics with visual effects",
     "tags": [
       "animation",

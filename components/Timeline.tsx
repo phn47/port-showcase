@@ -87,7 +87,7 @@ const Timeline: React.FC = () => {
              </p>
           </div>
           <div className="md:w-1/2 md:ml-12 opacity-80 hover:opacity-100 transition-opacity">
-            <img src="https://i.ibb.co/rfyyWNSJ/8.jpg" className="grayscale contrast-125 shadow-lg w-full max-w-md object-cover" alt="2021" />
+            <img src="https://i.ibb.co/Nnm4zpRb/92-result.webp" className="grayscale contrast-125 shadow-lg w-full max-w-md object-cover" alt="2021" />
           </div>
         </motion.div>
 
@@ -106,7 +106,7 @@ const Timeline: React.FC = () => {
               <motion.img 
                 initial={{ scale: 0.8 }}
                 whileInView={{ scale: 1 }}
-                src="https://i.ibb.co/Q79JYFN5/group-3-1.png" 
+                src="https://i.ibb.co/WT9hk4k/ghensin-5-result.webp" 
                 className="w-full object-cover shadow-lg" 
                 alt="Studio" 
               />
@@ -142,12 +142,12 @@ const Timeline: React.FC = () => {
           <div className="md:w-1/2 md:ml-12 relative group cursor-none">
             <div className="relative overflow-hidden shadow-lg">
                 <img 
-                    src="https://i.ibb.co/twKx8KTc/68.jpg" 
+                    src="https://i.ibb.co/rfyV3KKs/38-result.webp" 
                     className="grayscale contrast-125 w-full transition-opacity duration-700 group-hover:opacity-0" 
                     alt="2025 Base" 
                 />
                 <img 
-                    src="https://i.ibb.co/VWz4LWy4/28.jpg" 
+                    src="https://i.ibb.co/8JHdSHh/74-result.webp" 
                     className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-700" 
                     alt="2025 Hover" 
                 />

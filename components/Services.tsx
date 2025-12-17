@@ -3,12 +3,16 @@ import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 
 const services = [
-  { id: 1, name: "Web3 Development", image: "https://i.ibb.co/WNpVtrk0/10.jpg" },
-  { id: 2, name: "Motion Art", image: "https://i.ibb.co/NgDW3j3c/2.gif" },
-  { id: 3, name: "Web portfolio", image: "https://i.ibb.co/1JGyPjY1/17.jpg" },
-  { id: 4, name: "Brand pages", image: "https://i.ibb.co/RkDKbyzL/01.png" },
-  { id: 5, name: "Web Funnels", image: "https://i.ibb.co/pmXrbCs/352.jpg" }
+  { id: 1, name: "Web3 Development", image: "https://i.ibb.co/Jw3g2Fj8/96-result.webp" },
+  { id: 2, name: "Motion Art", image: "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940924/2_kzi0sr.mp4" },
+  { id: 3, name: "Web portfolio", image: "https://i.ibb.co/8gkWvpXG/70-result.webp" },
+  { id: 4, name: "Brand pages", image: "https://i.ibb.co/kkHmfFq/ver-1-result.webp" },
+  { id: 5, name: "Web Funnels", image: "https://i.ibb.co/fdysG9wd/221rr-banner-result.webp" }
 ];
+
+const isVideo = (src: string) => {
+    return src?.toLowerCase().match(/\.(mp4|webm|mov)$/);
+};
 
 const Services: React.FC = () => {
   const [hoveredService, setHoveredService] = useState<number | null>(null);
@@ -82,11 +86,27 @@ const Services: React.FC = () => {
             transition={{ type: "spring", stiffness: 150, damping: 15 }}
             className="absolute top-0 left-0 w-64 h-48 pointer-events-none z-20 overflow-hidden border-2 border-black bg-black"
           >
-             <img 
-                src={services.find(s => s.id === hoveredService)?.image} 
-                alt="Preview" 
-                className="w-full h-full object-cover grayscale"
-             />
+             {(() => {
+                 const currentService = services.find(s => s.id === hoveredService);
+                 if (!currentService) return null;
+                 
+                 return isVideo(currentService.image) ? (
+                    <video
+                        src={currentService.image}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className="w-full h-full object-cover grayscale"
+                    />
+                 ) : (
+                    <img 
+                        src={currentService.image} 
+                        alt="Preview" 
+                        className="w-full h-full object-cover grayscale"
+                    />
+                 );
+             })()}
              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
           </motion.div>
         )}

@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, Variants } from 'framer-motion';
 
 interface HeroProps {
@@ -8,6 +8,7 @@ interface HeroProps {
 
 const Hero: React.FC<HeroProps> = ({ startAnimation }) => {
   const { scrollY } = useScroll();
+  const [activeIndex, setActiveIndex] = useState(0);
   
   // Parallax for Video (Slower)
   const videoY = useTransform(scrollY, [0, 1000], [0, 400]); 
@@ -17,34 +18,57 @@ const Hero: React.FC<HeroProps> = ({ startAnimation }) => {
   const textY = useTransform(scrollY, [0, 1000], [0, 550]);
   const textOpacity = useTransform(scrollY, [0, 500], [1, 0]);
 
+  // Cycle active text every 2 seconds
+  useEffect(() => {
+    if (!startAnimation) return;
+
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % 3);
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [startAnimation]);
+
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.3,
-        delayChildren: 0.8 // Start shortly AFTER preloader is gone
+        staggerChildren: 0.25,
+        delayChildren: 0.5
       }
     }
   };
 
+  // Optimized for smoothness: Removed rotateX, added blur and fluid easing
   const itemVariants: Variants = {
     hidden: { 
-      y: 120, 
+      y: 100, 
       opacity: 0, 
-      rotateX: -20,
-      filter: "blur(12px)" 
+      filter: "blur(20px)",
     },
     visible: { 
       y: 0, 
       opacity: 1, 
-      rotateX: 0,
-      filter: "blur(0px)", // Focus in
+      filter: "blur(0px)",
       transition: { 
-        duration: 1.4, 
-        ease: [0.16, 1, 0.3, 1] 
+        duration: 1.6, 
+        ease: [0.16, 1, 0.3, 1] // Custom bezier for silky smooth stop
       } 
     }
+  };
+
+  // Define styles for active vs inactive state
+  // Increased transition duration to 1000ms for breathing effect
+  const getTextProps = (index: number) => {
+    const isActive = activeIndex === index;
+    return {
+      className: `text-[8vw] md:text-[7vw] font-black select-none transition-all duration-1000 ease-in-out ${
+        isActive 
+          ? "text-white opacity-100 scale-105 blur-0" 
+          : "text-transparent stroke-text opacity-30 scale-95 blur-[2px]"
+      }`,
+    };
   };
 
   return (
@@ -55,7 +79,6 @@ const Hero: React.FC<HeroProps> = ({ startAnimation }) => {
         style={{ y: videoY, opacity: videoOpacity }} 
         className="absolute inset-0 w-full h-full"
       >
-        {/* Increased overlay opacity for better text readability */}
         <div className="absolute inset-0 bg-black/60 z-10" /> 
         <video 
           autoPlay 
@@ -71,34 +94,27 @@ const Hero: React.FC<HeroProps> = ({ startAnimation }) => {
       {/* Typography Layer */}
       <motion.div 
         style={{ y: textY, opacity: textOpacity }}
-        // Removed mix-blend-overlay, added drop-shadow for separation
         className="absolute inset-0 z-20 flex flex-col items-center justify-center h-full w-full pointer-events-none drop-shadow-2xl"
       >
          <motion.div 
             variants={containerVariants}
             initial="hidden"
             animate={startAnimation ? "visible" : "hidden"}
-            className="flex flex-col items-center leading-[0.85] md:leading-[0.8] tracking-tighter"
+            className="flex flex-col items-center leading-[0.85] md:leading-[0.8] tracking-tighter gap-10 md:gap-20"
          >
-            {/* Line 1: Dream (Outline/Ethereal) */}
-            <motion.h1 variants={itemVariants} className="text-[8vw] md:text-[6vw] font-black text-white/5 stroke-text select-none">
+            {/* Line 1: Dream */}
+            <motion.h1 variants={itemVariants} {...getTextProps(0)}>
               WE DREAM
             </motion.h1>
 
-            {/* Line 2: Do (Solid/Action) */}
-            <motion.h1 variants={itemVariants} className="text-[8vw] md:text-[6vw] font-black text-white select-none">
+            {/* Line 2: Do */}
+            <motion.h1 variants={itemVariants} {...getTextProps(1)}>
               WE DO
             </motion.h1>
 
-            {/* Line 3: Deliver (Solid/Result/Impact) */}
-            <motion.h1 variants={itemVariants} className="text-[8vw] md:text-[6vw] font-black text-white select-none relative">
+            {/* Line 3: Deliver (Underline removed) */}
+            <motion.h1 variants={itemVariants} {...getTextProps(2)}>
               WE DELIVER
-              <motion.div 
-                initial={{ width: 0 }}
-                animate={startAnimation ? { width: "100%" } : { width: 0 }}
-                transition={{ delay: 2.2, duration: 1, ease: "circOut" }}
-                className="absolute -bottom-2 left-0 h-1 md:h-2 bg-white"
-              />
             </motion.h1>
          </motion.div>
       </motion.div>

@@ -1,7 +1,7 @@
 
 import React, { useRef, useMemo, useState, useEffect, useCallback } from 'react';
 import { motion, useScroll, useTransform, Variants, AnimatePresence, useInView } from 'framer-motion';
-import { X, Search } from 'lucide-react';
+import { X, Search, ArrowRight } from 'lucide-react';
 import { galleryData } from '../data/index';
 
 // Define the interface
@@ -28,17 +28,22 @@ const FILTERS = [
   { id: 'SOCIAL', label: 'Social & Viral', types: ['Social Media', 'Meme', 'Sticker'] },
 ];
 
-const BATCH_SIZE = 15; // Number of items to load per "page"
+const BATCH_SIZE = 15; 
+
+// Helper to check for video format
+const isVideo = (src: string) => {
+    return src?.toLowerCase().match(/\.(mp4|webm|mov)$/);
+};
 
 const Gallery: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null); 
   const searchInputRef = useRef<HTMLInputElement>(null);
-  const loadMoreRef = useRef<HTMLDivElement>(null); // Ref for infinite scroll trigger
+  const loadMoreRef = useRef<HTMLDivElement>(null); 
   
   // State
   const [activeFilter, setActiveFilter] = useState('ALL');
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedItem, setSelectedItem] = useState<GalleryItem | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
@@ -46,34 +51,24 @@ const Gallery: React.FC = () => {
   // Progressive Loading State
   const [visibleCount, setVisibleCount] = useState(BATCH_SIZE);
 
-  // Check screen size for parallax logic
+  // Check screen size
   useEffect(() => {
-    const checkSize = () => setIsDesktop(window.innerWidth >= 768);
+    const checkSize = () => setIsDesktop(window.innerWidth >= 1024);
     checkSize();
     window.addEventListener('resize', checkSize);
     return () => window.removeEventListener('resize', checkSize);
   }, []);
   
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
-
-  // Parallax Layers for Columns (Only active on Desktop)
-  const yCol1 = useTransform(scrollYProgress, [0, 1], [0, -100]);
-  const yCol2 = useTransform(scrollYProgress, [0, 1], [0, -250]); 
-  const yCol3 = useTransform(scrollYProgress, [0, 1], [0, -50]);
-
   // Lock scroll when overlay is open
   useEffect(() => {
-    if (selectedCategory) {
+    if (selectedItem) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
-  }, [selectedCategory]);
+  }, [selectedItem]);
 
-  // Handle Click Outside to Collapse Search
+  // Handle Click Outside Search
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node)) {
@@ -99,7 +94,7 @@ const Gallery: React.FC = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(handleObserver, {
         root: null,
-        rootMargin: "400px", // Load next batch well before user hits bottom
+        rootMargin: "400px",
         threshold: 0
     });
     
@@ -110,7 +105,7 @@ const Gallery: React.FC = () => {
     return () => {
         if (loadMoreRef.current) observer.unobserve(loadMoreRef.current);
     }
-  }, [handleObserver, activeFilter, searchQuery]); // Re-attach when data source changes
+  }, [handleObserver, activeFilter, searchQuery]); 
 
   // Reset visible count when filter or search changes
   useEffect(() => {
@@ -124,87 +119,97 @@ const Gallery: React.FC = () => {
     }
   };
 
-  const transitionConfig = {
-    duration: 1.2,
-    ease: [0.16, 1, 0.3, 1] as [number, number, number, number]
-  };
-
   const textVariants: Variants = {
     hidden: { opacity: 0, y: 60, filter: 'blur(10px)' },
     visible: { 
       opacity: 1, 
       y: 0, 
       filter: 'blur(0px)',
-      transition: transitionConfig
+      transition: { duration: 1.2, ease: [0.16, 1, 0.3, 1] }
     }
   };
 
-  // Updated Image Variants for "Bottom-Up" Motion
-  const imageVariants: Variants = {
-    hidden: { 
-      opacity: 0, 
-      y: 50,
-      scale: 0.98, 
+  // Optimized Grid Animation (Staggered Fade In)
+  const gridContainerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.05, // Fast stagger for snappiness
+        delayChildren: 0.1
+      }
     },
+    exit: { 
+        opacity: 0,
+        transition: { duration: 0.2 } // Quick fade out
+    }
+  };
+
+  // Simple clean Item Animation (No layout movement)
+  const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 30, scale: 0.95 },
     visible: { 
       opacity: 1, 
       y: 0, 
-      scale: 1, 
-      transition: {
-        duration: 0.6,
-        ease: "easeOut"
-      }
+      scale: 1,
+      transition: { duration: 0.5, ease: "easeOut" }
     }
   };
 
-  // --- DATA FILTERING LOGIC ---
-  const allWorkData = useMemo(() => {
-    // Unique filtering logic: Ensure some variety if needed, or just return all
-    // For now, returning all data sorted or as-is
-    return galleryData; 
-  }, []);
+  // --- DATA PROCESSING ---
+  const allWorkData = useMemo(() => galleryData, []);
 
-  const activeData = useMemo(() => {
-    let filtered = allWorkData;
-
-    // Apply Category Filter
-    if (activeFilter !== 'ALL') {
-        const currentFilter = FILTERS.find(f => f.id === activeFilter);
-        if (currentFilter && currentFilter.types) {
-            filtered = filtered.filter(item => currentFilter.types!.includes(item.category));
-        }
-    }
-
-    // Apply Search Filter
+  const processedData = useMemo(() => {
+    // A. Search Mode
     if (searchQuery.trim()) {
         const terms = searchQuery.toLowerCase().trim().split(/\s+/);
-        filtered = filtered.filter(item => {
+        return allWorkData.filter(item => {
             const itemTags = item.tags ? item.tags.join(' ') : '';
             const searchableText = `${item.title} ${item.category} ${item.description || ''} ${itemTags}`.toLowerCase();
             return terms.every(term => searchableText.includes(term));
         });
     }
 
-    return filtered;
+    // B. Specific Category Mode
+    if (activeFilter !== 'ALL') {
+        const currentFilter = FILTERS.find(f => f.id === activeFilter);
+        if (currentFilter && currentFilter.types) {
+            return allWorkData.filter(item => currentFilter.types!.includes(item.category));
+        }
+        return [];
+    }
+
+    // C. "ALL" Mode - 6 items per concept, interleaved
+    const limitPerConcept = 6;
+    const buckets: Record<string, GalleryItem[]> = {};
+    const mixedResult: GalleryItem[] = [];
+
+    FILTERS.slice(1).forEach(f => {
+        buckets[f.id] = [];
+    });
+
+    for (const item of allWorkData) {
+        const filter = FILTERS.slice(1).find(f => f.types?.includes(item.category));
+        if (filter && buckets[filter.id].length < limitPerConcept) {
+            buckets[filter.id].push(item);
+        }
+    }
+
+    for (let i = 0; i < limitPerConcept; i++) {
+        FILTERS.slice(1).forEach(f => {
+            if (buckets[f.id][i]) {
+                mixedResult.push(buckets[f.id][i]);
+            }
+        });
+    }
+
+    return mixedResult;
+
   }, [activeFilter, allWorkData, searchQuery]);
 
-  // --- SLICE DATA FOR PROGRESSIVE LOADING ---
-  const visibleData = useMemo(() => {
-      return activeData.slice(0, visibleCount);
-  }, [activeData, visibleCount]);
-
-
-  // --- MASONRY COLUMN SPLIT (For Visible Data Only) ---
-  const masonryColumns = useMemo(() => {
-    if (activeFilter !== 'ALL' && !searchQuery) return [[], [], []];
-    // Also use masonry for ALL even with search if no query, but here we want search to be grid
-    
-    const cols: GalleryItem[][] = [[], [], []];
-    visibleData.forEach((item, i) => {
-        cols[i % 3].push(item);
-    });
-    return cols;
-  }, [visibleData, activeFilter, searchQuery]);
+  const visibleFilteredData = useMemo(() => {
+      return processedData.slice(0, visibleCount);
+  }, [processedData, visibleCount]);
 
 
   return (
@@ -229,12 +234,14 @@ const Gallery: React.FC = () => {
                 <button
                     key={filter.id}
                     onClick={() => {
+                        // Prevent useless re-renders if clicking same filter
+                        if (activeFilter === filter.id) return;
                         setActiveFilter(filter.id);
                         setSearchQuery(''); 
-                        window.scrollTo({
-                            top: containerRef.current?.offsetTop ? containerRef.current.offsetTop - 100 : 0,
-                            behavior: 'smooth'
-                        });
+                        if(containerRef.current) {
+                            const offset = containerRef.current.offsetTop - 100;
+                            window.scrollTo({ top: offset, behavior: 'smooth' });
+                        }
                     }}
                     className={`
                         px-4 py-2 rounded-full border border-black font-mono text-xs md:text-sm uppercase tracking-wider transition-all duration-300
@@ -289,134 +296,56 @@ const Gallery: React.FC = () => {
       </div>
 
       {/* CONTENT AREA */}
-      {searchQuery ? (
-        // --- SEARCH RESULTS GRID ---
-        <div className="container mx-auto px-4 min-h-[50vh]">
+      <div className="container mx-auto px-4 min-h-[50vh]">
+        
+        {searchQuery && (
             <motion.div 
                 initial={{ opacity: 0 }} 
                 animate={{ opacity: 1 }}
                 className="flex items-center gap-4 mb-12"
             >
                 <span className="font-mono text-sm text-gray-400 uppercase tracking-widest">
-                    Searching for "{searchQuery}" — {activeData.length} Results
+                    Searching for "{searchQuery}" — {processedData.length} Results
                 </span>
             </motion.div>
+        )}
 
-            {visibleData.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {visibleData.map((item, i) => (
-                        <ProjectItem 
-                            key={`${item.id}-${i}`}
-                            item={item}
-                            aspect="aspect-square"
-                            variants={imageVariants}
-                            contain={item.contain}
-                            delay={0} // No stagger for infinite scroll items to appear faster
-                            priority={i < 6} // Eager load top 6
-                            onClick={() => setSelectedCategory(item.category)}
-                        />
-                    ))}
-                </div>
-            ) : (
-                <div className="flex flex-col items-center justify-center py-32 opacity-50 border border-dashed border-gray-300 rounded-lg">
-                    <Search size={48} className="mb-4 text-gray-300" />
-                    <p className="font-mono uppercase text-lg text-gray-400">No matches found</p>
-                </div>
-            )}
-        </div>
-      ) : (
-        <div className="container mx-auto px-4 relative min-h-[50vh]">
-            
-            {activeFilter === 'ALL' ? (
-                // --- MASONRY PARALLAX LAYOUT (ALL WORK) ---
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full items-start">
-                    
-                    {/* Column 1 */}
-                    <motion.div 
-                        style={{ y: isDesktop ? yCol1 : 0 }} 
-                        className="flex flex-col gap-12"
-                    >
-                        {masonryColumns[0].map((item, i) => (
-                            <ProjectItem 
-                                key={item.id} 
-                                item={item} 
-                                aspect="auto" 
-                                variants={imageVariants} 
-                                delay={0} 
-                                priority={i < 2} // Eager load top items
-                                onClick={() => setSelectedCategory(item.category)} 
-                            />
-                        ))}
-                    </motion.div>
-
-                    {/* Column 2 */}
-                    <motion.div 
-                        style={{ y: isDesktop ? yCol2 : 0 }} 
-                        className="flex flex-col gap-12 md:pt-24"
-                    >
-                        {masonryColumns[1].map((item, i) => (
-                            <ProjectItem 
-                                key={item.id} 
-                                item={item} 
-                                aspect="auto" 
-                                variants={imageVariants} 
-                                delay={0} 
-                                priority={i < 2} 
-                                onClick={() => setSelectedCategory(item.category)} 
-                            />
-                        ))}
-                    </motion.div>
-
-                    {/* Column 3 */}
-                    <motion.div 
-                        style={{ y: isDesktop ? yCol3 : 0 }} 
-                        className="flex flex-col gap-12 md:pt-12"
-                    >
-                        {masonryColumns[2].map((item, i) => (
-                            <ProjectItem 
-                                key={item.id} 
-                                item={item} 
-                                aspect="auto" 
-                                variants={imageVariants} 
-                                delay={0} 
-                                priority={i < 2} 
-                                onClick={() => setSelectedCategory(item.category)} 
-                            />
-                        ))}
-                    </motion.div>
-                </div>
-            ) : (
-                // --- CLEAN GRID LAYOUT (SPECIFIC FILTERS) ---
+        {/* OPTIMIZED GRID TRANSITION */}
+        {visibleFilteredData.length > 0 ? (
+            <AnimatePresence mode="wait"> 
                 <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
+                    key={activeFilter + searchQuery} // Force complete re-render on filter change
+                    variants={gridContainerVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
                     className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
                 >
-                    {visibleData.map((item, i) => (
+                    {visibleFilteredData.map((item, i) => (
                         <ProjectItem 
-                            key={item.id}
+                            key={`${item.id}`} 
                             item={item}
-                            aspect="aspect-square" 
-                            variants={imageVariants}
+                            aspect="auto"
+                            variants={itemVariants}
                             contain={item.contain}
-                            delay={0}
+                            // Priority logic: Load first 6 items eagerly
                             priority={i < 6}
-                            onClick={() => setSelectedCategory(item.category)}
+                            onClick={() => setSelectedItem(item)}
                         />
                     ))}
-                    {visibleData.length === 0 && (
-                        <div className="col-span-full py-20 text-center">
-                            <p className="font-mono text-gray-400 uppercase">No projects found in this category.</p>
-                        </div>
-                    )}
                 </motion.div>
-            )}
-        </div>
-      )}
+            </AnimatePresence>
+        ) : (
+            <div className="flex flex-col items-center justify-center py-32 opacity-50 border border-dashed border-gray-300 rounded-lg">
+                <Search size={48} className="mb-4 text-gray-300" />
+                <p className="font-mono uppercase text-lg text-gray-400">No items found</p>
+            </div>
+        )}
+
+      </div>
 
       {/* INFINITE SCROLL TRIGGER */}
-      {visibleCount < activeData.length && (
+      {visibleCount < processedData.length && (
           <div ref={loadMoreRef} className="w-full h-20 flex items-center justify-center mt-10">
               <div className="w-8 h-8 border-2 border-black border-t-transparent rounded-full animate-spin opacity-50" />
           </div>
@@ -425,12 +354,12 @@ const Gallery: React.FC = () => {
       {/* FOOTER WIZARD */}
       <DiscoveryWizard onBrowse={handleScrollToGallery} />
 
-      {/* DETAIL OVERLAY */}
+      {/* ZOOM MODAL OVERLAY */}
       <AnimatePresence>
-        {selectedCategory && (
-          <ConceptDetailOverlay 
-            category={selectedCategory} 
-            onClose={() => setSelectedCategory(null)} 
+        {selectedItem && (
+          <ZoomModal 
+            item={selectedItem} 
+            onClose={() => setSelectedItem(null)} 
           />
         )}
       </AnimatePresence>
@@ -439,10 +368,60 @@ const Gallery: React.FC = () => {
   );
 };
 
-// ... (Rest of Wizard components remain exactly same as before) ...
-// RE-EXPORTING FOR COMPLETENESS OF THE FILE
+// --- NEW ZOOM MODAL COMPONENT ---
+const ZoomModal = ({ item, onClose }: { item: GalleryItem, onClose: () => void }) => {
+    const isVid = useMemo(() => isVideo(item.src), [item.src]);
 
-// --- OPTION ITEM FOR WIZARD ---
+    return (
+        <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            onClick={onClose}
+            className="fixed inset-0 z-[70] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 cursor-zoom-out"
+        >
+            {isVid ? (
+                <motion.video
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.9, opacity: 0 }}
+                    transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                    src={item.src}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    controls
+                    className="max-w-full max-h-full object-contain shadow-2xl"
+                    onClick={(e) => e.stopPropagation()} 
+                />
+            ) : (
+                <motion.img
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.9, opacity: 0 }}
+                    transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                    src={item.src}
+                    alt={item.title}
+                    className="max-w-full max-h-full object-contain shadow-2xl"
+                    onClick={(e) => e.stopPropagation()} 
+                />
+            )}
+            
+            <div className="absolute bottom-8 left-8 text-white pointer-events-none">
+                <h3 className="text-2xl font-bold uppercase">{item.title}</h3>
+                <p className="font-mono text-xs opacity-70">{item.category}</p>
+            </div>
+
+            <button onClick={onClose} className="absolute top-8 right-8 text-white/50 hover:text-white transition-colors" data-hover="true">
+                <X size={48} />
+            </button>
+        </motion.div>
+    );
+};
+
+// ... (Wizard components remain unchanged) ...
 const OptionItem = ({ label, index, hoveredOption, onHover, onLeave, onClick }: any) => {
   const isHovered = hoveredOption === label;
   const isDimmed = hoveredOption !== null && !isHovered;
@@ -475,7 +454,6 @@ const OptionItem = ({ label, index, hoveredOption, onHover, onLeave, onClick }: 
   );
 };
 
-// --- DISCOVERY WIZARD COMPONENT ---
 const DiscoveryWizard: React.FC<{ onBrowse: () => void }> = ({ onBrowse }) => {
     const [step, setStep] = useState<number>(0);
     const [selections, setSelections] = useState<{type?: string; style?: string; subject?: string}>({});
@@ -583,7 +561,6 @@ const DiscoveryWizard: React.FC<{ onBrowse: () => void }> = ({ onBrowse }) => {
                         </motion.div>
                     )}
 
-                    {/* Step 1, 2, 3 content omitted for brevity but logic remains same */}
                     {step === 1 && (
                         <motion.div 
                             key="step1"
@@ -751,7 +728,7 @@ const WizardResultOverlay: React.FC<{ results: GalleryItem[]; criteria: any; onC
 
             <div className="container mx-auto px-4 py-12">
                 {results.length > 0 ? (
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {results.map((item, index) => (
                             <motion.div
                                 key={item.id}
@@ -761,10 +738,21 @@ const WizardResultOverlay: React.FC<{ results: GalleryItem[]; criteria: any; onC
                                 className="group cursor-none"
                                 onClick={() => setSelectedImage(item)}
                                 data-hover="true"
-                                data-cursor-text="VIEW"
+                                data-cursor-text="ZOOM"
                             >
                                 <div className={`w-full aspect-square relative overflow-hidden bg-gray-900 ${item.contain ? 'p-8' : ''}`}>
-                                    <img src={item.src} alt={item.title} className={`w-full h-full ${item.contain ? 'object-contain' : 'object-cover'} transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100`} />
+                                    {isVideo(item.src) ? (
+                                        <video
+                                            src={item.src}
+                                            autoPlay
+                                            muted
+                                            loop
+                                            playsInline
+                                            className={`w-full h-full object-contain transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100`}
+                                        />
+                                    ) : (
+                                        <img src={item.src} alt={item.title} className={`w-full h-full ${item.contain ? 'object-contain' : 'object-cover'} transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100`} />
+                                    )}
                                 </div>
                                 <div className="mt-4 border-t border-white/20 pt-2 flex justify-between items-baseline">
                                     <h3 className="text-lg font-bold uppercase">{item.title}</h3>
@@ -785,133 +773,17 @@ const WizardResultOverlay: React.FC<{ results: GalleryItem[]; criteria: any; onC
 
         <AnimatePresence>
             {selectedImage && (
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    onClick={() => setSelectedImage(null)}
-                    className="fixed inset-0 z-[70] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 cursor-zoom-out"
-                >
-                    <motion.img
-                        initial={{ scale: 0.9, opacity: 0 }}
-                        animate={{ scale: 1, opacity: 1 }}
-                        exit={{ scale: 0.9, opacity: 0 }}
-                        src={selectedImage.src}
-                        alt={selectedImage.title}
-                        className="max-w-full max-h-full object-contain shadow-2xl"
-                        onClick={(e) => e.stopPropagation()} 
-                    />
-                    <button onClick={() => setSelectedImage(null)} className="absolute top-8 right-8 text-white/50 hover:text-white transition-colors">
-                        <X size={48} />
-                    </button>
-                </motion.div>
+                <ZoomModal 
+                    item={selectedImage} 
+                    onClose={() => setSelectedImage(null)} 
+                />
             )}
         </AnimatePresence>
         </>
     );
 };
 
-const ConceptDetailOverlay: React.FC<{ category: string; onClose: () => void }> = ({ category, onClose }) => {
-    // ... (Same as before)
-    const items = useMemo(() => galleryData.filter(item => item.category === category), [category]);
-    const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
-  
-    return (
-      <>
-      <motion.div
-        initial={{ y: "100%" }}
-        animate={{ y: "0%" }}
-        exit={{ y: "100%" }}
-        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }} 
-        className="fixed inset-0 z-[60] bg-white text-black overflow-y-auto overflow-x-hidden"
-      >
-        <div className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-black/10 px-4 py-6 md:px-8 flex justify-between items-center">
-          <div>
-            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter">{category}</h2>
-          </div>
-          <button 
-            onClick={onClose}
-            className="w-12 h-12 rounded-full border border-black flex items-center justify-center hover:bg-black hover:text-white transition-colors cursor-none"
-            data-hover="true"
-          >
-            <X size={24} />
-          </button>
-        </div>
-  
-        <div className="container mx-auto px-4 py-12 md:py-24">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
-            {items.map((item, index) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 + (index * 0.1), duration: 0.8, ease: "easeOut" }}
-                className="flex flex-col gap-4 group"
-              >
-                <div 
-                  className={`w-full ${item.contain ? 'bg-gray-100 p-8 aspect-square' : 'aspect-[4/5]'} relative overflow-hidden bg-gray-50 cursor-none`}
-                  onClick={() => setSelectedImage(item)}
-                  data-hover="true"
-                  data-cursor-text="ZOOM"
-                >
-                  <img 
-                    src={item.src} 
-                    alt={item.title} 
-                    loading="lazy"
-                    decoding="async"
-                    className={`w-full h-full ${item.contain ? 'object-contain' : 'object-cover'} transition-transform duration-700 group-hover:scale-105`}
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
-                </div>
-  
-                <div className="flex flex-col border-t border-black pt-4">
-                  <div className="flex justify-between items-baseline">
-                      <h3 className="text-xl font-bold uppercase tracking-tight">{item.title}</h3>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-        
-        <div className="w-full py-12 text-center border-t border-black/10 mt-12">
-            <p className="font-mono text-xs text-gray-400 uppercase">End of Concept</p>
-        </div>
-      </motion.div>
-  
-      <AnimatePresence>
-          {selectedImage && (
-              <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  onClick={() => setSelectedImage(null)}
-                  className="fixed inset-0 z-[70] bg-black/90 backdrop-blur-xl flex items-center justify-center p-4 cursor-zoom-out"
-              >
-                  <motion.img
-                      initial={{ scale: 0.9, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      exit={{ scale: 0.9, opacity: 0 }}
-                      transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                      src={selectedImage.src}
-                      alt={selectedImage.title}
-                      className="max-w-full max-h-full object-contain shadow-2xl"
-                      onClick={(e) => e.stopPropagation()} 
-                  />
-                  
-                  <button onClick={() => setSelectedImage(null)} className="absolute top-8 right-8 text-white/50 hover:text-white transition-colors" data-hover="true">
-                      <X size={48} />
-                  </button>
-              </motion.div>
-          )}
-      </AnimatePresence>
-      </>
-    );
-};
-
-// --- UPDATED PROJECT ITEM WITH VIRTUALIZATION ---
+// --- UPDATED PROJECT ITEM WITHOUT LAYOUT PROP (Performance Fix) ---
 interface ProjectItemProps {
     item: GalleryItem;
     aspect: string;
@@ -939,44 +811,49 @@ const ProjectItem: React.FC<ProjectItemProps> = ({
     const skeletonColor = isDark ? 'bg-gray-800' : 'bg-gray-100'; 
     const pulseColor = isDark ? 'bg-gray-700' : 'bg-gray-200';
 
-    // Virtualization Logic: Detect when this component is in viewport
+    // Virtualization Logic
     const containerRef = useRef(null);
-    // Large rootMargin to preload before user scrolls to it, and keep it a bit after they scroll past
     const isInView = useInView(containerRef, { margin: "800px 0px 800px 0px", once: false });
 
     const [imgLoaded, setImgLoaded] = useState(false);
+    const isVid = useMemo(() => isVideo(item.src), [item.src]);
+    const isVideoCategory = ['Animation', 'Motion & Video', 'GIF'].includes(item.category);
+    const isSticker = ['Animated Sticker', 'Sticker', 'Social & Viral'].includes(item.category);
 
-    // Calculate aspect ratio for the placeholder container
     let containerStyle: React.CSSProperties = {
-        // Optimization: Browser rendering performance
         contentVisibility: 'auto',
-        containIntrinsicSize: '1px 300px', // Fallback height estimate
+        containIntrinsicSize: '1px 300px', 
     };
     
     let containerClass = aspect; 
 
     if (aspect === 'auto') {
         containerClass = ''; 
-        if (item.dimensions && item.dimensions.includes('x')) {
+        if (isVid) {
+             containerStyle.aspectRatio = '1 / 1';
+        } 
+        else if (item.dimensions && item.dimensions.includes('x')) {
             const [w, h] = item.dimensions.split('x').map(Number);
             if (!isNaN(w) && !isNaN(h)) {
                 containerStyle.aspectRatio = `${w} / ${h}`;
                 containerStyle.containIntrinsicSize = `1px ${Math.round((h/w) * 300)}px`;
             }
         } else {
-             // Fallback if dimensions missing
-             containerStyle.aspectRatio = '3/4'; 
+             if (isSticker) {
+                 containerStyle.aspectRatio = '1/1'; 
+             } else if (isVideoCategory) {
+                 containerStyle.aspectRatio = '16/9';
+             } else {
+                 containerStyle.aspectRatio = '3/4'; 
+             }
         }
     }
 
     return (
         <motion.div
             ref={containerRef}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-5%" }} // Animation trigger (separate from virtualization)
+            // Use simple fade in without layout prop to prevent layout thrashing
             variants={variants}
-            transition={{ delay: delay }}
             className="flex flex-col w-full"
             onClick={onClick}
         >
@@ -984,40 +861,48 @@ const ProjectItem: React.FC<ProjectItemProps> = ({
                 className={`group relative ${containerClass} ${skeletonColor} overflow-hidden cursor-none mb-3 w-full`} 
                 style={containerStyle}
                 data-hover="true"
-                data-cursor-text="VIEW"
+                data-cursor-text="ZOOM" 
             >
-                {/* VIRTUALIZATION: Only render the heavy Image tag if within 800px of viewport */}
                 {isInView ? (
                     <>
-                        {/* SKELETON LOADER (Only show if image hasn't loaded yet) */}
                         {!imgLoaded && (
                             <div className={`absolute inset-0 z-10 animate-pulse ${pulseColor}`} />
                         )}
 
-                        <img 
-                            src={item.src} 
-                            alt={item.title} 
-                            loading={priority ? "eager" : "lazy"} 
-                            // @ts-ignore
-                            fetchPriority={priority ? "high" : "auto"} 
-                            decoding="async" 
-                            onLoad={() => setImgLoaded(true)}
-                            className={`w-full h-full ${contain ? 'object-contain p-8' : 'object-cover'} transition-all duration-700 ease-out group-hover:scale-110 
-                                ${imgLoaded ? 'opacity-100 scale-100 blur-0' : 'opacity-0 scale-105 blur-sm'}`}
-                        />
+                        {isVid ? (
+                            <video
+                                src={item.src}
+                                autoPlay
+                                muted
+                                loop
+                                playsInline
+                                onLoadedData={() => setImgLoaded(true)}
+                                className={`w-full h-full object-contain transition-all duration-700 ease-out 
+                                    ${imgLoaded ? 'opacity-100 scale-100 blur-0' : 'opacity-0 scale-105 blur-sm'}`}
+                            />
+                        ) : (
+                            <img 
+                                src={item.src} 
+                                alt={item.title} 
+                                loading={priority ? "eager" : "lazy"} 
+                                // @ts-ignore
+                                fetchPriority={priority ? "high" : "auto"} 
+                                decoding="async" 
+                                onLoad={() => setImgLoaded(true)}
+                                className={`w-full h-full ${contain ? 'object-contain' : 'object-cover'} transition-all duration-700 ease-out group-hover:scale-110 
+                                    ${imgLoaded ? 'opacity-100 scale-100 blur-0' : 'opacity-0 scale-105 blur-sm'}`}
+                            />
+                        )}
                         
-                        {/* Overlay Effect */}
                         {imgLoaded && (
                             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-500" />
                         )}
                     </>
                 ) : (
-                    // Placeholder when off-screen to maintain layout height
                     <div className="w-full h-full" />
                 )}
             </div>
             
-            {/* Minimal Description */}
             <div className="flex flex-col items-start gap-1">
                 <h3 className={`text-lg md:text-xl font-bold uppercase tracking-tight leading-none ${textColor}`}>{item.title}</h3>
                 <span className={`font-mono text-[10px] md:text-xs uppercase tracking-widest ${subTextColor}`}>{item.category}</span>

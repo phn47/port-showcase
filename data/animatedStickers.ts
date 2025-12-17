@@ -2,7 +2,7 @@ export const animatedStickers = [
   {
     "id": "animated-sticker-1",
     "filename": "1.gif",
-    "image_url": "https://i.ibb.co/5XNZsbSB/1.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765941142/7_isdncb.mp4",
     "alt_text": "Animated chibi anime character waving hello with cheerful expression",
     "tags": [
       "animated-sticker",
@@ -78,7 +78,7 @@ export const animatedStickers = [
   {
     "id": "animated-sticker-2",
     "filename": "2.gif",
-    "image_url": "https://i.ibb.co/jZfKRVZ2/2.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765941141/2_fe9w1v.mp4",
     "alt_text": "Animated chibi anime character dancing with happy movements",
     "tags": [
       "animated-sticker",
@@ -154,7 +154,7 @@ export const animatedStickers = [
   {
     "id": "animated-sticker-3",
     "filename": "3.gif",
-    "image_url": "https://i.ibb.co/VYyvHb8W/3.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765941140/5_grkg3g.mp4",
     "alt_text": "Animated chibi anime character jumping with excitement",
     "tags": [
       "animated-sticker",
@@ -230,7 +230,7 @@ export const animatedStickers = [
   {
     "id": "animated-sticker-4",
     "filename": "4.gif",
-    "image_url": "https://i.ibb.co/BVkFfLGJ/4.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765941140/3_vzp1q1.mp4",
     "alt_text": "Animated chibi anime character crying with tears flowing",
     "tags": [
       "animated-sticker",
@@ -306,7 +306,7 @@ export const animatedStickers = [
   {
     "id": "animated-sticker-5",
     "filename": "5.gif",
-    "image_url": "https://i.ibb.co/CptkZCrN/5.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765941140/25_x0oqd0.mp4",
     "alt_text": "Animated chibi anime character laughing with joy",
     "tags": [
       "animated-sticker",
@@ -381,7 +381,7 @@ export const animatedStickers = [
   {
     "id": "animated-sticker-6",
     "filename": "6.gif",
-    "image_url": "https://i.ibb.co/zTpnYL74/6.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765941140/27_ik17ds.mp4",
     "alt_text": "Animated chibi anime character sleeping peacefully with zzz",
     "tags": [
       "animated-sticker",
@@ -455,7 +455,7 @@ export const animatedStickers = [
   {
     "id": "animated-sticker-7",
     "filename": "7.gif",
-    "image_url": "https://i.ibb.co/RG0kZPP8/7.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765941139/20_rmaobj.mp4",
     "alt_text": "Animated chibi anime character eating food happily",
     "tags": [
       "animated-sticker",
@@ -531,7 +531,7 @@ export const animatedStickers = [
   {
     "id": "animated-sticker-8",
     "filename": "8.gif",
-    "image_url": "https://i.ibb.co/5W0GCY8C/8.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765941139/9_q1nl2w.mp4",
     "alt_text": "Animated chibi anime character with hearts and love",
     "tags": [
       "animated-sticker",
@@ -606,7 +606,7 @@ export const animatedStickers = [
   {
     "id": "animated-sticker-9",
     "filename": "9.gif",
-    "image_url": "https://i.ibb.co/My7GjFXM/9.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765941139/40_nqgda8.mp4",
     "alt_text": "Animated chibi anime character running in hurry",
     "tags": [
       "animated-sticker",
@@ -681,7 +681,7 @@ export const animatedStickers = [
   {
     "id": "animated-sticker-10",
     "filename": "10.gif",
-    "image_url": "https://i.ibb.co/9kHxqPct/10.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765941139/8_weddom.mp4",
     "alt_text": "Animated chibi anime character spinning around dizzy",
     "tags": [
       "animated-sticker",
@@ -757,7 +757,7 @@ export const animatedStickers = [
   {
     "id": "animated-sticker-11",
     "filename": "13.gif",
-    "image_url": "https://i.ibb.co/mCBSQpzD/13.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765941138/1_deqz4a.mp4",
     "alt_text": "Animated chibi anime character celebrating with confetti",
     "tags": [
       "animated-sticker",
@@ -832,7 +832,7 @@ export const animatedStickers = [
   {
     "id": "animated-sticker-12",
     "filename": "16.gif",
-    "image_url": "https://i.ibb.co/RVxQDFz/16.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765941138/16_m2thac.mp4",
     "alt_text": "Animated chibi anime character working on computer typing",
     "tags": [
       "animated-sticker",
@@ -907,7 +907,7 @@ export const animatedStickers = [
   {
     "id": "animated-sticker-13",
     "filename": "18.gif",
-    "image_url": "https://i.ibb.co/G3BmhYnG/18.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765941138/64_pw5idg.mp4",
     "alt_text": "Animated chibi anime character with sparkles and shine",
     "tags": [
       "animated-sticker",
@@ -982,7 +982,7 @@ export const animatedStickers = [
   {
     "id": "animated-sticker-14",
     "filename": "19.gif",
-    "image_url": "https://i.ibb.co/mCpjvbfj/19.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765941137/13_mvahhn.mp4",
     "alt_text": "Animated chibi anime character blushing embarrassed",
     "tags": [
       "animated-sticker",
@@ -1055,7 +1055,7 @@ export const animatedStickers = [
   {
     "id": "animated-sticker-15",
     "filename": "20.gif",
-    "image_url": "https://i.ibb.co/rGXDGq0c/20.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765941137/21_xifkqu.mp4",
     "alt_text": "Animated chibi anime character angry with steam",
     "tags": [
       "animated-sticker",
@@ -1130,7 +1130,7 @@ export const animatedStickers = [
   {
     "id": "animated-sticker-16",
     "filename": "21.gif",
-    "image_url": "https://i.ibb.co/7NpJSm07/21.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765941137/19_fyzzfn.mp4",
     "alt_text": "Animated chibi anime character surprised shocked reaction",
     "tags": [
       "animated-sticker",
@@ -1205,7 +1205,7 @@ export const animatedStickers = [
   {
     "id": "animated-sticker-17",
     "filename": "25.gif",
-    "image_url": "https://i.ibb.co/n8Qz9ynC/25.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765941137/4_bwlwga.mp4",
     "alt_text": "Animated chibi anime character playing video games",
     "tags": [
       "animated-sticker",
@@ -1282,7 +1282,7 @@ export const animatedStickers = [
   {
     "id": "animated-sticker-18",
     "filename": "27.gif",
-    "image_url": "https://i.ibb.co/rSqZrTX/27.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765941136/18_mouw4d.mp4",
     "alt_text": "Animated chibi anime character exercising workout",
     "tags": [
       "animated-sticker",
@@ -1358,7 +1358,7 @@ export const animatedStickers = [
   {
     "id": "animated-sticker-19",
     "filename": "40.gif",
-    "image_url": "https://i.ibb.co/spfgMzLY/40.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765941136/10_lmfuah.mp4",
     "alt_text": "Animated chibi anime character with magical transformation",
     "tags": [
       "animated-sticker",
@@ -1433,7 +1433,7 @@ export const animatedStickers = [
   {
     "id": "animated-sticker-20",
     "filename": "64.gif",
-    "image_url": "https://i.ibb.co/SDGgb7zX/64.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765941135/6_gjlgii.mp4",
     "alt_text": "Animated chibi anime character with cat ears playing",
     "tags": [
       "animated-sticker",
@@ -1508,7 +1508,7 @@ export const animatedStickers = [
   {
     "id": "animated-sticker-21",
     "filename": "67.gif",
-    "image_url": "https://i.ibb.co/r28sTtmZ/67.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765941096/67_yaoeu3.mp4",
     "alt_text": "Animated chibi anime character floating with dreamy motion",
     "tags": [
       "animated-sticker",

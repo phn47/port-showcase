@@ -9,6 +9,7 @@ import Gallery from './components/Gallery';
 import Timeline from './components/Timeline';
 import Services from './components/Services';
 import Contact from './components/Contact';
+import FloatingControls from './components/FloatingControls';
 import { galleryData } from './data/index'; 
 
 // --- SMART PRELOADER COMPONENT ---
@@ -132,6 +133,9 @@ const App: React.FC = () => {
       <Timeline />
       <Services />
       <Contact />
+      
+      {/* Floating Controls (Chat + Scroll Top) */}
+      {!isLoading && <FloatingControls />}
     </div>
   );
 };

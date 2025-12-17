@@ -3,7 +3,7 @@ export const socialMedia = [
   {
     "id": "social-media-1",
     "filename": "1.png",
-    "image_url": "https://i.ibb.co/QvP4fM7b/1.png",
+    "image_url": "https://i.ibb.co/yCNtQDh/thunderpenguin-result.webp",
     "alt_text": "Good morning social media post with cheerful design",
     "tags": [
       "gm-post",
@@ -73,7 +73,7 @@ export const socialMedia = [
   {
     "id": "social-media-2",
     "filename": "2.jpg",
-    "image_url": "https://i.ibb.co/BHRq3rk6/2.jpg",
+    "image_url": "https://i.ibb.co/sdXSgL67/sketch-da-xanh-result.webp",
     "alt_text": "Social media graphic post with vibrant visuals",
     "tags": [
       "gm-post",
@@ -142,7 +142,7 @@ export const socialMedia = [
   {
     "id": "social-media-3",
     "filename": "3.jpg",
-    "image_url": "https://i.ibb.co/CKyDmmJG/3.jpg",
+    "image_url": "https://i.ibb.co/PZpxpSng/photo-2025-05-15-01-35-59-result.webp",
     "alt_text": "Morning greeting post with artistic design",
     "tags": [
       "gm-post",
@@ -208,7 +208,7 @@ export const socialMedia = [
   {
     "id": "social-media-4",
     "filename": "4.jpg",
-    "image_url": "https://i.ibb.co/VW3zsw0F/4.jpg",
+    "image_url": "https://i.ibb.co/nNwy4VTJ/photo-2025-05-15-01-36-00-result.webp",
     "alt_text": "Social media promotional post with bold graphics",
     "tags": [
       "gm-post",
@@ -275,7 +275,7 @@ export const socialMedia = [
   {
     "id": "social-media-5",
     "filename": "5.jpg",
-    "image_url": "https://i.ibb.co/d4H1SJB8/5.jpg",
+    "image_url": "https://i.ibb.co/VcMhVCqL/photo-2025-05-15-01-36-26-result.webp",
     "alt_text": "Good morning post with colorful illustration",
     "tags": [
       "gm-post",
@@ -341,7 +341,7 @@ export const socialMedia = [
   {
     "id": "social-media-6",
     "filename": "6.jpg",
-    "image_url": "https://i.ibb.co/yF07YjPb/6.jpg",
+    "image_url": "https://i.ibb.co/zVHXRqtM/line1-result.webp",
     "alt_text": "Social media content post with creative design",
     "tags": [
       "gm-post",
@@ -408,7 +408,7 @@ export const socialMedia = [
   {
     "id": "social-media-7",
     "filename": "7.jpg",
-    "image_url": "https://i.ibb.co/BVBQQ9Bv/7.jpg",
+    "image_url": "https://i.ibb.co/Hfkwg2T8/photo-2025-05-15-01-35-57-result.webp",
     "alt_text": "Morning greeting graphic with engaging visuals",
     "tags": [
       "gm-post",
@@ -474,7 +474,7 @@ export const socialMedia = [
   {
     "id": "social-media-8",
     "filename": "8.jpg",
-    "image_url": "https://i.ibb.co/Kpbtw1Rc/8.jpg",
+    "image_url": "https://i.ibb.co/vGcppsQ/photo-2025-05-15-01-35-58-result.webp",
     "alt_text": "Social media post with professional design",
     "tags": [
       "gm-post",
@@ -541,7 +541,7 @@ export const socialMedia = [
   {
     "id": "social-media-9",
     "filename": "8-1.jpg",
-    "image_url": "https://i.ibb.co/60t4DRW4/8-1.jpg",
+    "image_url": "https://i.ibb.co/TqBsDhqd/giong-bao-2-fix-result.webp",
     "alt_text": "Alternative version of social media post",
     "tags": [
       "gm-post",
@@ -608,7 +608,7 @@ export const socialMedia = [
   {
     "id": "social-media-10",
     "filename": "9.jpg",
-    "image_url": "https://i.ibb.co/4ZKfyZ3B/9.jpg",
+    "image_url": "https://i.ibb.co/jZwGYbWs/batman2-result.webp",
     "alt_text": "Good morning post with anime character",
     "tags": [
       "gm-post",
@@ -673,7 +673,7 @@ export const socialMedia = [
   {
     "id": "social-media-11",
     "filename": "9-1.jpg",
-    "image_url": "https://i.ibb.co/xt01sMLp/9-1.jpg",
+    "image_url": "https://i.ibb.co/8DZYqK4f/99-1-result.webp",
     "alt_text": "Variant of morning greeting post",
     "tags": [
       "gm-post",
@@ -738,7 +738,7 @@ export const socialMedia = [
   {
     "id": "social-media-12",
     "filename": "10.jpg",
-    "image_url": "https://i.ibb.co/8yF9Y78/10.jpg",
+    "image_url": "https://i.ibb.co/nMrMScJv/batman-result.webp",
     "alt_text": "Social media graphic with eye-catching design",
     "tags": [
       "gm-post",
@@ -805,7 +805,7 @@ export const socialMedia = [
   {
     "id": "social-media-13",
     "filename": "11.jpg",
-    "image_url": "https://i.ibb.co/ZR54wW20/11.jpg",
+    "image_url": "https://i.ibb.co/NgWyBWMT/983-result.webp",
     "alt_text": "Morning post with cheerful illustration",
     "tags": [
       "gm-post",
@@ -870,7 +870,7 @@ export const socialMedia = [
   {
     "id": "social-media-14",
     "filename": "12.jpg",
-    "image_url": "https://i.ibb.co/N2BxNhSy/12.jpg",
+    "image_url": "https://i.ibb.co/XrdmNwkS/91-result.webp",
     "alt_text": "Social media content with vibrant colors",
     "tags": [
       "gm-post",
@@ -938,7 +938,7 @@ export const socialMedia = [
   {
     "id": "social-media-15",
     "filename": "12-1.jpg",
-    "image_url": "https://i.ibb.co/dsJJLH5z/12-1.jpg",
+    "image_url": "https://i.ibb.co/yBX6jZvr/9-result.webp",
     "alt_text": "Alternative social media post design",
     "tags": [
       "gm-post",
@@ -1005,7 +1005,7 @@ export const socialMedia = [
   {
     "id": "social-media-16",
     "filename": "13.jpg",
-    "image_url": "https://i.ibb.co/Fb04Vs7K/13.jpg",
+    "image_url": "https://i.ibb.co/rKRYjNbC/9-1-result.webp",
     "alt_text": "Good morning greeting with artistic style",
     "tags": [
       "gm-post",
@@ -1071,7 +1071,7 @@ export const socialMedia = [
   {
     "id": "social-media-17",
     "filename": "13-1.jpg",
-    "image_url": "https://i.ibb.co/xt2VYydf/13-1.jpg",
+    "image_url": "https://i.ibb.co/cXQX55RZ/87-gm-meo-picnic-pj-ill-result.webp",
     "alt_text": "Variant morning post with creative design",
     "tags": [
       "gm-post",
@@ -1137,7 +1137,7 @@ export const socialMedia = [
   {
     "id": "social-media-18",
     "filename": "14.jpg",
-    "image_url": "https://i.ibb.co/FqyxXWTz/14.jpg",
+    "image_url": "https://i.ibb.co/zhydNz4N/8-result.webp",
     "alt_text": "Social media promotional graphic",
     "tags": [
       "gm-post",
@@ -1204,7 +1204,7 @@ export const socialMedia = [
   {
     "id": "social-media-19",
     "filename": "15.jpg",
-    "image_url": "https://i.ibb.co/XrN2V2N2/15.jpg",
+    "image_url": "https://i.ibb.co/YFC3M2JB/8-1-result.webp",
     "alt_text": "Morning greeting post with bold visuals",
     "tags": [
       "gm-post",
@@ -1269,7 +1269,7 @@ export const socialMedia = [
   {
     "id": "social-media-20",
     "filename": "16.jpg",
-    "image_url": "https://i.ibb.co/hRJFy5Qp/16.jpg",
+    "image_url": "https://i.ibb.co/93g3bSxF/79-result.webp",
     "alt_text": "Social media content with engaging design",
     "tags": [
       "gm-post",
@@ -1336,7 +1336,7 @@ export const socialMedia = [
   {
     "id": "social-media-21",
     "filename": "17.jpg",
-    "image_url": "https://i.ibb.co/zVvy7VL5/17.jpg",
+    "image_url": "https://i.ibb.co/Kx7FQZBF/75-result.webp",
     "alt_text": "Good morning post with colorful graphics",
     "tags": [
       "gm-post",
@@ -1402,7 +1402,7 @@ export const socialMedia = [
   {
     "id": "social-media-22",
     "filename": "18.jpg",
-    "image_url": "https://i.ibb.co/hRd2WKkr/18.jpg",
+    "image_url": "https://i.ibb.co/WNyHPSrx/7-result.webp",
     "alt_text": "Social media post with professional layout",
     "tags": [
       "gm-post",
@@ -1469,7 +1469,7 @@ export const socialMedia = [
   {
     "id": "social-media-23",
     "filename": "19.jpg",
-    "image_url": "https://i.ibb.co/hFCVtZQN/19.jpg",
+    "image_url": "https://i.ibb.co/bMdcbHFH/61-2-result.webp",
     "alt_text": "Morning greeting with creative illustration",
     "tags": [
       "gm-post",
@@ -1534,7 +1534,7 @@ export const socialMedia = [
   {
     "id": "social-media-24",
     "filename": "20-3.png",
-    "image_url": "https://i.ibb.co/nsfq3TtN/20-3.png",
+    "image_url": "https://i.ibb.co/Qv2CxdL8/6-result.webp",
     "alt_text": "Social media graphic with unique design",
     "tags": [
       "gm-post",
@@ -1601,7 +1601,7 @@ export const socialMedia = [
   {
     "id": "social-media-25",
     "filename": "27.jpg",
-    "image_url": "https://i.ibb.co/qF3FP6k7/27.jpg",
+    "image_url": "https://i.ibb.co/0V6LTrKS/5-result.webp",
     "alt_text": "Good morning post with anime artwork",
     "tags": [
       "gm-post",
@@ -1666,7 +1666,7 @@ export const socialMedia = [
   {
     "id": "social-media-26",
     "filename": "31.jpg",
-    "image_url": "https://i.ibb.co/hR38crsb/31.jpg",
+    "image_url": "https://i.ibb.co/bYHpgLZ/52-1-result.webp",
     "alt_text": "Social media content with vibrant illustration",
     "tags": [
       "gm-post",
@@ -1734,7 +1734,7 @@ export const socialMedia = [
   {
     "id": "social-media-27",
     "filename": "36.jpg",
-    "image_url": "https://i.ibb.co/fYtxJTxH/36.jpg",
+    "image_url": "https://i.ibb.co/ZzHDJQxJ/49-result.webp",
     "alt_text": "Morning greeting post with cheerful design",
     "tags": [
       "gm-post",
@@ -1800,7 +1800,7 @@ export const socialMedia = [
   {
     "id": "social-media-28",
     "filename": "45-1.png",
-    "image_url": "https://i.ibb.co/kshyW26v/45-1.png",
+    "image_url": "https://i.ibb.co/s9k1xH5Z/45-1-result.webp",
     "alt_text": "Social media promotional post design",
     "tags": [
       "gm-post",
@@ -1867,7 +1867,7 @@ export const socialMedia = [
   {
     "id": "social-media-29",
     "filename": "49.jpg",
-    "image_url": "https://i.ibb.co/d4yS1rxn/49.jpg",
+    "image_url": "https://i.ibb.co/23QzzBnd/438rr-result.webp",
     "alt_text": "Good morning post with artistic graphics",
     "tags": [
       "gm-post",
@@ -1932,7 +1932,7 @@ export const socialMedia = [
   {
     "id": "social-media-30",
     "filename": "52-1.jpg",
-    "image_url": "https://i.ibb.co/C3JV5yp8/52-1.jpg",
+    "image_url": "https://i.ibb.co/1tyh0T2h/4-result.webp",
     "alt_text": "Social media content with bold visuals",
     "tags": [
       "gm-post",
@@ -1999,7 +1999,7 @@ export const socialMedia = [
   {
     "id": "social-media-31",
     "filename": "61-2.jpg",
-    "image_url": "https://i.ibb.co/F4hM1Sxb/61-2.jpg",
+    "image_url": "https://i.ibb.co/7NGnmWvd/36-result.webp",
     "alt_text": "Morning greeting with engaging illustration",
     "tags": [
       "gm-post",
@@ -2064,7 +2064,7 @@ export const socialMedia = [
   {
     "id": "social-media-32",
     "filename": "75.png",
-    "image_url": "https://i.ibb.co/wh77mPp0/75.png",
+    "image_url": "https://i.ibb.co/b5Mf1pJZ/347-result.webp",
     "alt_text": "Social media graphic with creative design",
     "tags": [
       "gm-post",
@@ -2131,7 +2131,7 @@ export const socialMedia = [
   {
     "id": "social-media-33",
     "filename": "79.png",
-    "image_url": "https://i.ibb.co/SwV8R3yz/79.png",
+    "image_url": "https://i.ibb.co/CKHwPFYv/31-result.webp",
     "alt_text": "Good morning post with colorful artwork",
     "tags": [
       "gm-post",
@@ -2197,7 +2197,7 @@ export const socialMedia = [
   {
     "id": "social-media-34",
     "filename": "87-gm-meo-picnic-pj-ill.png",
-    "image_url": "https://i.ibb.co/XfGsmfjn/87-gm-meo-picnic-pj-ill.png",
+    "image_url": "https://i.ibb.co/gFfWGg89/3-result.webp",
     "alt_text": "Cat picnic themed good morning illustration",
     "tags": [
       "gm-post",
@@ -2265,7 +2265,7 @@ export const socialMedia = [
   {
     "id": "social-media-35",
     "filename": "91.png",
-    "image_url": "https://i.ibb.co/svnhJYhG/91.png",
+    "image_url": "https://i.ibb.co/20H1yhL9/27-result.webp",
     "alt_text": "Social media post with professional graphics",
     "tags": [
       "gm-post",
@@ -2332,7 +2332,7 @@ export const socialMedia = [
   {
     "id": "social-media-36",
     "filename": "99-1.png",
-    "image_url": "https://i.ibb.co/fPgjsd3/99-1.png",
+    "image_url": "https://i.ibb.co/JhrGQrL/245-result.webp",
     "alt_text": "Morning greeting with vibrant design",
     "tags": [
       "gm-post",
@@ -2398,7 +2398,7 @@ export const socialMedia = [
   {
     "id": "social-media-37",
     "filename": "111.png",
-    "image_url": "https://i.ibb.co/PzN17hLZ/111.png",
+    "image_url": "https://i.ibb.co/TqwVW7Vm/266-result.webp",
     "alt_text": "Social media content with eye-catching visuals",
     "tags": [
       "gm-post",
@@ -2465,7 +2465,7 @@ export const socialMedia = [
   {
     "id": "social-media-38",
     "filename": "113.png",
-    "image_url": "https://i.ibb.co/2TZXnq2/113.png",
+    "image_url": "https://i.ibb.co/HDHB1Qjq/236-result.webp",
     "alt_text": "Good morning post with artistic illustration",
     "tags": [
       "gm-post",
@@ -2530,7 +2530,7 @@ export const socialMedia = [
   {
     "id": "social-media-39",
     "filename": "236.png",
-    "image_url": "https://i.ibb.co/CKhzk1B7/236.png",
+    "image_url": "https://i.ibb.co/4n6YDYsQ/20-3-result.webp",
     "alt_text": "Social media graphic with bold design",
     "tags": [
       "gm-post",
@@ -2597,7 +2597,7 @@ export const socialMedia = [
   {
     "id": "social-media-40",
     "filename": "245.png",
-    "image_url": "https://i.ibb.co/35YksNV0/245.png",
+    "image_url": "https://i.ibb.co/d4vdthYr/2-result.webp",
     "alt_text": "Morning greeting post with creative artwork",
     "tags": [
       "gm-post",
@@ -2662,7 +2662,7 @@ export const socialMedia = [
   {
     "id": "social-media-41",
     "filename": "266.png",
-    "image_url": "https://i.ibb.co/tMvyn6Hs/266.png",
+    "image_url": "https://i.ibb.co/VYzrzQmh/19-result.webp",
     "alt_text": "Social media promotional content",
     "tags": [
       "gm-post",
@@ -2729,7 +2729,7 @@ export const socialMedia = [
   {
     "id": "social-media-42",
     "filename": "347.jpg",
-    "image_url": "https://i.ibb.co/23SLLpHs/347.jpg",
+    "image_url": "https://i.ibb.co/hGs5CkY/18-result.webp",
     "alt_text": "Good morning post with engaging graphics",
     "tags": [
       "gm-post",
@@ -2794,7 +2794,7 @@ export const socialMedia = [
   {
     "id": "social-media-43",
     "filename": "438rr.jpg",
-    "image_url": "https://i.ibb.co/8LqPqjb2/438rr.jpg",
+    "image_url": "https://i.ibb.co/20bw4SRD/16-result.webp",
     "alt_text": "Social media content with vibrant design",
     "tags": [
       "gm-post",
@@ -2862,7 +2862,7 @@ export const socialMedia = [
   {
     "id": "social-media-44",
     "filename": "983.png",
-    "image_url": "https://i.ibb.co/Q7XhbvHz/983.png",
+    "image_url": "https://i.ibb.co/6JbvkS7q/17-result.webp",
     "alt_text": "Morning greeting with colorful illustration",
     "tags": [
       "gm-post",
@@ -2928,7 +2928,7 @@ export const socialMedia = [
   {
     "id": "social-media-45",
     "filename": "batman.jpg",
-    "image_url": "https://i.ibb.co/nsW9vv7K/batman.jpg",
+    "image_url": "https://i.ibb.co/7JWx9DVR/15-result.webp",
     "alt_text": "Batman themed social media post",
     "tags": [
       "gm-post",
@@ -2998,7 +2998,7 @@ export const socialMedia = [
   {
     "id": "social-media-46",
     "filename": "batman2.jpg",
-    "image_url": "https://i.ibb.co/fY0FLjn9/batman2.jpg",
+    "image_url": "https://i.ibb.co/RT6MCMkp/14-result.webp",
     "alt_text": "Batman character social media graphic",
     "tags": [
       "gm-post",
@@ -3067,7 +3067,7 @@ export const socialMedia = [
   {
     "id": "social-media-47",
     "filename": "giong-bao-2-fix.png",
-    "image_url": "https://i.ibb.co/6d9HSbh/giong-bao-2-fix.png",
+    "image_url": "https://i.ibb.co/s9s69hpq/13-result.webp",
     "alt_text": "Storm themed social media post design",
     "tags": [
       "gm-post",
@@ -3137,7 +3137,7 @@ export const socialMedia = [
   {
     "id": "social-media-48",
     "filename": "line1.png",
-    "image_url": "https://i.ibb.co/R46LvpDY/line1.png",
+    "image_url": "https://i.ibb.co/MDt7KQPk/13-1-result.webp",
     "alt_text": "Social media post with line art design",
     "tags": [
       "gm-post",
@@ -3204,7 +3204,7 @@ export const socialMedia = [
   {
     "id": "social-media-49",
     "filename": "photo-2025-05-15-01-35-57.jpg",
-    "image_url": "https://i.ibb.co/p6pwtytq/photo-2025-05-15-01-35-57.jpg",
+    "image_url": "https://i.ibb.co/rKLK90rk/12-result.webp",
     "alt_text": "Social media photo post from May 2025",
     "tags": [
       "gm-post",
@@ -3271,7 +3271,7 @@ export const socialMedia = [
   {
     "id": "social-media-50",
     "filename": "photo-2025-05-15-01-35-58.jpg",
-    "image_url": "https://i.ibb.co/tMnZccjY/photo-2025-05-15-01-35-58.jpg",
+    "image_url": "https://i.ibb.co/yBK5TD5s/12-1-result.webp",
     "alt_text": "Social media photo content from May 2025",
     "tags": [
       "gm-post",
@@ -3338,7 +3338,7 @@ export const socialMedia = [
   {
     "id": "social-media-51",
     "filename": "photo-2025-05-15-01-35-59.jpg",
-    "image_url": "https://i.ibb.co/Y49n8fNp/photo-2025-05-15-01-35-59.jpg",
+    "image_url": "https://i.ibb.co/qFxv8ZnL/113-result.webp",
     "alt_text": "Social media photo graphic from May 2025",
     "tags": [
       "gm-post",
@@ -3405,7 +3405,7 @@ export const socialMedia = [
   {
     "id": "social-media-52",
     "filename": "photo-2025-05-15-01-36-00.jpg",
-    "image_url": "https://i.ibb.co/6R3ZghKM/photo-2025-05-15-01-36-00.jpg",
+    "image_url": "https://i.ibb.co/9kDCtQGb/111-result.webp",
     "alt_text": "Social media photo post content from May 2025",
     "tags": [
       "gm-post",
@@ -3472,7 +3472,7 @@ export const socialMedia = [
   {
     "id": "social-media-53",
     "filename": "photo-2025-05-15-01-36-26.jpg",
-    "image_url": "https://i.ibb.co/8D9gcyxk/photo-2025-05-15-01-36-26.jpg",
+    "image_url": "https://i.ibb.co/LHZb3qk/11-result.webp",
     "alt_text": "Social media photo design from May 2025",
     "tags": [
       "gm-post",
@@ -3539,7 +3539,7 @@ export const socialMedia = [
   {
     "id": "social-media-54",
     "filename": "sketch-da-xanh.png",
-    "image_url": "https://i.ibb.co/hFFVnX8M/sketch-da-xanh.png",
+    "image_url": "https://i.ibb.co/QjM4rNzZ/10-result.webp",
     "alt_text": "Blue skin sketch character design",
     "tags": [
       "gm-post",
@@ -3604,7 +3604,7 @@ export const socialMedia = [
   {
     "id": "social-media-55",
     "filename": "thunderpenguin.png",
-    "image_url": "https://i.ibb.co/0pHv1fK9/thunderpenguin.png",
+    "image_url": "https://i.ibb.co/27nKJ2VV/1-result.webp",
     "alt_text": "Thunder penguin character social media post",
     "tags": [
       "gm-post",

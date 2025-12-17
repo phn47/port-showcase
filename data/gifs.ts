@@ -2,7 +2,7 @@ export const gifs = [
   {
     "id": "gif-1",
     "filename": "1.gif",
-    "image_url": "https://i.ibb.co/N6Y9MRQ0/1.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940925/3_j8ormo.mp4",
     "alt_text": "Animated GIF with smooth looping motion",
     "tags": [
       "gif",
@@ -69,7 +69,7 @@ export const gifs = [
   {
     "id": "gif-2",
     "filename": "2.gif",
-    "image_url": "https://i.ibb.co/NgDW3j3c/2.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940924/2_kzi0sr.mp4",
     "alt_text": "Dynamic GIF animation with colorful effects",
     "tags": [
       "gif",
@@ -135,7 +135,7 @@ export const gifs = [
   {
     "id": "gif-3",
     "filename": "3.gif",
-    "image_url": "https://i.ibb.co/ynbLYGbc/3.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940924/1_s42ele.mp4",
     "alt_text": "Animated GIF with creative visual design",
     "tags": [
       "gif",
@@ -201,7 +201,7 @@ export const gifs = [
   {
     "id": "gif-4",
     "filename": "4.gif",
-    "image_url": "https://i.ibb.co/XrkCpYrB/4.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940924/20_nh4zjh.mp4",
     "alt_text": "Looping GIF animation with smooth transitions",
     "tags": [
       "gif",
@@ -267,7 +267,7 @@ export const gifs = [
   {
     "id": "gif-5",
     "filename": "7.gif",
-    "image_url": "https://i.ibb.co/1GXJjWx6/7.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940924/7_ij15ge.mp4",
     "alt_text": "Animated GIF with energetic movement",
     "tags": [
       "gif",
@@ -333,7 +333,7 @@ export const gifs = [
   {
     "id": "gif-6",
     "filename": "9.gif",
-    "image_url": "https://i.ibb.co/T9bD7yf/9.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940923/4_dj4lc7.mp4",
     "alt_text": "Creative GIF animation with artistic style",
     "tags": [
       "gif",
@@ -398,7 +398,7 @@ export const gifs = [
   {
     "id": "gif-7",
     "filename": "10.gif",
-    "image_url": "https://i.ibb.co/WN2fLQTn/10.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940923/11_cwirfd.mp4",
     "alt_text": "Smooth looping GIF with continuous motion",
     "tags": [
       "gif",
@@ -464,7 +464,7 @@ export const gifs = [
   {
     "id": "gif-8",
     "filename": "11.gif",
-    "image_url": "https://i.ibb.co/99WbKWcc/11.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940922/27_qxcs0e.mp4",
     "alt_text": "Dynamic animated GIF with vibrant colors",
     "tags": [
       "gif",
@@ -532,7 +532,7 @@ export const gifs = [
   {
     "id": "gif-9",
     "filename": "13.gif",
-    "image_url": "https://i.ibb.co/LXgzFTd3/13.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940922/15_gj7euv.mp4",
     "alt_text": "Animated GIF with playful movement",
     "tags": [
       "gif",
@@ -598,7 +598,7 @@ export const gifs = [
   {
     "id": "gif-10",
     "filename": "14.gif",
-    "image_url": "https://i.ibb.co/8DFSh5Q1/14.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940922/10_lkjlx8.mp4",
     "alt_text": "Creative looping GIF animation",
     "tags": [
       "gif",
@@ -664,7 +664,7 @@ export const gifs = [
   {
     "id": "gif-11",
     "filename": "15.gif",
-    "image_url": "https://i.ibb.co/d0Hf5NDz/15.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940922/9_elarjo.mp4",
     "alt_text": "Smooth animated GIF with fluid motion",
     "tags": [
       "gif",
@@ -730,7 +730,7 @@ export const gifs = [
   {
     "id": "gif-12",
     "filename": "16.gif",
-    "image_url": "https://i.ibb.co/j9JnC34H/16.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940922/14_frtnq9.mp4",
     "alt_text": "Dynamic GIF with energetic visual effects",
     "tags": [
       "gif",
@@ -795,7 +795,7 @@ export const gifs = [
   {
     "id": "gif-13",
     "filename": "17.gif",
-    "image_url": "https://i.ibb.co/hxxKv5Zy/17.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940921/18_rc0hmr.mp4",
     "alt_text": "Animated GIF with rhythmic movement",
     "tags": [
       "gif",
@@ -861,7 +861,7 @@ export const gifs = [
   {
     "id": "gif-14",
     "filename": "18.gif",
-    "image_url": "https://i.ibb.co/tPDyVsrS/18.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940921/13_raj8zf.mp4",
     "alt_text": "Creative GIF animation with unique style",
     "tags": [
       "gif",
@@ -926,7 +926,7 @@ export const gifs = [
   {
     "id": "gif-15",
     "filename": "19.gif",
-    "image_url": "https://i.ibb.co/tpQpBz6Y/19.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940921/16_jye9lx.mp4",
     "alt_text": "Looping GIF with mesmerizing motion",
     "tags": [
       "gif",
@@ -992,7 +992,7 @@ export const gifs = [
   {
     "id": "gif-16",
     "filename": "20.gif",
-    "image_url": "https://i.ibb.co/RWt6vwY/20.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940921/17_iouqpp.mp4",
     "alt_text": "Animated GIF with smooth flowing movement",
     "tags": [
       "gif",
@@ -1058,7 +1058,7 @@ export const gifs = [
   {
     "id": "gif-17",
     "filename": "21.gif",
-    "image_url": "https://i.ibb.co/MDksbd0H/21.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940920/21_ariude.mp4",
     "alt_text": "Dynamic GIF animation with bold visuals",
     "tags": [
       "gif",
@@ -1124,7 +1124,7 @@ export const gifs = [
   {
     "id": "gif-18",
     "filename": "22.gif",
-    "image_url": "https://i.ibb.co/HfpDF6Zp/22.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940920/24_unxjud.mp4",
     "alt_text": "Creative animated GIF with artistic flair",
     "tags": [
       "gif",
@@ -1190,7 +1190,7 @@ export const gifs = [
   {
     "id": "gif-19",
     "filename": "23.gif",
-    "image_url": "https://i.ibb.co/ycw6Tzq9/23.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940920/19_pei5ey.mp4",
     "alt_text": "Smooth looping GIF with elegant motion",
     "tags": [
       "gif",
@@ -1257,7 +1257,7 @@ export const gifs = [
   {
     "id": "gif-20",
     "filename": "24.gif",
-    "image_url": "https://i.ibb.co/zWwRC2DR/24.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940919/22_y8hthr.mp4",
     "alt_text": "Animated GIF with vibrant color transitions",
     "tags": [
       "gif",
@@ -1324,7 +1324,7 @@ export const gifs = [
   {
     "id": "gif-21",
     "filename": "25.gif",
-    "image_url": "https://i.ibb.co/S4rhjDzs/25.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940919/23_v1sh5o.mp4",
     "alt_text": "Dynamic GIF with fast-paced movement",
     "tags": [
       "gif",
@@ -1389,7 +1389,7 @@ export const gifs = [
   {
     "id": "gif-22",
     "filename": "26.gif",
-    "image_url": "https://i.ibb.co/MyPBhCbx/26.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940919/40_izeaqi.mp4",
     "alt_text": "Creative looping GIF with abstract design",
     "tags": [
       "gif",
@@ -1456,7 +1456,7 @@ export const gifs = [
   {
     "id": "gif-23",
     "filename": "27.gif",
-    "image_url": "https://i.ibb.co/RpDtMsCT/27.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940919/26_piebfl.mp4",
     "alt_text": "Smooth animated GIF with gentle motion",
     "tags": [
       "gif",
@@ -1522,7 +1522,7 @@ export const gifs = [
   {
     "id": "gif-24",
     "filename": "28.gif",
-    "image_url": "https://i.ibb.co/v6D0PG7s/28.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940918/25_r22f84.mp4",
     "alt_text": "Dynamic GIF animation with striking visuals",
     "tags": [
       "gif",
@@ -1588,7 +1588,7 @@ export const gifs = [
   {
     "id": "gif-25",
     "filename": "32.gif",
-    "image_url": "https://i.ibb.co/HfwVKjmL/32.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940918/32_qsos7m.mp4",
     "alt_text": "Animated GIF with continuous loop pattern",
     "tags": [
       "gif",
@@ -1654,7 +1654,7 @@ export const gifs = [
   {
     "id": "gif-26",
     "filename": "33.gif",
-    "image_url": "https://i.ibb.co/QFqGbqQN/33.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940918/35_mwxzbd.mp4",
     "alt_text": "Creative GIF with innovative animation style",
     "tags": [
       "gif",
@@ -1719,7 +1719,7 @@ export const gifs = [
   {
     "id": "gif-27",
     "filename": "34.gif",
-    "image_url": "https://i.ibb.co/Q0jf9gt/34.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940918/39_mflrzd.mp4",
     "alt_text": "Smooth looping GIF with seamless transitions",
     "tags": [
       "gif",
@@ -1785,7 +1785,7 @@ export const gifs = [
   {
     "id": "gif-28",
     "filename": "35.gif",
-    "image_url": "https://i.ibb.co/PZ9sSMhc/35.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940918/28_u7mcxy.mp4",
     "alt_text": "Dynamic animated GIF with energetic visuals",
     "tags": [
       "gif",
@@ -1852,7 +1852,7 @@ export const gifs = [
   {
     "id": "gif-29",
     "filename": "36.gif",
-    "image_url": "https://i.ibb.co/whzwDgxw/36.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940917/38_sdena6.mp4",
     "alt_text": "Creative GIF animation with artistic movement",
     "tags": [
       "gif",
@@ -1917,7 +1917,7 @@ export const gifs = [
   {
     "id": "gif-30",
     "filename": "38.gif",
-    "image_url": "https://i.ibb.co/Q7jN7WqF/38.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940916/42_a1uxt6.mp4",
     "alt_text": "Animated GIF with rhythmic looping motion",
     "tags": [
       "gif",
@@ -1984,7 +1984,7 @@ export const gifs = [
   {
     "id": "gif-31",
     "filename": "39.gif",
-    "image_url": "https://i.ibb.co/ZzxFYL1R/39.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940916/34_gonbkb.mp4",
     "alt_text": "Smooth GIF animation with fluid transitions",
     "tags": [
       "gif",
@@ -2049,7 +2049,7 @@ export const gifs = [
   {
     "id": "gif-32",
     "filename": "40.gif",
-    "image_url": "https://i.ibb.co/TDrdpTS2/40.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940916/41_ua3rzx.mp4",
     "alt_text": "Dynamic GIF with bold animated effects",
     "tags": [
       "gif",
@@ -2115,7 +2115,7 @@ export const gifs = [
   {
     "id": "gif-33",
     "filename": "41.gif",
-    "image_url": "https://i.ibb.co/Jwdcw5QT/41.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940916/36_zh7shk.mp4",
     "alt_text": "Creative looping GIF with unique visuals",
     "tags": [
       "gif",
@@ -2182,7 +2182,7 @@ export const gifs = [
   {
     "id": "gif-34",
     "filename": "42.gif",
-    "image_url": "https://i.ibb.co/jF0njGm/42.gif",
+    "image_url": "https://res.cloudinary.com/dpcmdnqbb/video/upload/v1765940916/33_ktacgn.mp4",
     "alt_text": "Animated GIF with smooth continuous motion",
     "tags": [
       "gif",
