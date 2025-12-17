@@ -27,13 +27,13 @@ const Navigation: React.FC = () => {
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     setIsOpen(false);
-    
+
     // Tiny timeout to allow the menu to start closing before the jump/scroll triggers
     setTimeout(() => {
-        const element = document.querySelector(href);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
-        }
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     }, 100);
   };
 
@@ -74,14 +74,31 @@ const Navigation: React.FC = () => {
       <nav className="fixed top-0 left-0 w-full z-50 px-8 py-8 flex justify-between items-center pointer-events-none text-white mix-blend-difference">
         {/* Logo */}
         <div className="pointer-events-auto">
-          <span className="font-bold tracking-widest text-4xl uppercase">9F</span>
+          <div
+            className="w-16 h-16 relative cursor-pointer overflow-hidden flex items-center justify-center transform -ml-2 md:-ml-0"
+            onMouseEnter={(e) => {
+              const video = e.currentTarget.querySelector('video') as HTMLVideoElement;
+              if (video) {
+                video.currentTime = 0;
+                video.play();
+              }
+            }}
+          >
+            <video
+              src="https://res.cloudinary.com/dpcmdnqbb/video/upload/logo_lb7ivc.mp4"
+              className="w-full h-full object-contain scale-150"
+              muted
+              playsInline
+            // No loop, so it stops after 1 time
+            />
+          </div>
         </div>
 
         {/* Menu Trigger - Toggles between MENU text and Close Icon */}
         <div className="pointer-events-auto cursor-pointer flex items-center justify-end w-32 h-10" onClick={toggleMenu} data-hover="true">
           <AnimatePresence mode="wait">
             {!isOpen ? (
-              <motion.div 
+              <motion.div
                 key="menu-text"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -93,7 +110,7 @@ const Navigation: React.FC = () => {
                 <span className="font-mono text-[20px] hidden group-hover:block font-bold">[ OPEN ]</span>
               </motion.div>
             ) : (
-              <motion.div 
+              <motion.div
                 key="close-icon"
                 initial={{ opacity: 0, rotate: -90 }}
                 animate={{ opacity: 1, rotate: 0 }}
@@ -128,8 +145,8 @@ const Navigation: React.FC = () => {
                   variants={itemVariants}
                   className="overflow-hidden"
                 >
-                  <a 
-                    href={item.href} 
+                  <a
+                    href={item.href}
                     className="block text-6xl md:text-8xl font-black uppercase tracking-tighter hover:text-gray-400 transition-colors duration-300 relative group"
                     onClick={(e) => handleNavClick(e, item.href)}
                     data-hover="true"
@@ -143,8 +160,8 @@ const Navigation: React.FC = () => {
             </div>
 
             {/* Background Texture/Grid inside Menu */}
-            <div className="absolute inset-0 pointer-events-none opacity-10" 
-                 style={{ backgroundImage: 'linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px)', backgroundSize: '40px 40px' }} 
+            <div className="absolute inset-0 pointer-events-none opacity-10"
+              style={{ backgroundImage: 'linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px)', backgroundSize: '40px 40px' }}
             />
           </motion.div>
         )}
