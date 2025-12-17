@@ -10,6 +10,20 @@ export const Preloader = ({ onComplete }: { onComplete: () => void }) => {
     const loadedCount = useRef(0);
     const totalToLoad = useRef(0);
 
+    // BLOCK SCROLLING WHEN ACTIVE
+    // BLOCK SCROLLING WHEN ACTIVE
+    useEffect(() => {
+        // Hide scrollbar on both body and html to ensure it's gone
+        document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden';
+
+        return () => {
+            document.body.style.overflow = 'unset';
+            document.documentElement.style.overflow = 'unset';
+            window.scrollTo(0, 0); // Ensure top separation
+        };
+    }, []);
+
     useEffect(() => {
         // 1. SETUP: Determine what to load
         // OPTIMIZATION: Only preload the very first viewport (15 items) to get user in faster.

@@ -147,12 +147,15 @@ const Gallery: React.FC = () => {
 
     // Simple clean Item Animation (No layout movement)
     const itemVariants: Variants = {
-        hidden: { opacity: 0, y: 30, scale: 0.95 },
+        hidden: { opacity: 0, y: 50, scale: 0.9 },
         visible: {
             opacity: 1,
             y: 0,
             scale: 1,
-            transition: { duration: 0.5, ease: "easeOut" }
+            transition: {
+                duration: 1.2,
+                ease: [0.22, 1, 0.36, 1] // Custom "smooth" easing
+            }
         }
     };
 
@@ -229,10 +232,31 @@ const Gallery: React.FC = () => {
                     </motion.h2>
 
                     {/* FILTER BUTTONS */}
-                    <div className="flex flex-wrap gap-2 md:gap-3 items-center">
+                    <motion.div
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, margin: "-10%" }}
+                        variants={{
+                            hidden: { opacity: 0 },
+                            visible: {
+                                opacity: 1,
+                                transition: {
+                                    staggerChildren: 0.1,
+                                    delayChildren: 0.2
+                                }
+                            }
+                        }}
+                        className="flex flex-wrap gap-2 md:gap-3 items-center"
+                    >
                         {FILTERS.map((filter) => (
-                            <button
+                            <motion.button
                                 key={filter.id}
+                                variants={{
+                                    hidden: { opacity: 0, y: 20 },
+                                    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+                                }}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
                                 onClick={() => {
                                     // Prevent useless re-renders if clicking same filter
                                     if (activeFilter === filter.id) return;
@@ -244,17 +268,17 @@ const Gallery: React.FC = () => {
                                     }
                                 }}
                                 className={`
-                        px-4 py-2 rounded-full border border-black font-mono text-xs md:text-sm uppercase tracking-wider transition-all duration-300
+                        px-4 py-2 rounded-full border border-black font-mono text-xs md:text-sm uppercase tracking-wider transition-colors duration-300
                         ${activeFilter === filter.id
-                                        ? 'bg-black text-white scale-105'
+                                        ? 'bg-black text-white'
                                         : 'bg-transparent text-black hover:bg-black/5'}
                     `}
                                 data-hover="true"
                             >
                                 {filter.label}
-                            </button>
+                            </motion.button>
                         ))}
-                    </div>
+                    </motion.div>
 
                     {/* SEARCH */}
                     <div className="flex items-center mb-1 md:mb-3" ref={searchContainerRef}>
@@ -854,6 +878,9 @@ const ProjectItem: React.FC<ProjectItemProps> = ({
             ref={containerRef}
             // Use simple fade in without layout prop to prevent layout thrashing
             variants={variants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-10%" }}
             className="flex flex-col w-full"
             onClick={onClick}
         >
