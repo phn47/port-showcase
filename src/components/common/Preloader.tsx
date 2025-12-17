@@ -28,6 +28,7 @@ export const Preloader = ({ onComplete }: { onComplete: () => void }) => {
         // 1. SETUP: Determine what to load
         // OPTIMIZATION: Only preload the very first viewport (15 items) to get user in faster.
         // The rest will be handled by the Gallery's progressive loading.
+        const isMounted = { current: true };
         const PRIORITY_BATCH = galleryData.slice(0, 15);
         totalToLoad.current = PRIORITY_BATCH.length;
 
@@ -41,10 +42,11 @@ export const Preloader = ({ onComplete }: { onComplete: () => void }) => {
             img.src = item.src;
 
             const markLoaded = () => {
+                if (!isMounted.current) return; // Prevent updates if unmounted
                 loadedCount.current++;
                 // Calculate real percentage
                 const rawPercent = (loadedCount.current / totalToLoad.current) * 100;
-                targetCount.current = Math.floor(rawPercent);
+                targetCount.current = Math.min(Math.floor(rawPercent), 100); // Clamp to 100
             };
 
             // Mark complete on success OR error (so one bad link doesn't hang the site)
@@ -80,6 +82,7 @@ export const Preloader = ({ onComplete }: { onComplete: () => void }) => {
         }, 3000);
 
         return () => {
+            isMounted.current = false;
             clearInterval(updateInterval);
             clearTimeout(fallbackTimeout);
         };
