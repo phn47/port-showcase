@@ -1,0 +1,23 @@
+body {
+  cursor: none; /* Hide default cursor for custom implementation */
+  overflow-x: hidden;
+  background-color: #FAFAFA;
+}
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #000;
+}
+.stroke-text {
+  -webkit-text-stroke: 1px white; /* Changed to white for hero visibility */
+  color: transparent;
+}
+/* Specific override for black sections if needed, but Hero uses white stroke */
+#timeline .stroke-text {
+    -webkit-text-stroke: 1px black;
+}

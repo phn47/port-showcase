@@ -1,63 +1,40 @@
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>9F | Order & Chaos</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    <!-- OPTIMIZATION: Preconnect to image server -->
-    <link rel="preconnect" href="https://i.ibb.co" crossorigin>
-    <link rel="dns-prefetch" href="https://i.ibb.co">
 
-    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Syne', 'sans-serif'],
-              mono: ['Space Mono', 'monospace'],
-            },
-            colors: {
-              black: '#050505',
-              white: '#FAFAFA',
-            },
-            cursor: {
-              none: 'none',
-            }
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>9F | Order & Chaos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- OPTIMIZATION: Preconnect to image server -->
+  <link rel="preconnect" href="https://i.ibb.co" crossorigin>
+  <link rel="dns-prefetch" href="https://i.ibb.co">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;700;800&display=swap"
+    rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Syne', 'sans-serif'],
+            mono: ['Space Mono', 'monospace'],
+          },
+          colors: {
+            black: '#050505',
+            white: '#FAFAFA',
+          },
+          cursor: {
+            none: 'none',
           }
         }
       }
-    </script>
-    <style>
-      body {
-        cursor: none; /* Hide default cursor for custom implementation */
-        overflow-x: hidden;
-        background-color: #FAFAFA;
-      }
-      /* Custom Scrollbar */
-      ::-webkit-scrollbar {
-        width: 6px;
-      }
-      ::-webkit-scrollbar-track {
-        background: transparent;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #000;
-      }
-      .stroke-text {
-        -webkit-text-stroke: 1px white; /* Changed to white for hero visibility */
-        color: transparent;
-      }
-      /* Specific override for black sections if needed, but Hero uses white stroke */
-      #timeline .stroke-text {
-         -webkit-text-stroke: 1px black;
-      }
-    </style>
+    }
+  </script>
   <script type="importmap">
 {
   "imports": {
@@ -69,10 +46,11 @@
   }
 }
 </script>
-<link rel="stylesheet" href="/index.css">
 </head>
-  <body>
-    <div id="root"></div>
-  <script type="module" src="/index.tsx"></script>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/index.tsx"></script>
 </body>
+
 </html>
