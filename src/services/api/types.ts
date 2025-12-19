@@ -10,8 +10,9 @@
 export type UserRole = 'admin' | 'editor' | 'viewer';
 export type ArtworkStatus = 'draft' | 'published' | 'archived';
 export type TimelineStatus = 'draft' | 'published' | 'archived';
+export type ServiceStatus = 'draft' | 'published' | 'archived';
 export type MediaType = 'image' | 'video';
-export type EntityType = 'artwork' | 'timeline_entry' | 'site_setting';
+export type EntityType = 'artwork' | 'timeline_entry' | 'service' | 'site_setting';
 
 export type ArtworkCategory =
   | 'Illustration'
@@ -113,6 +114,26 @@ export interface TimelineEntry {
   media_alt?: string | null;
   display_order: number;
   status: TimelineStatus;
+  metadata: Record<string, unknown>;
+  created_at: string;
+  updated_at: string;
+  published_at?: string | null;
+  created_by?: string | null;
+  updated_by?: string | null;
+}
+
+// ============================================
+// Service
+// ============================================
+
+export interface Service {
+  id: string;
+  name: string;
+  slug: string;
+  description?: string | null;
+  image_url?: string | null;
+  display_order: number;
+  status: ServiceStatus;
   metadata: Record<string, unknown>;
   created_at: string;
   updated_at: string;
@@ -261,6 +282,28 @@ export interface ReorderTimelineEntriesRequest {
   }>;
 }
 
+// Create Service
+export interface CreateServiceRequest {
+  name: string;
+  slug: string;
+  description?: string;
+  image_url?: string;
+  display_order?: number;
+  status?: ServiceStatus;
+  metadata?: Record<string, unknown>;
+}
+
+// Update Service
+export type UpdateServiceRequest = Partial<CreateServiceRequest>;
+
+// Reorder Services
+export interface ReorderServicesRequest {
+  items: Array<{
+    id: string;
+    display_order: number;
+  }>;
+}
+
 // Create Tag
 export interface CreateTagRequest {
   name: string;
@@ -308,6 +351,13 @@ export interface TimelineFilters {
   order?: 'display_order.asc' | 'display_order.desc';
 }
 
+export interface ServiceFilters {
+  status?: ServiceStatus | 'all';
+  limit?: number;
+  offset?: number;
+  order?: 'display_order.asc' | 'display_order.desc' | 'created_at.desc' | 'created_at.asc';
+}
+
 // ============================================
 // Gallery Item (for frontend compatibility)
 // ============================================
@@ -328,7 +378,7 @@ export interface GalleryItem {
 // Helper to convert Artwork to GalleryItem
 export function artworkToGalleryItem(artwork: Artwork): GalleryItem {
   const primaryMedia = artwork.media?.find((m) => m.is_primary) || artwork.media?.[0];
-  
+
   return {
     id: artwork.id,
     src: primaryMedia?.url || '',

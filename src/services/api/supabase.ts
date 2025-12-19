@@ -12,6 +12,10 @@ import type {
   TimelineFilters,
   CreateTimelineEntryRequest,
   UpdateTimelineEntryRequest,
+  Service,
+  ServiceFilters,
+  CreateServiceRequest,
+  UpdateServiceRequest,
   Tag,
   SiteSettings,
   UploadMediaResponse,
@@ -95,7 +99,7 @@ export const auth = {
 export const artworks = {
   async list(filters: ArtworkFilters = {}) {
     console.log('artworks.list called with filters:', filters);
-    
+
     // First, get artworks
     let query = supabase
       .from('artworks')
@@ -125,14 +129,14 @@ export const artworks = {
       const { data: taggedArtworks } = await supabase
         .from('artwork_tags')
         .select('artwork_id')
-        .in('tag_id', 
+        .in('tag_id',
           await supabase
             .from('tags')
             .select('id')
             .in('slug', filters.tags)
             .then(res => res.data?.map(t => t.id) || [])
         );
-      
+
       if (taggedArtworks && taggedArtworks.length > 0) {
         const artworkIds = taggedArtworks.map(t => t.artwork_id);
         query = query.in('id', artworkIds);
@@ -164,12 +168,12 @@ export const artworks = {
     }
 
     const { data: artworksData, error } = await query;
-    console.log('artworks.list query result:', { 
-      count: artworksData?.length || 0, 
+    console.log('artworks.list query result:', {
+      count: artworksData?.length || 0,
       error: error?.message,
       sample: artworksData?.[0]
     });
-    
+
     if (error) {
       console.error('artworks.list error:', error);
       throw error;
@@ -181,7 +185,7 @@ export const artworks = {
 
     // Fetch media and tags separately for better reliability
     const artworkIds = artworksData.map(a => a.id);
-    
+
     // Get media
     const { data: mediaData } = await supabase
       .from('artwork_media')
@@ -191,15 +195,15 @@ export const artworks = {
     // Get tags - use simpler query to avoid nested relation issues
     let tagRelations: any[] = [];
     let tagsData: any[] = [];
-    
+
     if (artworkIds.length > 0) {
       const { data: tagRels } = await supabase
         .from('artwork_tags')
         .select('artwork_id, tag_id')
         .in('artwork_id', artworkIds);
-      
+
       tagRelations = tagRels || [];
-      
+
       const tagIds = tagRelations.map(tr => tr.tag_id);
       if (tagIds.length > 0) {
         const { data: tags } = await supabase
@@ -215,7 +219,7 @@ export const artworks = {
       const artworkTagIds = tagRelations
         ?.filter(tr => tr.artwork_id === artwork.id)
         .map(tr => tr.tag_id) || [];
-      
+
       const artworkTags = tagsData?.filter(t => artworkTagIds.includes(t.id)) || [];
 
       return {
@@ -314,6 +318,27 @@ export const artworks = {
           .insert(tagRelations);
 
         if (tagsError) throw tagsError;
+      }
+    }
+
+    // Update media if provided
+    if (media !== undefined) {
+      // Delete existing media
+      const { error: deleteError } = await supabase.from('artwork_media').delete().eq('artwork_id', id);
+      if (deleteError) throw deleteError;
+
+      // Insert new media
+      if (media.length > 0) {
+        const mediaRecords = media.map((m) => ({
+          ...m,
+          artwork_id: id,
+        }));
+
+        const { error: mediaError } = await supabase
+          .from('artwork_media')
+          .insert(mediaRecords);
+
+        if (mediaError) throw mediaError;
       }
     }
 
@@ -444,6 +469,94 @@ export const timeline = {
     const updates = items.map((item) =>
       supabase
         .from('timeline_entries')
+        .update({ display_order: item.display_order })
+        .eq('id', item.id)
+    );
+
+    const results = await Promise.all(updates);
+    const errors = results.filter((r) => r.error);
+    if (errors.length > 0) throw errors[0].error;
+  },
+};
+
+// ============================================
+// Services API
+// ============================================
+
+export const services = {
+  async list(filters: ServiceFilters = {}) {
+    console.log('services.list called with filters:', filters);
+    let query = supabase.from('services').select('*');
+
+    if (filters.status && filters.status !== 'all') {
+      query = query.eq('status', filters.status);
+    }
+
+    if (filters.order) {
+      const [column, direction] = filters.order.split('.');
+      query = query.order(column, { ascending: direction === 'asc' });
+    } else {
+      query = query.order('display_order', { ascending: true });
+    }
+
+    if (filters.limit) {
+      query = query.limit(filters.limit);
+    }
+    if (filters.offset) {
+      query = query.range(filters.offset, filters.offset + (filters.limit || 20) - 1);
+    }
+
+    const { data, error } = await query;
+    console.log('services.list result:', { count: data?.length || 0, error: error?.message });
+    if (error) throw error;
+    return data as Service[];
+  },
+
+  async get(id: string) {
+    const { data, error } = await supabase
+      .from('services')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (error) throw error;
+    return data as Service;
+  },
+
+  async create(payload: CreateServiceRequest) {
+    const { data, error } = await supabase
+      .from('services')
+      .insert(payload)
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data as Service;
+  },
+
+  async update(id: string, payload: UpdateServiceRequest) {
+    const { error } = await supabase
+      .from('services')
+      .update(payload)
+      .eq('id', id);
+
+    if (error) throw error;
+    return this.get(id);
+  },
+
+  async delete(id: string) {
+    const { error } = await supabase
+      .from('services')
+      .update({ status: 'archived' })
+      .eq('id', id);
+
+    if (error) throw error;
+  },
+
+  async reorder(items: Array<{ id: string; display_order: number }>) {
+    const updates = items.map((item) =>
+      supabase
+        .from('services')
         .update({ display_order: item.display_order })
         .eq('id', item.id)
     );

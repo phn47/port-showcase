@@ -20,7 +20,7 @@ export const AdminLayout: React.FC = () => {
     { path: '/admin', label: 'Dashboard', icon: LayoutDashboard },
     { path: '/admin/artworks', label: 'Artworks', icon: Image },
     { path: '/admin/timeline', label: 'Timeline', icon: Clock },
-    { path: '/admin/settings', label: 'Settings', icon: Settings },
+    { path: '/admin/settings', label: 'Services', icon: Settings },
   ];
 
   const handleLogout = async () => {
@@ -44,11 +44,10 @@ export const AdminLayout: React.FC = () => {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                  isActive
+                className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive
                     ? 'bg-white text-black'
                     : 'text-gray-300 hover:bg-white/10 hover:text-white'
-                }`}
+                  }`}
               >
                 <Icon size={20} />
                 <span className="font-mono text-sm uppercase tracking-wider">{item.label}</span>

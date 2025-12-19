@@ -7,10 +7,11 @@ import { DashboardPage } from './pages/DashboardPage';
 import { ArtworksListPage } from './pages/ArtworksListPage';
 import { ArtworkEditorPage } from './pages/ArtworkEditorPage';
 import { TimelinePage } from './pages/TimelinePage';
+import { TimelineEditorPage } from './pages/TimelineEditorPage';
+import { SettingsPage } from './pages/SettingsPage';
 
 export const AdminApp: React.FC = () => {
   const { user, isLoading } = useAuth();
-
   if (isLoading) {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
@@ -30,7 +31,6 @@ export const AdminApp: React.FC = () => {
       </Routes>
     );
   }
-
   return (
     <Routes>
       <Route element={<AdminLayout />}>
@@ -38,7 +38,8 @@ export const AdminApp: React.FC = () => {
         <Route path="/artworks" element={<ArtworksListPage />} />
         <Route path="/artworks/:id" element={<ArtworkEditorPage />} />
         <Route path="/timeline" element={<TimelinePage />} />
-        <Route path="/settings" element={<div className="p-8">Settings - Coming soon</div>} />
+        <Route path="/timeline/:id" element={<TimelineEditorPage />} />
+        <Route path="/settings" element={<SettingsPage />} />
       </Route>
     </Routes>
   );

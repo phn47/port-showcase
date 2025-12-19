@@ -10,15 +10,19 @@ export const ArtworksListPage: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState<'all' | 'published' | 'draft' | 'archived'>('all');
   const [categoryFilter, setCategoryFilter] = useState<ArtworkCategory | 'all'>('all');
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [limit, setLimit] = useState<50 | 100>(50);
+  const [page, setPage] = useState(1);
 
   // Don't pass status filter if 'all' - fetch all statuses for admin
   const artworkFilters = {
     ...(statusFilter !== 'all' && { status: statusFilter }),
     ...(searchQuery && { q: searchQuery }),
+    limit,
+    offset: (page - 1) * limit,
   };
-  
+
   const { data: artworks, isLoading, error: artworksError } = useArtworks(artworkFilters);
-  
+
   console.log('ArtworksListPage - useArtworks result:', {
     artworks: artworks?.length,
     isLoading,
@@ -30,12 +34,15 @@ export const ArtworksListPage: React.FC = () => {
   const publishMutation = usePublishArtwork();
   const unpublishMutation = useUnpublishArtwork();
 
-  // Filter by category
+  // Filter by category (client-side)
   const filteredArtworks = useMemo(() => {
     if (!artworks) return [];
     if (categoryFilter === 'all') return artworks;
     return artworks.filter(a => a.category === categoryFilter);
   }, [artworks, categoryFilter]);
+
+  // Calculate total pages
+  const totalPages = Math.ceil((artworks?.length || 0) / limit);
 
   const handleDelete = async (id: string) => {
     if (confirm('Are you sure you want to delete this artwork?')) {
@@ -82,14 +89,14 @@ export const ArtworksListPage: React.FC = () => {
   };
 
   const categories: ArtworkCategory[] = [
-    'Illustration', 'Animation', 'Logo', 'Banner', 'NFT', 
+    'Illustration', 'Animation', 'Logo', 'Banner', 'NFT',
     'Meme', 'Sticker', 'Animated Sticker', 'GIF', 'Social Media', 'Comic'
   ];
 
   // Debug
-  console.log('ArtworksListPage render', { 
-    artworks, 
-    isLoading, 
+  console.log('ArtworksListPage render', {
+    artworks,
+    isLoading,
     filteredArtworks,
     artworksLength: artworks?.length,
     filteredLength: filteredArtworks.length,
@@ -135,7 +142,7 @@ export const ArtworksListPage: React.FC = () => {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value as any)}
-            className="bg-white/5 border border-white/10 px-4 py-2 focus:border-white focus:outline-none font-mono uppercase text-sm"
+            className="bg-black border border-white/20 px-4 py-2 focus:border-white focus:outline-none font-mono uppercase text-sm text-white rounded"
           >
             <option value="all">All Status</option>
             <option value="published">Published</option>
@@ -146,12 +153,24 @@ export const ArtworksListPage: React.FC = () => {
           <select
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value as any)}
-            className="bg-white/5 border border-white/10 px-4 py-2 focus:border-white focus:outline-none font-mono uppercase text-sm"
+            className="bg-black border border-white/20 px-4 py-2 focus:border-white focus:outline-none font-mono uppercase text-sm text-white rounded"
           >
             <option value="all">All Categories</option>
             {categories.map(cat => (
               <option key={cat} value={cat}>{cat}</option>
             ))}
+          </select>
+
+          <select
+            value={limit}
+            onChange={(e) => {
+              setLimit(Number(e.target.value) as 50 | 100);
+              setPage(1);
+            }}
+            className="bg-black border border-white/20 px-4 py-2 focus:border-white focus:outline-none font-mono uppercase text-sm text-white rounded"
+          >
+            <option value="50">50 per page</option>
+            <option value="100">100 per page</option>
           </select>
         </div>
       </div>
@@ -196,18 +215,6 @@ export const ArtworksListPage: React.FC = () => {
         </div>
       )}
 
-      {/* Debug Info */}
-      {process.env.NODE_ENV === 'development' && (
-        <div className="mb-4 p-4 bg-white/5 border border-white/10 rounded text-xs font-mono">
-          <div>Loading: {isLoading ? 'Yes' : 'No'}</div>
-          <div>Artworks: {artworks?.length || 0}</div>
-          <div>Filtered: {filteredArtworks.length}</div>
-          <div>Status Filter: {statusFilter}</div>
-          <div>Category Filter: {categoryFilter}</div>
-          {artworksError && <div className="text-red-500">Error: {artworksError.message}</div>}
-        </div>
-      )}
-
       {/* Table */}
       {isLoading ? (
         <div className="text-center py-12 text-gray-400">Loading artworks...</div>
@@ -228,8 +235,8 @@ export const ArtworksListPage: React.FC = () => {
         <div className="text-center py-12 text-gray-400">
           <p className="text-lg mb-2">No artworks match filters</p>
           <p className="text-sm mb-4">
-            Total artworks: {artworks.length} | 
-            Status: {statusFilter} | 
+            Total artworks: {artworks.length} |
+            Status: {statusFilter} |
             Category: {categoryFilter}
           </p>
           <button
@@ -287,11 +294,25 @@ export const ArtworksListPage: React.FC = () => {
                     </td>
                     <td className="px-6 py-4">
                       {primaryMedia ? (
-                        <div className="w-16 h-16 bg-white/5 rounded overflow-hidden">
-                          {primaryMedia.type === 'video' ? (
-                            <video src={primaryMedia.url} className="w-full h-full object-cover" muted />
+                        <div className="w-16 h-16 bg-white/5 rounded overflow-hidden relative">
+                          {(primaryMedia.type === 'video' || primaryMedia.url.match(/\.(mp4|webm|mov)$/i)) ? (
+                            <video
+                              src={primaryMedia.url}
+                              className="w-full h-full object-cover"
+                              muted
+                              playsInline
+                              onMouseOver={e => e.currentTarget.play()}
+                              onMouseOut={e => {
+                                e.currentTarget.pause();
+                                e.currentTarget.currentTime = 0;
+                              }}
+                            />
                           ) : (
-                            <img src={primaryMedia.url} alt={artwork.title} className="w-full h-full object-cover" />
+                            <img
+                              src={primaryMedia.url}
+                              alt={artwork.title}
+                              className="w-full h-full object-cover"
+                            />
                           )}
                         </div>
                       ) : (
@@ -311,13 +332,12 @@ export const ArtworksListPage: React.FC = () => {
                     </td>
                     <td className="px-6 py-4">
                       <span
-                        className={`px-2 py-1 rounded text-xs font-mono uppercase ${
-                          artwork.status === 'published'
-                            ? 'bg-green-500/20 text-green-500'
-                            : artwork.status === 'draft'
+                        className={`px-2 py-1 rounded text-xs font-mono uppercase ${artwork.status === 'published'
+                          ? 'bg-green-500/20 text-green-500'
+                          : artwork.status === 'draft'
                             ? 'bg-yellow-500/20 text-yellow-500'
                             : 'bg-gray-500/20 text-gray-500'
-                        }`}
+                          }`}
                       >
                         {artwork.status}
                       </span>
@@ -368,10 +388,58 @@ export const ArtworksListPage: React.FC = () => {
         </div>
       )}
 
-      {/* Pagination Info */}
+      {/* Pagination Controls */}
       {filteredArtworks.length > 0 && (
-        <div className="mt-4 text-sm text-gray-400 font-mono uppercase text-center">
-          Showing {filteredArtworks.length} of {artworks?.length || 0} artworks
+        <div className="mt-6 flex items-center justify-between">
+          <div className="text-sm text-gray-400 font-mono uppercase">
+            Showing {((page - 1) * limit) + 1}-{Math.min(page * limit, artworks?.length || 0)} of {artworks?.length || 0} artworks
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setPage(p => Math.max(1, p - 1))}
+              disabled={page === 1}
+              className="px-4 py-2 bg-white/5 border border-white/10 font-mono text-sm uppercase hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              Previous
+            </button>
+
+            <div className="flex items-center gap-1">
+              {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
+                let pageNum;
+                if (totalPages <= 5) {
+                  pageNum = i + 1;
+                } else if (page <= 3) {
+                  pageNum = i + 1;
+                } else if (page >= totalPages - 2) {
+                  pageNum = totalPages - 4 + i;
+                } else {
+                  pageNum = page - 2 + i;
+                }
+
+                return (
+                  <button
+                    key={pageNum}
+                    onClick={() => setPage(pageNum)}
+                    className={`px-3 py-2 font-mono text-sm transition-colors ${page === pageNum
+                      ? 'bg-white text-black'
+                      : 'bg-white/5 border border-white/10 hover:bg-white/10'
+                      }`}
+                  >
+                    {pageNum}
+                  </button>
+                );
+              })}
+            </div>
+
+            <button
+              onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+              disabled={page === totalPages}
+              className="px-4 py-2 bg-white/5 border border-white/10 font-mono text-sm uppercase hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              Next
+            </button>
+          </div>
         </div>
       )}
     </div>
