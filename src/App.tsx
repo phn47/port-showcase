@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { CustomCursor } from '@/components/ui/CustomCursor';
 import Navigation from '@/components/layout/Navigation';
@@ -10,8 +11,10 @@ import Services from '@/components/sections/Services';
 import Contact from '@/components/sections/Contact';
 import FloatingControls from '@/components/ui/FloatingControls';
 import { Preloader } from '@/components/common/Preloader';
+import { MigrateDataPage } from '@/pages/MigrateData';
+import { AdminApp } from '@/features/admin/AdminApp';
 
-const App: React.FC = () => {
+const PublicApp: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const handleLoadingComplete = () => {
@@ -38,6 +41,33 @@ const App: React.FC = () => {
       {/* Floating Controls (Chat + Scroll Top) */}
       {!isLoading && <FloatingControls />}
     </div>
+  );
+};
+
+const App: React.FC = () => {
+  const [showMigration, setShowMigration] = useState(false);
+
+  useEffect(() => {
+    // Check if migration page should be shown (via URL hash or query param)
+    const hash = window.location.hash;
+    const params = new URLSearchParams(window.location.search);
+    if (hash === '#migrate' || params.get('migrate') === 'true') {
+      setShowMigration(true);
+    }
+  }, []);
+
+  // Show migration page if requested
+  if (showMigration) {
+    return <MigrateDataPage />;
+  }
+
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/admin/*" element={<AdminApp />} />
+        <Route path="/*" element={<PublicApp />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 

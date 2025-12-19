@@ -1,76 +1,80 @@
-# 9F Universe
+# 9F Universe - Portfolio Showcase + CMS
 
-An avant-garde contemporary art portfolio featuring parallax scrolling, magnetic interactions, and a stark black-and-white aesthetic.
+A creative portfolio website with avant-garde black-white minimal aesthetic, built with React 19 + TypeScript + Vite + Tailwind CSS + Framer Motion.
 
-## Tech Stack
+## ✨ Features
 
-- **React 19**: Modern UI library for building user interfaces.
-- **TypeScript**: Static typing for better developer experience and code verification.
-- **Vite**: Ultra-fast build tool and dev server.
-- **Tailwind CSS**: Utility-first CSS framework for styling.
-- **Framer Motion**: Production-ready animation library.
-- **Lucide React**: Beautiful & consistent icons.
+- 🎨 **Public Portfolio**: Hero, Interactive Gallery (filter + search), Timeline, Contact
+- 🛠️ **Admin Dashboard**: Content management system for artworks, timeline, and settings
+- 🎭 **Animations**: Preloader, Custom Cursor (magnetic), Parallax scroll, Floating controls
+- 📦 **Headless CMS**: Supabase backend with REST API
 
-## Project Structure
+## 🚀 Quick Start
 
-The project has been refactored for scalability:
+See `README_SETUP.md` for detailed setup instructions.
 
-```text
+### Basic Setup
+
+1. **Database**: Run `database/schema.sql` in Supabase SQL Editor
+2. **Storage**: Create bucket `artwork-media` (public)
+3. **Admin User**: Create user and insert into `users` table with role `admin`
+4. **Run**: `npm install && npm run dev`
+
+## 📚 Documentation
+
+- `README_SETUP.md` - Setup & usage guide
+- `CMS_DESIGN.md` - Full CMS design document (1300+ lines)
+- `CMS_IMPLEMENTATION_GUIDE.md` - Implementation details
+- `ADMIN_SETUP.md` - Admin dashboard setup
+- `CHECK_RLS_GUIDE.md` - RLS policies troubleshooting
+- `SETUP_COMPLETE.md` - Initial setup checklist
+
+## 🛠️ Tech Stack
+
+- **Frontend**: React 19, TypeScript, Vite, Tailwind CSS, Framer Motion
+- **Backend**: Supabase (PostgreSQL + Auth + Storage)
+- **State**: React Query (@tanstack/react-query)
+- **Routing**: React Router v6
+
+## 📁 Project Structure
+
+```
 src/
-├── components/
+├── components/     # Public UI components
 │   ├── layout/    # Navigation, Footer
-│   ├── sections/  # Hero, Gallery, Timeline, etc.
-│   ├── ui/        # Reusable UI (Buttons, Marquee, Cursor)
-│   └── common/    # Utilities (Preloader)
-├── data/          # Static data assets (JSON/TS)
-├── App.tsx        # Main application entry
-├── index.css      # Global styles & Tailwind directives
-└── index.tsx      # Entry point
+│   ├── sections/  # Hero, Gallery, Timeline, Contact
+│   ├── ui/        # Custom Cursor, Marquee, Floating Controls
+│   └── common/    # Preloader
+├── features/       # Feature modules
+│   └── admin/     # Admin dashboard (CRUD, Settings)
+├── hooks/          # React hooks (useArtworks, useAuth, useTags)
+├── services/      # API clients (Supabase)
+├── providers/     # Context providers (QueryProvider)
+└── data/          # Static data (fallback)
 ```
 
-## Getting Started
+## 🎯 Admin Dashboard
 
-### Prerequisites
+- URL: `http://localhost:5173/admin`
+- Features:
+  - ✅ Dashboard overview
+  - ✅ Artworks CRUD (List, Create, Edit, Delete, Publish)
+  - ⏳ Timeline editor (coming soon)
+  - ⏳ Settings page (coming soon)
 
-- Node.js (v18+ recommended)
+## 📦 Database Scripts
 
-### Installation
+- `database/schema.sql` - Main database schema
+- `database/fix-rls-policies.sql` - Fix RLS policies
+- `database/check-rls-and-roles.sql` - Diagnostic queries
+- `database/allow-migration-insert.sql` - Temporary policies for migration
 
-1. Clone the repository.
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Set up environment variables:
-   - Create a `.env.local` file.
-   - Add your keys (e.g., `GEMINI_API_KEY`) if using AI features.
+## 🔧 Scripts
 
-### Development
+- `scripts/setup-database.md` - Database setup guide
+- `scripts/MIGRATE_DATA.md` - Data migration guide
+- `scripts/verify-migration.sql` - Verify migration results
 
-Start the local development server:
+---
 
-```bash
-npm run dev
-```
-
-### Build
-
-Build for production:
-
-```bash
-npm run build
-```
-
-Preview the production build:
-
-```bash
-npm run preview
-```
-
-## Features
-
-- **Preloader**: Progressive loading with visual feedback.
-- **Custom Cursor**: Magnetic interactions and custom states.
-- **Parallax Scroll**: Smooth scrolling effects using Framer Motion.
-- **Interactive Gallery**: Filterable and searchable artwork showcase.
-- **Floating Controls**: Quick access chat and scroll-to-top.
+**Built with ❤️ for 9F Universe**

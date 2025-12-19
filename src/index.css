@@ -3,6 +3,12 @@ body {
   overflow-x: hidden;
   background-color: #FAFAFA;
 }
+
+/* Show cursor in admin area */
+body.admin-mode,
+body.admin-mode * {
+  cursor: auto !important;
+}
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;

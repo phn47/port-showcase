@@ -2,7 +2,9 @@
 import React, { useRef, useMemo, useState, useEffect, useCallback } from 'react';
 import { motion, useScroll, useTransform, Variants, AnimatePresence, useInView } from 'framer-motion';
 import { X, Search, ArrowRight } from 'lucide-react';
-import { galleryData } from '@/data/index';
+import { galleryData } from '@/data/index'; // Fallback
+import { useArtworks } from '@/hooks/useArtworks';
+import { artworkToGalleryItem } from '@/services/api/types';
 
 // Define the interface
 interface GalleryItem {
@@ -160,7 +162,20 @@ const Gallery: React.FC = () => {
     };
 
     // --- DATA PROCESSING ---
-    const allWorkData = useMemo(() => galleryData, []);
+    // Fetch from API, fallback to static data
+    const { data: artworks, isLoading: isLoadingArtworks, error: artworksError } = useArtworks({ 
+      status: 'published' 
+    });
+    
+    // Transform API data to gallery format, or use static fallback
+    const apiData = useMemo(() => {
+      if (artworks && artworks.length > 0) {
+        return artworks.map(artworkToGalleryItem);
+      }
+      return null;
+    }, [artworks]);
+    
+    const allWorkData = useMemo(() => apiData || galleryData, [apiData]);
 
     const processedData = useMemo(() => {
         // A. Search Mode
