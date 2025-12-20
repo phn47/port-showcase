@@ -30,6 +30,8 @@ const Navigation: React.FC = () => {
     }
   }, [isOpen]);
 
+
+
   const toggleMenu = () => setIsOpen(!isOpen);
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -41,9 +43,9 @@ const Navigation: React.FC = () => {
       if (href.startsWith('/')) {
         navigate(href);
       } else {
-        // Internal Link logic with "Chase" mechanism
-        const scrollToElement = () => {
-          const element = document.querySelector(href) as HTMLElement;
+        // Logic extracted for reuse
+        const executeScroll = (targetHref: string) => {
+          const element = document.querySelector(targetHref) as HTMLElement;
           if (!element) return;
 
           if (lenis) {
@@ -51,7 +53,6 @@ const Navigation: React.FC = () => {
             lenis.scrollTo(element, { offset: 0, duration: 1.6, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
 
             // 2. Chase Mechanism (Retries for layout stability)
-            // Using same long duration (1.5s) prevents "jumps" - it just smoothly updates the target trajectory
             setTimeout(() => {
               lenis.scrollTo(element, { offset: 0, duration: 1.5, lock: false, force: true });
             }, 600);
@@ -60,15 +61,15 @@ const Navigation: React.FC = () => {
               lenis.scrollTo(element, { offset: 0, duration: 1.5, lock: false, force: true });
             }, 1500);
           } else {
-            // Fallback
             element.scrollIntoView({ behavior: 'smooth' });
           }
         };
 
+        const scrollToElement = () => executeScroll(href);
+
         if (location.pathname !== '/') {
-          navigate('/');
-          // Wait for page transition then scroll
-          setTimeout(scrollToElement, 500);
+          // Pass target via state to survive unmount/remount
+          navigate('/', { state: { scrollTo: href } });
         } else {
           scrollToElement();
         }

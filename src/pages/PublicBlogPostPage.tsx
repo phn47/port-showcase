@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useBlogPost, useBlogPosts } from '@/hooks/useBlog';
-import Navigation from '@/components/layout/Navigation';
 import { BlogFooter } from '@/components/layout/BlogFooter';
-import { CustomCursor } from '@/components/ui/CustomCursor';
 import { format } from 'date-fns';
 import { motion } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
@@ -19,8 +17,7 @@ export const PublicBlogPostPage: React.FC = () => {
 
     if (isLoading) {
         return (
-            <div className="bg-white min-h-screen text-black cursor-none flex items-center justify-center font-mono">
-                <CustomCursor />
+            <div className="bg-white min-h-screen text-black flex items-center justify-center font-mono">
                 Loading...
             </div>
         );
@@ -28,8 +25,7 @@ export const PublicBlogPostPage: React.FC = () => {
 
     if (!post) {
         return (
-            <div className="bg-white min-h-screen text-black cursor-none flex flex-col items-center justify-center font-mono">
-                <CustomCursor />
+            <div className="bg-white min-h-screen text-black flex flex-col items-center justify-center font-mono">
                 <h1 className="text-4xl font-bold mb-4">404 - Post not found</h1>
                 <Link to="/blog" className="underline">Back to Blog</Link>
             </div>
@@ -37,10 +33,7 @@ export const PublicBlogPostPage: React.FC = () => {
     }
 
     return (
-        <div className="bg-white min-h-screen text-black cursor-none selection:bg-gray-200 flex flex-col">
-            <CustomCursor />
-            <Navigation />
-
+        <div className="flex flex-col min-h-screen selection:bg-gray-200">
             <article className="pt-32 flex-grow">
                 <div className="container mx-auto px-4 max-w-4xl">
                     {/* Navigation Back */}

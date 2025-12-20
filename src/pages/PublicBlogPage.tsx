@@ -1,9 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useBlogPosts } from '@/hooks/useBlog';
-import Navigation from '@/components/layout/Navigation';
 import { BlogFooter } from '@/components/layout/BlogFooter';
-import { CustomCursor } from '@/components/ui/CustomCursor';
 import { format } from 'date-fns';
 import { motion } from 'framer-motion';
 
@@ -12,10 +10,7 @@ export const PublicBlogPage: React.FC = () => {
     const posts = data?.data || [];
 
     return (
-        <div className="bg-white min-h-screen text-black cursor-none flex flex-col">
-            <CustomCursor />
-            <Navigation />
-
+        <div className="flex flex-col min-h-screen">
             <div className="container mx-auto px-4 pt-40 pb-20 flex-grow">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import { CustomCursor } from '@/components/ui/CustomCursor';
 import Navigation from '@/components/layout/Navigation';
@@ -16,55 +16,15 @@ import { AdminApp } from '@/features/admin/AdminApp';
 import { PublicBlogPage } from '@/pages/PublicBlogPage';
 import { PublicBlogPostPage } from '@/pages/PublicBlogPostPage';
 
-const PublicApp: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(true);
-
-  const handleLoadingComplete = () => {
-    setIsLoading(false);
-    window.scrollTo(0, 0);
-  };
-
-  return (
-    <div className="bg-white min-h-screen text-black cursor-none">
-      <CustomCursor />
-
-      <AnimatePresence mode="wait">
-        {isLoading && <Preloader onComplete={handleLoadingComplete} />}
-      </AnimatePresence>
-
-      <SmoothScroll>
-        <Navigation />
-        <Hero startAnimation={!isLoading} />
-        <Marquee />
-        <Gallery />
-        <Timeline />
-        <Services />
-        <Contact />
-
-        {/* Floating Controls (Chat + Scroll Top) */}
-        {!isLoading && <FloatingControls />}
-      </SmoothScroll>
-    </div>
-  );
-};
+import { AnimatedRoutes } from '@/components/common/AnimatedRoutes';
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/admin/*" element={<AdminApp />} />
-        <Route path="/blog" element={
-          <SmoothScroll>
-            <PublicBlogPage />
-          </SmoothScroll>
-        } />
-        <Route path="/blog/:slug" element={
-          <SmoothScroll>
-            <PublicBlogPostPage />
-          </SmoothScroll>
-        } />
-        <Route path="/*" element={<PublicApp />} />
-      </Routes>
+      <div className="bg-white min-h-screen text-black cursor-none">
+        <CustomCursor />
+        <AnimatedRoutes />
+      </div>
     </BrowserRouter>
   );
 };

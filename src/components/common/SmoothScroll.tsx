@@ -23,6 +23,9 @@ export const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children
             touchMultiplier: 2,
         });
 
+        // Force scroll to top on mount (fixes issue when navigating between pages)
+        lenisInstance.scrollTo(0, { immediate: true });
+
         setLenis(lenisInstance);
 
         // Synchronize Lenis scroll with GSAP ScrollTrigger
