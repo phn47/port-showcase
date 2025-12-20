@@ -12,7 +12,6 @@ import Contact from '@/components/sections/Contact';
 import FloatingControls from '@/components/ui/FloatingControls';
 import { Preloader } from '@/components/common/Preloader';
 import { SmoothScroll } from '@/components/common/SmoothScroll';
-import { MigrateDataPage } from '@/pages/MigrateData';
 import { AdminApp } from '@/features/admin/AdminApp';
 import { PublicBlogPage } from '@/pages/PublicBlogPage';
 import { PublicBlogPostPage } from '@/pages/PublicBlogPostPage';
@@ -50,22 +49,6 @@ const PublicApp: React.FC = () => {
 };
 
 const App: React.FC = () => {
-  const [showMigration, setShowMigration] = useState(false);
-
-  useEffect(() => {
-    // Check if migration page should be shown (via URL hash or query param)
-    const hash = window.location.hash;
-    const params = new URLSearchParams(window.location.search);
-    if (hash === '#migrate' || params.get('migrate') === 'true') {
-      setShowMigration(true);
-    }
-  }, []);
-
-  // Show migration page if requested
-  if (showMigration) {
-    return <MigrateDataPage />;
-  }
-
   return (
     <BrowserRouter>
       <Routes>
