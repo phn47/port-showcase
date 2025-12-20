@@ -5,4 +5,5 @@ export { AdminSelect } from './AdminSelect';
 export { AdminBadge } from './AdminBadge';
 export { AdminPageHeader } from './AdminPageHeader';
 export { AdminActionButton } from './AdminActionButton';
+export { AdminRichTextEditor } from './AdminRichTextEditor';
 

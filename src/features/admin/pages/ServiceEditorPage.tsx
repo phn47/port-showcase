@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Save, Upload, X } from 'lucide-react';
-import { useServices, useCreateService, useUpdateService } from '@/hooks/useServices';
+import { useServices, useService, useCreateService, useUpdateService } from '@/hooks/useServices';
 import { media } from '@/services/api/supabase';
 import type { CreateServiceRequest, ServiceStatus } from '@/services/api/types';
-import { AdminButton, AdminPageHeader, AdminCard, AdminInput } from '@/features/admin/components/ui';
+import { AdminButton, AdminPageHeader, AdminCard, AdminInput, AdminRichTextEditor } from '@/features/admin/components/ui';
 
 export const ServiceEditorPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
@@ -13,6 +13,7 @@ export const ServiceEditorPage: React.FC = () => {
     const isNew = id === 'new';
 
     const { data: services, isLoading: isLoadingServices } = useServices();
+    const { data: service, isLoading: isLoadingService } = useService(!isNew && id ? id : '');
     const createMutation = useCreateService();
     const updateMutation = useUpdateService();
 
@@ -30,26 +31,25 @@ export const ServiceEditorPage: React.FC = () => {
     const [isSaving, setIsSaving] = useState(false);
 
     useEffect(() => {
-        if (!isNew && services) {
-            const service = services.find(s => s.id === id);
-            if (service) {
-                setFormData({
-                    name: service.name,
-                    slug: service.slug,
-                    description: service.description || '',
-                    image_url: service.image_url || '',
-                    display_order: service.display_order,
-                    status: service.status,
-                });
-                setPreviewUrl(service.image_url || null);
-            }
+        console.log('ServiceEditorPage useEffect:', { id, isNew, service: !!service, services: services?.length });
+        if (!isNew && service) {
+            console.log('Pre-filling form with service data:', service);
+            setFormData({
+                name: service.name,
+                slug: service.slug,
+                description: service.description || '',
+                image_url: service.image_url || '',
+                display_order: service.display_order,
+                status: service.status,
+            });
+            setPreviewUrl(service.image_url || null);
         } else if (isNew && services) {
             setFormData(prev => ({
                 ...prev,
                 display_order: services.length + 1
             }));
         }
-    }, [id, isNew, services]);
+    }, [id, isNew, service, services]);
 
     const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
@@ -98,7 +98,7 @@ export const ServiceEditorPage: React.FC = () => {
         }
     };
 
-    if (isLoadingServices && !isNew) {
+    if ((isLoadingServices || isLoadingService) && !isNew) {
         return <div className="p-12 text-center text-gray-400 font-mono italic">Loading service data...</div>;
     }
 
@@ -151,13 +151,13 @@ export const ServiceEditorPage: React.FC = () => {
                                 />
                             </div>
 
-                            <div>
-                                <label className="block text-xs font-mono uppercase tracking-widest text-gray-500 mb-2">Description</label>
-                                <textarea
-                                    value={formData.description}
-                                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                                    className="w-full bg-white/5 border border-white/10 px-4 py-3 rounded-lg focus:border-white focus:outline-none focus:bg-white/10 transition-all h-32"
+                            <div className="min-h-[400px]">
+                                <AdminRichTextEditor
+                                    label="Description"
+                                    value={formData.description || ''}
+                                    onChange={(content) => setFormData({ ...formData, description: content })}
                                     placeholder="Describe this service..."
+                                    height="350px"
                                 />
                             </div>
                         </div>
