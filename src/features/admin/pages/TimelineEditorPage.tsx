@@ -130,8 +130,8 @@ export const TimelineEditorPage: React.FC = () => {
                 </h1>
                 {formData.status && (
                     <div className={`px-3 py-1 text-sm font-mono uppercase border ${formData.status === 'published' ? 'border-green-500 text-green-500' :
-                            formData.status === 'archived' ? 'border-red-500 text-red-500' :
-                                'border-yellow-500 text-yellow-500'
+                        formData.status === 'archived' ? 'border-red-500 text-red-500' :
+                            'border-yellow-500 text-yellow-500'
                         }`}>
                         {formData.status}
                     </div>
@@ -187,8 +187,8 @@ export const TimelineEditorPage: React.FC = () => {
                                 {previewUrl ? (
                                     <div className="relative aspect-video bg-black/50 rounded overflow-hidden group">
                                         {/* Check media type for preview */}
-                                        {(imageFile?.type.startsWith('video/') || previewUrl.match(/\.(mp4|webm|mov)$/i)) ? (
-                                            <video src={previewUrl} className="w-full h-full object-cover" controls />
+                                        {(imageFile?.type.startsWith('video/') || previewUrl.match(/\.(mp4|webm|mov)$/i) || previewUrl.includes('/video/upload/')) ? (
+                                            <video src={previewUrl} className="w-full h-full object-cover" controls playsInline muted />
                                         ) : (
                                             <img src={previewUrl} alt="Preview" className="w-full h-full object-cover" />
                                         )}

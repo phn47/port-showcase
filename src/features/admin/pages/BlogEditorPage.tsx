@@ -217,7 +217,18 @@ export const BlogEditorPage: React.FC = () => {
                             <div className="aspect-video bg-black/50 rounded overflow-hidden relative group border border-dashed border-white/10 hover:border-white/30 transition-colors">
                                 {coverPreview ? (
                                     <>
-                                        <img src={coverPreview} alt="Cover" className="w-full h-full object-cover" />
+                                        {coverPreview.match(/\.(mp4|webm|mov)$/i) || coverPreview.includes('/video/upload/') || coverFile?.type.startsWith('video/') ? (
+                                            <video
+                                                src={coverPreview}
+                                                className="w-full h-full object-cover"
+                                                autoPlay
+                                                muted
+                                                loop
+                                                playsInline
+                                            />
+                                        ) : (
+                                            <img src={coverPreview} alt="Cover" className="w-full h-full object-cover" />
+                                        )}
                                         <button
                                             type="button"
                                             onClick={() => { setCoverFile(null); setCoverPreview(null); setFormData(p => ({ ...p, cover_image: '' })) }}
@@ -236,7 +247,7 @@ export const BlogEditorPage: React.FC = () => {
                                     type="file"
                                     className="absolute inset-0 opacity-0 cursor-pointer"
                                     onChange={handleImageSelect}
-                                    accept="image/*"
+                                    accept="image/*,video/*"
                                 />
                             </div>
                         </div>

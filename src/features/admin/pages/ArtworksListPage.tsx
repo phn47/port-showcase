@@ -318,7 +318,7 @@ export const ArtworksListPage: React.FC = () => {
                     <td className="px-6 py-5">
                       {primaryMedia ? (
                         <div className="w-20 h-20 bg-white/5 rounded-lg overflow-hidden relative border border-white/10">
-                          {(primaryMedia.type === 'video' || primaryMedia.url.match(/\.(mp4|webm|mov)$/i)) ? (
+                          {(primaryMedia.type === 'video' || primaryMedia.url.match(/\.(mp4|webm|mov)$/i) || primaryMedia.url.includes('/video/upload/')) ? (
                             <video
                               src={primaryMedia.url}
                               className="w-full h-full object-cover"

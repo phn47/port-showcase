@@ -269,7 +269,18 @@ const ServicesTab: React.FC = () => {
                                         <td className="px-6 py-5">
                                             {service.image_url ? (
                                                 <div className="w-16 h-16 rounded-lg overflow-hidden bg-black/20 border border-white/10">
-                                                    <img src={service.image_url} alt={service.name} className="w-full h-full object-cover" />
+                                                    {service.image_url.match(/\.(mp4|webm|mov)$/i) || service.image_url.includes('/video/upload/') ? (
+                                                        <video
+                                                            src={service.image_url}
+                                                            className="w-full h-full object-cover"
+                                                            autoPlay
+                                                            muted
+                                                            loop
+                                                            playsInline
+                                                        />
+                                                    ) : (
+                                                        <img src={service.image_url} alt={service.name} className="w-full h-full object-cover" />
+                                                    )}
                                                 </div>
                                             ) : (
                                                 <div className="w-16 h-16 bg-white/5 rounded border border-white/10" />

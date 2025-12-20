@@ -255,7 +255,18 @@ export const BlogListPage: React.FC = () => {
                                         <td className="px-6 py-5">
                                             {post.cover_image ? (
                                                 <div className="w-16 h-16 rounded-lg overflow-hidden bg-black/20 border border-white/10">
-                                                    <img src={post.cover_image} alt={post.title} className="w-full h-full object-cover" />
+                                                    {post.cover_image.match(/\.(mp4|webm|mov)$/i) || post.cover_image.includes('/video/upload/') ? (
+                                                        <video
+                                                            src={post.cover_image}
+                                                            className="w-full h-full object-cover"
+                                                            autoPlay
+                                                            muted
+                                                            loop
+                                                            playsInline
+                                                        />
+                                                    ) : (
+                                                        <img src={post.cover_image} alt={post.title} className="w-full h-full object-cover" />
+                                                    )}
                                                 </div>
                                             ) : (
                                                 <div className="w-16 h-16 bg-white/5 rounded border border-white/10" />

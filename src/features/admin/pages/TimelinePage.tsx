@@ -270,10 +270,15 @@ export const TimelinePage: React.FC = () => {
                     <td className="px-6 py-5">
                       {item.media_url ? (
                         <div className="w-16 h-16 rounded-lg overflow-hidden bg-black/20 border border-white/10">
-                          {item.media_url.match(/\.(mp4|webm|mov)$/i) ? (
-                            <div className="w-full h-full flex items-center justify-center bg-white/5">
-                              <span className="text-[10px] uppercase font-mono text-gray-400">Video</span>
-                            </div>
+                          {item.media_url.match(/\.(mp4|webm|mov)$/i) || item.media_url.includes('/video/upload/') ? (
+                            <video
+                              src={item.media_url}
+                              className="w-full h-full object-cover"
+                              autoPlay
+                              muted
+                              loop
+                              playsInline
+                            />
                           ) : (
                             <img src={item.media_url} alt={item.title} className="w-full h-full object-cover" />
                           )}

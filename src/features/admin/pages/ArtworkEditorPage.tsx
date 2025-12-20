@@ -201,8 +201,8 @@ export const ArtworkEditorPage: React.FC = () => {
               {mediaFiles.map((media, index) => (
                 <div key={index} className="relative group">
                   <div className="aspect-video bg-white/5 rounded overflow-hidden">
-                    {(media.file?.type.startsWith('video/') || media.url.match(/\.(mp4|webm|mov)$/i)) ? (
-                      <video src={media.url} className="w-full h-full object-cover" controls />
+                    {(media.file?.type.startsWith('video/') || media.url.match(/\.(mp4|webm|mov)$/i) || media.url.includes('/video/upload/')) ? (
+                      <video src={media.url} className="w-full h-full object-cover" controls playsInline muted />
                     ) : (
                       <img src={media.url} alt={`Media ${index + 1}`} className="w-full h-full object-cover" />
                     )}

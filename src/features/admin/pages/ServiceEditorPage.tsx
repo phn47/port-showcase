@@ -166,30 +166,42 @@ export const ServiceEditorPage: React.FC = () => {
                     <AdminCard title="Media & Display">
                         <div className="space-y-6">
                             <div>
-                                <label className="block text-xs font-mono uppercase tracking-widest text-gray-500 mb-4">Service Image</label>
+                                <label className="block text-xs font-mono uppercase tracking-widest text-gray-500 mb-4">Service Media (Image/Video)</label>
                                 <div className="relative border border-dashed border-white/20 rounded-xl p-8 hover:border-white/40 transition-colors group bg-white/5 text-center">
                                     <input
                                         type="file"
-                                        accept="image/*"
+                                        accept="image/*,video/*"
                                         onChange={handleImageSelect}
                                         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
                                     />
 
                                     {previewUrl ? (
                                         <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-black/50">
-                                            <img
-                                                src={previewUrl}
-                                                alt="Preview"
-                                                className="w-full h-full object-contain"
-                                            />
+                                            {previewUrl.match(/\.(mp4|webm|mov)$/i) || previewUrl.includes('/video/upload/') || imageFile?.type.startsWith('video/') ? (
+                                                <video
+                                                    src={previewUrl}
+                                                    className="w-full h-full object-contain"
+                                                    autoPlay
+                                                    muted
+                                                    loop
+                                                    playsInline
+                                                    controls
+                                                />
+                                            ) : (
+                                                <img
+                                                    src={previewUrl}
+                                                    alt="Preview"
+                                                    className="w-full h-full object-contain"
+                                                />
+                                            )}
                                             <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2 pointer-events-none">
                                                 <Upload className="text-white" size={24} />
-                                                <span className="text-white font-mono text-xs uppercase tracking-widest font-bold">Change Image</span>
+                                                <span className="text-white font-mono text-xs uppercase tracking-widest font-bold">Change Media</span>
                                             </div>
                                             <button
                                                 onClick={handleRemoveImage}
                                                 className="absolute top-4 right-4 p-2 bg-black/50 hover:bg-red-500 text-white rounded-full transition-all z-20 pointer-events-auto shadow-xl"
-                                                title="Remove image"
+                                                title="Remove media"
                                             >
                                                 <X size={18} />
                                             </button>
@@ -199,7 +211,7 @@ export const ServiceEditorPage: React.FC = () => {
                                             <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-4 group-hover:bg-white/10 transition-colors">
                                                 <Upload size={24} />
                                             </div>
-                                            <span className="text-xs font-mono uppercase tracking-[0.2em] font-bold">Click or Drag to upload image</span>
+                                            <span className="text-xs font-mono uppercase tracking-[0.2em] font-bold">Click or Drag to upload media</span>
                                             <p className="text-[10px] text-gray-500 mt-2 lowercase">Recommended size: 800x600px</p>
                                         </div>
                                     )}
