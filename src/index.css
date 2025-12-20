@@ -48,10 +48,19 @@ body.admin-mode::after {
 }
 
 /* Admin select dropdown styling */
+select {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
+
 select option {
   background-color: #000;
   color: #fff;
   padding: 8px;
+}
+
+select:focus {
+  outline: none;
 }
 
 select option:hover,

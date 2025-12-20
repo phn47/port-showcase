@@ -4,6 +4,7 @@ import { useBlogPosts, useDeleteBlogPost } from '@/hooks/useBlog';
 import { format } from 'date-fns';
 import { Edit, Trash2, Plus, Search, ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { AdminButton, AdminInput, AdminSelect, AdminBadge, AdminPageHeader, AdminCard, AdminActionButton } from '@/features/admin/components/ui';
 
 export const BlogListPage: React.FC = () => {
     const [statusFilter, setStatusFilter] = useState<'all' | 'published' | 'draft' | 'archived'>('all');
@@ -25,46 +26,47 @@ export const BlogListPage: React.FC = () => {
     const posts = data?.data || [];
 
     return (
-        <div className="p-8">
-            <div className="flex items-center justify-between mb-8">
-                <div>
-                    <h1 className="text-5xl font-black uppercase tracking-tighter mb-2">Blog</h1>
-                    <p className="text-gray-400 font-mono text-sm uppercase tracking-widest">
-                        Manage your articles
-                    </p>
-                </div>
-                <Link
-                    to="/admin/blog/new"
-                    className="flex items-center gap-2 px-6 py-3 bg-white text-black font-bold uppercase tracking-wider hover:bg-gray-200 transition-colors"
-                >
-                    <Plus size={20} />
-                    New Guy
-                </Link>
-            </div>
+        <div className="p-12">
+            <AdminPageHeader
+                title="Blog"
+                subtitle="Manage your articles"
+                action={
+                    <AdminButton
+                        asLink
+                        to="/admin/blog/new"
+                        icon={<Plus size={20} />}
+                    >
+                        New Post
+                    </AdminButton>
+                }
+            />
 
             {/* Filters */}
-            <div className="flex gap-4 mb-6">
-                <div className="relative flex-1 max-w-md">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={16} />
-                    <input
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.6 }}
+                className="flex gap-4 mb-8"
+            >
+                <div className="flex-1 max-w-md">
+                    <AdminInput
                         type="text"
                         placeholder="Search posts..."
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
-                        className="w-full bg-white/5 border border-white/10 pl-10 pr-4 py-2 focus:border-white focus:outline-none font-mono text-sm"
+                        icon={<Search size={18} />}
                     />
                 </div>
-                <select
+                <AdminSelect
                     value={statusFilter}
                     onChange={(e) => setStatusFilter(e.target.value as any)}
-                    className="bg-white/5 border border-white/10 px-4 py-2 focus:border-white focus:outline-none font-mono uppercase text-sm"
                 >
                     <option value="all">All Status</option>
                     <option value="published">Published</option>
                     <option value="draft">Draft</option>
                     <option value="archived">Archived</option>
-                </select>
-            </div>
+                </AdminSelect>
+            </motion.div>
 
             {/* List */}
             {isLoading ? (
@@ -79,47 +81,54 @@ export const BlogListPage: React.FC = () => {
                     {posts.map((post, idx) => (
                         <motion.div
                             key={post.id}
-                            initial={{ opacity: 0, y: 10 }}
+                            initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: idx * 0.05 }}
-                            className="bg-white/5 border border-white/10 p-4 rounded-lg flex items-center justify-between group hover:border-white/30 transition-colors"
+                            transition={{ delay: idx * 0.05, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                         >
-                            <div className="flex items-center gap-4">
+                            <AdminCard padding="md" hover className="flex items-center justify-between group">
+                            <div className="flex items-center gap-6 flex-1 min-w-0">
                                 {post.cover_image && (
-                                    <img src={post.cover_image} alt="" className="w-16 h-16 object-cover rounded bg-black/50" />
+                                    <div className="w-24 h-24 rounded-lg overflow-hidden bg-black/20 border border-white/10 flex-shrink-0">
+                                        <img src={post.cover_image} alt={post.title} className="w-full h-full object-cover" />
+                                    </div>
                                 )}
-                                <div>
-                                    <div className="font-bold text-lg mb-1">{post.title}</div>
-                                    <div className="flex items-center gap-3 text-xs font-mono uppercase text-gray-400">
-                                        <span className={`px-2 py-0.5 rounded border ${post.status === 'published' ? 'border-green-500 text-green-500' :
-                                                post.status === 'archived' ? 'border-red-500 text-red-500' :
-                                                    'border-yellow-500 text-yellow-500'
-                                            }`}>
+                                    <div className="flex-1 min-w-0">
+                                    <div className="font-bold text-lg mb-2 uppercase">{post.title}</div>
+                                    <div className="flex items-center gap-3 text-xs font-mono uppercase">
+                                        <AdminBadge variant={post.status === 'published' ? 'published' : post.status === 'archived' ? 'archived' : 'draft'}>
                                             {post.status}
-                                        </span>
-                                        <span>{format(new Date(post.created_at), 'MMM dd, yyyy')}</span>
-                                        {post.slug && <span className="text-gray-600">/{post.slug}</span>}
+                                        </AdminBadge>
+                                        <span className="text-gray-400">{format(new Date(post.created_at), 'MMM dd, yyyy')}</span>
+                                        {post.slug && <span className="text-gray-500">/{post.slug}</span>}
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity ml-4">
                                 {post.status === 'published' && (
-                                    <a href={`/blog/${post.slug}`} target="_blank" rel="noreferrer" className="p-2 hover:bg-white/10 rounded text-gray-400 hover:text-white" title="View Live">
-                                        <ExternalLink size={18} />
+                                    <a 
+                                        href={`/blog/${post.slug}`} 
+                                        target="_blank" 
+                                        rel="noreferrer" 
+                                        className="p-2.5 hover:bg-white/10 rounded-lg text-gray-400 hover:text-white transition-all hover:scale-110 inline-flex items-center justify-center" 
+                                        title="View Live"
+                                    >
+                                        <ExternalLink size={16} />
                                     </a>
                                 )}
-                                <Link to={`/admin/blog/${post.id}`} className="p-2 hover:bg-white/10 rounded text-gray-400 hover:text-white" title="Edit">
-                                    <Edit size={18} />
-                                </Link>
-                                <button
+                                <AdminActionButton
+                                    icon={Edit}
+                                    to={`/admin/blog/${post.id}`}
+                                    title="Edit"
+                                />
+                                <AdminActionButton
+                                    icon={Trash2}
                                     onClick={() => handleDelete(post.id, post.title)}
-                                    className="p-2 hover:bg-red-500/20 rounded text-gray-400 hover:text-red-500"
+                                    variant="danger"
                                     title="Delete"
-                                >
-                                    <Trash2 size={18} />
-                                </button>
+                                />
                             </div>
+                            </AdminCard>
                         </motion.div>
                     ))}
                 </div>

@@ -1,13 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useBlogPosts } from '@/hooks/useBlog';
 import { BlogFooter } from '@/components/layout/BlogFooter';
 import { format } from 'date-fns';
 import { motion } from 'framer-motion';
+import { useLenis } from '@/components/common/SmoothScroll';
 
 export const PublicBlogPage: React.FC = () => {
     const { data, isLoading } = useBlogPosts({ status: 'published' });
     const posts = data?.data || [];
+    const lenis = useLenis();
+
+    // Ensure page scrolls to top when mounted
+    useEffect(() => {
+        if (lenis) {
+            // Immediate scroll to top on mount
+            lenis.scrollTo(0, { immediate: true });
+            // Force scroll again after a short delay to ensure it sticks
+            setTimeout(() => {
+                lenis.scrollTo(0, { immediate: true });
+            }, 50);
+        }
+    }, [lenis]);
 
     return (
         <div className="flex flex-col min-h-screen">

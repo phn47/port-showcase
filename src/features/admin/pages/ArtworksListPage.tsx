@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useArtworks, useDeleteArtwork, usePublishArtwork, useUnpublishArtwork } from '@/hooks/useArtworks';
 import { Plus, Search, Filter, Eye, EyeOff, Trash2, Edit } from 'lucide-react';
 import type { ArtworkCategory } from '@/services/api/types';
+import { AdminButton, AdminInput, AdminSelect, AdminBadge, AdminPageHeader, AdminCard, AdminActionButton } from '@/features/admin/components/ui';
 
 export const ArtworksListPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -105,114 +106,122 @@ export const ArtworksListPage: React.FC = () => {
   });
 
   return (
-    <div className="p-8 cursor-auto">
+    <div className="p-12 cursor-auto">
       {/* Header */}
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-5xl font-black uppercase tracking-tighter mb-2">Artworks</h1>
-          <p className="text-gray-400 font-mono text-sm uppercase tracking-widest">
-            Manage your portfolio
-          </p>
-        </div>
-        <Link
-          to="/admin/artworks/new"
-          className="flex items-center gap-2 px-6 py-3 bg-white text-black font-bold uppercase tracking-wider hover:bg-gray-200 transition-colors"
-        >
-          <Plus size={20} />
-          New Artwork
-        </Link>
-      </div>
+      <AdminPageHeader
+        title="Artworks"
+        subtitle="Manage your portfolio"
+        action={
+          <AdminButton
+            asLink
+            to="/admin/artworks/new"
+            icon={<Plus size={20} />}
+          >
+            New Artwork
+          </AdminButton>
+        }
+      />
 
       {/* Filters */}
-      <div className="mb-6 space-y-4">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1, duration: 0.6 }}
+        className="mb-8 space-y-4"
+      >
         {/* Search */}
-        <div className="relative">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search artworks..."
-            className="w-full bg-white/5 border border-white/10 px-12 py-3 focus:border-white focus:outline-none transition-colors font-mono"
-          />
-        </div>
+        <AdminInput
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search artworks..."
+          icon={<Search size={20} />}
+        />
 
         {/* Status & Category Filters */}
-        <div className="flex gap-4">
-          <select
+        <div className="flex flex-wrap gap-4">
+          <AdminSelect
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value as any)}
-            className="bg-black border border-white/20 px-4 py-2 focus:border-white focus:outline-none font-mono uppercase text-sm text-white rounded"
           >
             <option value="all">All Status</option>
             <option value="published">Published</option>
             <option value="draft">Draft</option>
             <option value="archived">Archived</option>
-          </select>
+          </AdminSelect>
 
-          <select
+          <AdminSelect
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value as any)}
-            className="bg-black border border-white/20 px-4 py-2 focus:border-white focus:outline-none font-mono uppercase text-sm text-white rounded"
           >
             <option value="all">All Categories</option>
             {categories.map(cat => (
               <option key={cat} value={cat}>{cat}</option>
             ))}
-          </select>
+          </AdminSelect>
 
-          <select
+          <AdminSelect
             value={limit}
             onChange={(e) => {
               setLimit(Number(e.target.value) as 50 | 100);
               setPage(1);
             }}
-            className="bg-black border border-white/20 px-4 py-2 focus:border-white focus:outline-none font-mono uppercase text-sm text-white rounded"
           >
             <option value="50">50 per page</option>
             <option value="100">100 per page</option>
-          </select>
+          </AdminSelect>
         </div>
-      </div>
+      </motion.div>
 
       {/* Bulk Actions */}
       {selectedIds.size > 0 && (
-        <div className="mb-4 p-4 bg-white/5 border border-white/10 rounded-lg flex items-center justify-between">
-          <span className="font-mono text-sm uppercase">
-            {selectedIds.size} selected
-          </span>
-          <div className="flex gap-2">
-            <button
-              onClick={() => {
-                selectedIds.forEach(id => handlePublish(id));
-                setSelectedIds(new Set());
-              }}
-              className="px-4 py-2 bg-green-500 text-white font-mono text-xs uppercase hover:bg-green-600"
-            >
-              Publish Selected
-            </button>
-            <button
-              onClick={() => {
-                selectedIds.forEach(id => handleUnpublish(id));
-                setSelectedIds(new Set());
-              }}
-              className="px-4 py-2 bg-yellow-500 text-white font-mono text-xs uppercase hover:bg-yellow-600"
-            >
-              Unpublish Selected
-            </button>
-            <button
-              onClick={() => {
-                if (confirm(`Delete ${selectedIds.size} artworks?`)) {
-                  selectedIds.forEach(id => handleDelete(id));
-                  setSelectedIds(new Set());
-                }
-              }}
-              className="px-4 py-2 bg-red-500 text-white font-mono text-xs uppercase hover:bg-red-600"
-            >
-              Delete Selected
-            </button>
-          </div>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-6"
+        >
+          <AdminCard padding="md">
+            <div className="flex items-center justify-between">
+              <span className="font-mono text-sm uppercase tracking-wider font-bold">
+                {selectedIds.size} selected
+              </span>
+              <div className="flex gap-3">
+                <AdminButton
+                  variant="success"
+                  size="sm"
+                  onClick={() => {
+                    selectedIds.forEach(id => handlePublish(id));
+                    setSelectedIds(new Set());
+                  }}
+                >
+                  Publish Selected
+                </AdminButton>
+                <AdminButton
+                  variant="warning"
+                  size="sm"
+                  onClick={() => {
+                    selectedIds.forEach(id => handleUnpublish(id));
+                    setSelectedIds(new Set());
+                  }}
+                >
+                  Unpublish Selected
+                </AdminButton>
+                <AdminButton
+                  variant="danger"
+                  size="sm"
+                  onClick={() => {
+                    if (confirm(`Delete ${selectedIds.size} artworks?`)) {
+                      selectedIds.forEach(id => handleDelete(id));
+                      setSelectedIds(new Set());
+                    }
+                  }}
+                >
+                  Delete Selected
+                </AdminButton>
+              </div>
+            </div>
+          </AdminCard>
+        </motion.div>
       )}
 
       {/* Table */}
@@ -251,24 +260,24 @@ export const ArtworksListPage: React.FC = () => {
           </button>
         </div>
       ) : (
-        <div className="bg-white/5 border border-white/10 rounded-lg overflow-hidden">
+        <AdminCard padding="none" className="overflow-hidden">
           <table className="w-full">
-            <thead className="bg-white/5 border-b border-white/10">
+            <thead className="bg-black/20 border-b border-white/10">
               <tr>
-                <th className="px-6 py-4 text-left">
+                <th className="px-6 py-5 text-left">
                   <input
                     type="checkbox"
                     checked={selectedIds.size === filteredArtworks.length && filteredArtworks.length > 0}
                     onChange={toggleSelectAll}
-                    className="w-4 h-4"
+                    className="w-4 h-4 cursor-pointer"
                   />
                 </th>
-                <th className="px-6 py-4 text-left font-mono text-xs uppercase tracking-wider">Thumbnail</th>
-                <th className="px-6 py-4 text-left font-mono text-xs uppercase tracking-wider">Title</th>
-                <th className="px-6 py-4 text-left font-mono text-xs uppercase tracking-wider">Category</th>
-                <th className="px-6 py-4 text-left font-mono text-xs uppercase tracking-wider">Status</th>
-                <th className="px-6 py-4 text-left font-mono text-xs uppercase tracking-wider">Order</th>
-                <th className="px-6 py-4 text-left font-mono text-xs uppercase tracking-wider">Actions</th>
+                <th className="px-6 py-5 text-left font-mono text-xs uppercase tracking-wider font-bold">Thumbnail</th>
+                <th className="px-6 py-5 text-left font-mono text-xs uppercase tracking-wider font-bold">Title</th>
+                <th className="px-6 py-5 text-left font-mono text-xs uppercase tracking-wider font-bold">Category</th>
+                <th className="px-6 py-5 text-left font-mono text-xs uppercase tracking-wider font-bold">Status</th>
+                <th className="px-6 py-5 text-left font-mono text-xs uppercase tracking-wider font-bold">Order</th>
+                <th className="px-6 py-5 text-left font-mono text-xs uppercase tracking-wider font-bold">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -282,19 +291,19 @@ export const ArtworksListPage: React.FC = () => {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.02 }}
-                    className={`border-b border-white/5 hover:bg-white/5 ${isSelected ? 'bg-white/10' : ''}`}
+                    className={`border-b border-white/5 hover:bg-white/5 transition-colors ${isSelected ? 'bg-white/10' : ''}`}
                   >
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-5">
                       <input
                         type="checkbox"
                         checked={isSelected}
                         onChange={() => toggleSelect(artwork.id)}
-                        className="w-4 h-4"
+                        className="w-4 h-4 cursor-pointer"
                       />
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-5">
                       {primaryMedia ? (
-                        <div className="w-16 h-16 bg-white/5 rounded overflow-hidden relative">
+                        <div className="w-20 h-20 bg-white/5 rounded-lg overflow-hidden relative border border-white/10">
                           {(primaryMedia.type === 'video' || primaryMedia.url.match(/\.(mp4|webm|mov)$/i)) ? (
                             <video
                               src={primaryMedia.url}
@@ -319,65 +328,51 @@ export const ArtworksListPage: React.FC = () => {
                         <div className="w-16 h-16 bg-white/5 rounded" />
                       )}
                     </td>
-                    <td className="px-6 py-4">
-                      <div className="font-bold uppercase">{artwork.title}</div>
+                    <td className="px-6 py-5">
+                      <div className="font-bold uppercase text-sm mb-1">{artwork.title}</div>
                       {artwork.description && (
-                        <div className="text-sm text-gray-400 mt-1 line-clamp-1">
+                        <div className="text-xs text-gray-400 mt-1 line-clamp-1 font-mono">
                           {artwork.description.substring(0, 60)}...
                         </div>
                       )}
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-5">
                       <span className="font-mono text-xs uppercase text-gray-400">{artwork.category}</span>
                     </td>
-                    <td className="px-6 py-4">
-                      <span
-                        className={`px-2 py-1 rounded text-xs font-mono uppercase ${artwork.status === 'published'
-                          ? 'bg-green-500/20 text-green-500'
-                          : artwork.status === 'draft'
-                            ? 'bg-yellow-500/20 text-yellow-500'
-                            : 'bg-gray-500/20 text-gray-500'
-                          }`}
-                      >
+                    <td className="px-6 py-5">
+                      <AdminBadge variant={artwork.status === 'published' ? 'published' : artwork.status === 'draft' ? 'draft' : 'default'}>
                         {artwork.status}
-                      </span>
+                      </AdminBadge>
                     </td>
-                    <td className="px-6 py-4">
-                      <span className="font-mono text-sm">{artwork.display_order}</span>
+                    <td className="px-6 py-5">
+                      <span className="font-mono text-sm text-gray-400">{artwork.display_order}</span>
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-5">
                       <div className="flex items-center gap-2">
-                        <Link
+                        <AdminActionButton
+                          icon={Edit}
                           to={`/admin/artworks/${artwork.id}`}
-                          className="p-2 hover:bg-white/10 rounded transition-colors"
                           title="Edit"
-                        >
-                          <Edit size={16} />
-                        </Link>
+                        />
                         {artwork.status === 'published' ? (
-                          <button
+                          <AdminActionButton
+                            icon={EyeOff}
                             onClick={() => handleUnpublish(artwork.id)}
-                            className="p-2 hover:bg-white/10 rounded transition-colors"
                             title="Unpublish"
-                          >
-                            <EyeOff size={16} />
-                          </button>
+                          />
                         ) : (
-                          <button
+                          <AdminActionButton
+                            icon={Eye}
                             onClick={() => handlePublish(artwork.id)}
-                            className="p-2 hover:bg-white/10 rounded transition-colors"
                             title="Publish"
-                          >
-                            <Eye size={16} />
-                          </button>
+                          />
                         )}
-                        <button
+                        <AdminActionButton
+                          icon={Trash2}
                           onClick={() => handleDelete(artwork.id)}
-                          className="p-2 hover:bg-red-500/20 text-red-500 rounded transition-colors"
+                          variant="danger"
                           title="Delete"
-                        >
-                          <Trash2 size={16} />
-                        </button>
+                        />
                       </div>
                     </td>
                   </motion.tr>
@@ -385,26 +380,27 @@ export const ArtworksListPage: React.FC = () => {
               })}
             </tbody>
           </table>
-        </div>
+        </AdminCard>
       )}
 
       {/* Pagination Controls */}
       {filteredArtworks.length > 0 && (
-        <div className="mt-6 flex items-center justify-between">
-          <div className="text-sm text-gray-400 font-mono uppercase">
+        <div className="mt-8 flex items-center justify-between">
+          <div className="text-sm text-gray-400 font-mono uppercase tracking-wider">
             Showing {((page - 1) * limit) + 1}-{Math.min(page * limit, artworks?.length || 0)} of {artworks?.length || 0} artworks
           </div>
 
-          <div className="flex items-center gap-2">
-            <button
+          <div className="flex items-center gap-3">
+            <AdminButton
+              variant="secondary"
+              size="sm"
               onClick={() => setPage(p => Math.max(1, p - 1))}
               disabled={page === 1}
-              className="px-4 py-2 bg-white/5 border border-white/10 font-mono text-sm uppercase hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               Previous
-            </button>
+            </AdminButton>
 
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-2">
               {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
                 let pageNum;
                 if (totalPages <= 5) {
@@ -421,9 +417,9 @@ export const ArtworksListPage: React.FC = () => {
                   <button
                     key={pageNum}
                     onClick={() => setPage(pageNum)}
-                    className={`px-3 py-2 font-mono text-sm transition-colors ${page === pageNum
-                      ? 'bg-white text-black'
-                      : 'bg-white/5 border border-white/10 hover:bg-white/10'
+                    className={`px-4 py-3 font-mono text-sm transition-all rounded-lg ${page === pageNum
+                      ? 'bg-white text-black font-bold'
+                      : 'bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20'
                       }`}
                   >
                     {pageNum}
@@ -432,13 +428,14 @@ export const ArtworksListPage: React.FC = () => {
               })}
             </div>
 
-            <button
+            <AdminButton
+              variant="secondary"
+              size="sm"
               onClick={() => setPage(p => Math.min(totalPages, p + 1))}
               disabled={page === totalPages}
-              className="px-4 py-2 bg-white/5 border border-white/10 font-mono text-sm uppercase hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               Next
-            </button>
+            </AdminButton>
           </div>
         </div>
       )}

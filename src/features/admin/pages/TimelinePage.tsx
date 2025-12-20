@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useTimelineEntries, useDeleteTimelineEntry } from '@/hooks/useTimeline';
 import type { TimelineStatus } from '@/services/api/types';
+import { AdminButton, AdminSelect, AdminBadge, AdminPageHeader, AdminCard, AdminActionButton } from '@/features/admin/components/ui';
+import { Edit, Trash2, Plus } from 'lucide-react';
 
 const STATUS_OPTIONS: Array<TimelineStatus | 'all'> = ['all', 'published', 'draft', 'archived'];
 
@@ -27,35 +29,33 @@ export const TimelinePage: React.FC = () => {
   };
 
   return (
-    <div className="p-8 cursor-auto">
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-5xl font-black uppercase tracking-tighter mb-2">Timeline</h1>
-          <p className="text-gray-400 font-mono text-sm uppercase tracking-widest">
-            Manage roadmap milestones
-          </p>
-        </div>
-        <Link
-          to="/admin/timeline/new"
-          className="px-6 py-3 bg-white text-black font-bold uppercase tracking-wider hover:bg-gray-200 transition-colors"
-        >
-          New Entry
-        </Link>
-      </div>
+    <div className="p-12 cursor-auto">
+      <AdminPageHeader
+        title="Timeline"
+        subtitle="Manage roadmap milestones"
+        action={
+          <AdminButton
+            asLink
+            to="/admin/timeline/new"
+            icon={<Plus size={20} />}
+          >
+            New Entry
+          </AdminButton>
+        }
+      />
 
       {/* Filters */}
-      <div className="mb-6">
-        <select
+      <div className="mb-8">
+        <AdminSelect
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value as any)}
-          className="bg-white/5 border border-white/10 px-4 py-2 focus:border-white focus:outline-none font-mono uppercase text-sm"
         >
           {STATUS_OPTIONS.map((s) => (
             <option key={s} value={s}>
-              {s}
+              {s === 'all' ? 'All Status' : s}
             </option>
           ))}
-        </select>
+        </AdminSelect>
       </div>
 
       {/* Content */}
@@ -78,34 +78,38 @@ export const TimelinePage: React.FC = () => {
           {filtered.map((item, idx) => (
             <motion.div
               key={item.id}
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: idx * 0.02 }}
-              className="bg-white/5 border border-white/10 rounded-lg p-4 flex items-start justify-between"
+              transition={{ delay: idx * 0.05, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div>
-                <div className="font-bold uppercase text-lg">{item.title}</div>
-                <div className="text-sm text-gray-400 font-mono uppercase">
-                  {item.date_label} • {item.status}
+              <AdminCard padding="md" hover className="flex items-start justify-between">
+                <div className="flex-1">
+                  <div className="font-bold uppercase text-lg mb-2">{item.title}</div>
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="text-sm text-gray-400 font-mono uppercase">{item.date_label}</span>
+                    <span className="text-gray-500">•</span>
+                    <AdminBadge variant={item.status === 'published' ? 'published' : item.status === 'archived' ? 'archived' : 'draft'}>
+                      {item.status}
+                    </AdminBadge>
+                  </div>
+                  {item.body && (
+                    <div className="mt-2 text-gray-300 text-sm line-clamp-2">{item.body}</div>
+                  )}
                 </div>
-                {item.body && (
-                  <div className="mt-2 text-gray-300 text-sm line-clamp-2">{item.body}</div>
-                )}
-              </div>
-              <div className="flex items-center gap-3 text-sm">
-                <Link
-                  to={`/admin/timeline/${item.id}`}
-                  className="px-3 py-2 bg-white text-black font-mono uppercase hover:bg-gray-200"
-                >
-                  Edit
-                </Link>
-                <button
-                  onClick={() => handleDelete(item.id)}
-                  className="px-3 py-2 bg-red-500 text-white font-mono uppercase hover:bg-red-600"
-                >
-                  Delete
-                </button>
-              </div>
+                <div className="flex items-center gap-2 ml-4">
+                  <AdminActionButton
+                    icon={Edit}
+                    to={`/admin/timeline/${item.id}`}
+                    title="Edit"
+                  />
+                  <AdminActionButton
+                    icon={Trash2}
+                    onClick={() => handleDelete(item.id)}
+                    variant="danger"
+                    title="Delete"
+                  />
+                </div>
+              </AdminCard>
             </motion.div>
           ))}
         </div>
