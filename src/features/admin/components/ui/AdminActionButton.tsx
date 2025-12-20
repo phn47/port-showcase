@@ -4,7 +4,7 @@ import { LucideIcon } from 'lucide-react';
 
 interface AdminActionButtonProps {
   icon: LucideIcon;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent) => void;
   to?: string;
   variant?: 'default' | 'danger';
   title?: string;

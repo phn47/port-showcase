@@ -49,3 +49,23 @@ export const useDeleteTimelineEntry = () => {
     },
   });
 };
+
+export const usePublishTimelineEntry = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => timeline.publish(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['timeline'] });
+    },
+  });
+};
+
+export const useUnpublishTimelineEntry = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (id: string) => timeline.unpublish(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['timeline'] });
+    },
+  });
+};

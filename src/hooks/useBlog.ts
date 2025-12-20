@@ -59,3 +59,23 @@ export const useDeleteBlogPost = () => {
         },
     });
 };
+
+export const usePublishBlogPost = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (id: string) => blog.publish(id),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['blog'] });
+        },
+    });
+};
+
+export const useUnpublishBlogPost = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (id: string) => blog.unpublish(id),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['blog'] });
+        },
+    });
+};

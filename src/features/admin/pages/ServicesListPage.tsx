@@ -1,57 +1,63 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useBlogPosts, useDeleteBlogPost, usePublishBlogPost, useUnpublishBlogPost } from '@/hooks/useBlog';
-import { format } from 'date-fns';
-import { Edit, Trash2, Plus, Search, ExternalLink, Eye, EyeOff } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { AdminButton, AdminInput, AdminSelect, AdminBadge, AdminPageHeader, AdminCard, AdminActionButton } from '@/features/admin/components/ui';
+import { Plus, Edit, Trash2, Eye, EyeOff, Search } from 'lucide-react';
+import { useServices, useDeleteService, usePublishService, useUnpublishService } from '@/hooks/useServices';
+import type { ServiceStatus } from '@/services/api/types';
+import { AdminButton, AdminBadge, AdminPageHeader, AdminCard, AdminActionButton, AdminInput, AdminSelect } from '@/features/admin/components/ui';
 
-export const BlogListPage: React.FC = () => {
-    const [statusFilter, setStatusFilter] = useState<'all' | 'published' | 'draft'>('all');
+export const ServicesListPage: React.FC = () => {
+    return (
+        <div className="p-12 cursor-auto">
+            <AdminPageHeader
+                title="Services"
+                subtitle="Manage site services"
+                action={
+                    <AdminButton
+                        asLink
+                        to="/admin/services/new"
+                        icon={<Plus size={20} />}
+                    >
+                        New Service
+                    </AdminButton>
+                }
+            />
+
+            <ServicesTab />
+        </div>
+    );
+};
+
+const ServicesTab: React.FC = () => {
+    const [statusFilter, setStatusFilter] = useState<ServiceStatus | 'all'>('all');
     const [search, setSearch] = useState('');
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(50);
 
-    const { data, isLoading } = useBlogPosts({
-        status: statusFilter,
-        search: search || undefined,
-    });
+    const { data: services, isLoading, error } = useServices({ order: 'display_order.asc' });
+    const deleteMutation = useDeleteService();
+    const publishMutation = usePublishService();
+    const unpublishMutation = useUnpublishService();
 
-    const deleteMutation = useDeleteBlogPost();
-    const publishMutation = usePublishBlogPost();
-    const unpublishMutation = useUnpublishBlogPost();
-
-    const handleDelete = async (id: string, title: string) => {
-        if (confirm(`Delete post "${title}"? This cannot be undone.`)) {
-            await deleteMutation.mutateAsync(id);
-        }
-    };
-
-    const posts = data?.data || [];
-    const totalPages = Math.ceil(posts.length / limit);
-    const paginatedPosts = posts.slice((page - 1) * limit, page * limit);
     const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 
-    const toggleSelect = (id: string) => {
-        const newSelected = new Set(selectedIds);
-        if (newSelected.has(id)) {
-            newSelected.delete(id);
-        } else {
-            newSelected.add(id);
-        }
-        setSelectedIds(newSelected);
-    };
+    const filtered = useMemo(() => {
+        if (!services) return [];
+        return services.filter(service => {
+            const matchesStatus = statusFilter === 'all' || service.status === statusFilter;
+            const searchLower = search.toLowerCase();
+            const matchesSearch =
+                service.name.toLowerCase().includes(searchLower) ||
+                service.slug.toLowerCase().includes(searchLower) ||
+                (service.description?.toLowerCase() || '').includes(searchLower);
+            return matchesStatus && matchesSearch;
+        });
+    }, [services, statusFilter, search]);
 
-    const toggleSelectAll = () => {
-        if (selectedIds.size === paginatedPosts.length) {
-            setSelectedIds(new Set());
-        } else {
-            setSelectedIds(new Set(paginatedPosts.map(p => p.id)));
-        }
-    };
+    const totalPages = Math.ceil(filtered.length / limit);
+    const paginated = filtered.slice((page - 1) * limit, page * limit);
 
     const handleBulkDelete = async () => {
-        if (confirm(`Are you sure you want to PERMANENTLY delete ${selectedIds.size} selected posts? This action CANNOT be undone.`)) {
+        if (confirm(`Are you sure you want to PERMANENTLY delete ${selectedIds.size} selected services? This action CANNOT be undone.`)) {
             const idsToDelete = Array.from(selectedIds);
             for (const id of idsToDelete) {
                 await deleteMutation.mutateAsync(id);
@@ -79,36 +85,52 @@ export const BlogListPage: React.FC = () => {
     const handlePublish = async (id: string) => {
         try {
             await publishMutation.mutateAsync(id);
-        } catch (e: any) {
-            alert(`Publish failed: ${e.message}`);
+        } catch (error: any) {
+            alert(`Publish failed: ${error.message}`);
         }
     };
 
     const handleUnpublish = async (id: string) => {
         try {
             await unpublishMutation.mutateAsync(id);
-        } catch (e: any) {
-            alert(`Unpublish failed: ${e.message}`);
+        } catch (error: any) {
+            alert(`Unpublish failed: ${error.message}`);
         }
     };
 
-    return (
-        <div className="p-12">
-            <AdminPageHeader
-                title="Blog"
-                subtitle="Manage your articles"
-                action={
-                    <AdminButton
-                        asLink
-                        to="/admin/blog/new"
-                        icon={<Plus size={20} />}
-                    >
-                        New Post
-                    </AdminButton>
-                }
-            />
+    const toggleSelect = (id: string) => {
+        const newSelected = new Set(selectedIds);
+        if (newSelected.has(id)) {
+            newSelected.delete(id);
+        } else {
+            newSelected.add(id);
+        }
+        setSelectedIds(newSelected);
+    };
 
-            {/* Filters */}
+    const toggleSelectAll = () => {
+        if (selectedIds.size === paginated.length) {
+            setSelectedIds(new Set());
+        } else {
+            setSelectedIds(new Set(paginated.map(s => s.id)));
+        }
+    };
+
+    if (isLoading) {
+        return <div className="text-center py-12 text-gray-400">Loading services...</div>;
+    }
+
+    if (error) {
+        return (
+            <div className="text-center py-12">
+                <p className="text-red-500 mb-2">Error loading services</p>
+                <p className="text-gray-400 text-sm font-mono">{(error as any).message}</p>
+            </div>
+        );
+    }
+
+    return (
+        <div className="space-y-6">
             {/* Filters & Bulk Actions Toolbar */}
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -119,7 +141,7 @@ export const BlogListPage: React.FC = () => {
                 {/* Row 1: Search */}
                 <AdminInput
                     type="text"
-                    placeholder="Search posts..."
+                    placeholder="Search services..."
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     icon={<Search size={20} />}
@@ -206,15 +228,7 @@ export const BlogListPage: React.FC = () => {
                 </div>
             </motion.div>
 
-            {/* Content */}
-            {isLoading ? (
-                <div className="text-center py-12 text-gray-400">Loading posts...</div>
-            ) : posts.length === 0 ? (
-                <div className="text-center py-20 border border-dashed border-white/10 rounded-lg">
-                    <p className="text-gray-400 mb-4">No posts found</p>
-                    <Link to="/admin/blog/new" className="text-white underline font-mono uppercase text-sm">Create your first post</Link>
-                </div>
-            ) : (
+            {filtered && filtered.length > 0 ? (
                 <>
                     <AdminCard padding="none" className="overflow-hidden">
                         <table className="w-full">
@@ -223,84 +237,75 @@ export const BlogListPage: React.FC = () => {
                                     <th className="px-6 py-5 text-left w-12">
                                         <input
                                             type="checkbox"
-                                            checked={selectedIds.size === paginatedPosts.length && paginatedPosts.length > 0}
+                                            checked={selectedIds.size === paginated.length && paginated.length > 0}
                                             onChange={toggleSelectAll}
                                             className="w-4 h-4 cursor-pointer"
                                         />
                                     </th>
-                                    <th className="px-6 py-5 text-left font-mono text-xs uppercase tracking-wider font-bold w-24">Cover</th>
-                                    <th className="px-6 py-5 text-left font-mono text-xs uppercase tracking-wider font-bold">Title & URL</th>
+                                    <th className="px-6 py-5 text-left font-mono text-xs uppercase tracking-wider font-bold w-24">Image</th>
+                                    <th className="px-6 py-5 text-left font-mono text-xs uppercase tracking-wider font-bold">Name & Slug</th>
                                     <th className="px-6 py-5 text-left font-mono text-xs uppercase tracking-wider font-bold w-32">Status</th>
-                                    <th className="px-6 py-5 text-left font-mono text-xs uppercase tracking-wider font-bold w-32">Date</th>
+                                    <th className="px-6 py-5 text-left font-mono text-xs uppercase tracking-wider font-bold w-32">Order</th>
                                     <th className="px-6 py-5 text-left font-mono text-xs uppercase tracking-wider font-bold w-32">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {paginatedPosts.map((post, index) => (
+                                {paginated.map((service, index) => (
                                     <motion.tr
-                                        key={post.id}
+                                        key={service.id}
                                         initial={{ opacity: 0, y: 10 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: index * 0.02 }}
-                                        className={`border-b border-white/5 hover:bg-white/5 transition-colors ${selectedIds.has(post.id) ? 'bg-white/10' : ''}`}
+                                        className={`border-b border-white/5 hover:bg-white/5 transition-colors ${selectedIds.has(service.id) ? 'bg-white/10' : ''}`}
                                     >
                                         <td className="px-6 py-5">
                                             <input
                                                 type="checkbox"
-                                                checked={selectedIds.has(post.id)}
-                                                onChange={() => toggleSelect(post.id)}
+                                                checked={selectedIds.has(service.id)}
+                                                onChange={() => toggleSelect(service.id)}
                                                 className="w-4 h-4 cursor-pointer"
                                             />
                                         </td>
                                         <td className="px-6 py-5">
-                                            {post.cover_image ? (
+                                            {service.image_url ? (
                                                 <div className="w-16 h-16 rounded-lg overflow-hidden bg-black/20 border border-white/10">
-                                                    <img src={post.cover_image} alt={post.title} className="w-full h-full object-cover" />
+                                                    <img src={service.image_url} alt={service.name} className="w-full h-full object-cover" />
                                                 </div>
                                             ) : (
                                                 <div className="w-16 h-16 bg-white/5 rounded border border-white/10" />
                                             )}
                                         </td>
                                         <td className="px-6 py-5">
-                                            <div className="font-bold uppercase text-sm mb-1 line-clamp-1">{post.title}</div>
+                                            <div className="font-bold uppercase text-sm mb-1 line-clamp-1">{service.name}</div>
                                             <div className="text-xs font-mono text-gray-500 uppercase tracking-tighter">
-                                                /{post.slug}
+                                                /{service.slug}
                                             </div>
                                         </td>
                                         <td className="px-6 py-5">
-                                            <AdminBadge variant={post.status === 'published' ? 'published' : post.status === 'archived' ? 'archived' : 'draft'}>
-                                                {post.status}
+                                            <AdminBadge variant={service.status === 'published' ? 'published' : 'default'}>
+                                                {service.status}
                                             </AdminBadge>
                                         </td>
-                                        <td className="px-6 py-5">
-                                            <span className="text-xs font-mono text-gray-400 uppercase">
-                                                {format(new Date(post.created_at), 'MMM dd, yyyy')}
-                                            </span>
+                                        <td className="px-6 py-5 text-xs font-mono text-gray-400">
+                                            {service.display_order}
                                         </td>
                                         <td className="px-6 py-5">
                                             <div className="flex items-center gap-2">
-                                                {post.status === 'published' && (
-                                                    <AdminActionButton
-                                                        icon={ExternalLink}
-                                                        onClick={() => window.open(`/blog/${post.slug}`, '_blank')}
-                                                        title="View Live"
-                                                    />
-                                                )}
                                                 <AdminActionButton
                                                     icon={Edit}
-                                                    to={`/admin/blog/${post.id}`}
+                                                    to={`/admin/services/${service.id}`}
                                                     title="Edit"
                                                 />
-                                                {post.status === 'published' ? (
+                                                {service.status === 'published' ? (
                                                     <AdminActionButton
                                                         icon={EyeOff}
-                                                        onClick={() => handleUnpublish(post.id)}
+                                                        onClick={() => handleUnpublish(service.id)}
                                                         title="Unpublish"
                                                     />
                                                 ) : (
                                                     <AdminActionButton
                                                         icon={Eye}
-                                                        onClick={() => handlePublish(post.id)}
+                                                        onClick={() => handlePublish(service.id)}
                                                         title="Publish"
                                                     />
                                                 )}
@@ -313,10 +318,10 @@ export const BlogListPage: React.FC = () => {
                     </AdminCard>
 
                     {/* Pagination Controls */}
-                    {posts.length > 0 && (
+                    {filtered.length > 0 && (
                         <div className="mt-8 flex items-center justify-between">
                             <div className="text-sm text-gray-400 font-mono uppercase tracking-wider">
-                                Showing {((page - 1) * limit) + 1}-{Math.min(page * limit, posts.length)} of {posts.length} posts
+                                Showing {((page - 1) * limit) + 1}-{Math.min(page * limit, filtered.length)} of {filtered.length} services
                             </div>
 
                             <div className="flex items-center gap-3">
@@ -363,6 +368,17 @@ export const BlogListPage: React.FC = () => {
                         </div>
                     )}
                 </>
+            ) : (
+                <div className="text-center py-12 text-gray-400 border border-dashed border-white/10 rounded-xl">
+                    <p className="mb-4 uppercase font-mono text-sm tracking-widest">No services yet</p>
+                    <AdminButton
+                        asLink
+                        to="/admin/services/new"
+                        icon={<Plus size={20} />}
+                    >
+                        Create your first service
+                    </AdminButton>
+                </div>
             )}
         </div>
     );

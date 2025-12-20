@@ -10,7 +10,8 @@ import { TimelinePage } from './pages/TimelinePage';
 import { TimelineEditorPage } from './pages/TimelineEditorPage';
 import { BlogListPage } from './pages/BlogListPage';
 import { BlogEditorPage } from './pages/BlogEditorPage';
-import { SettingsPage } from './pages/SettingsPage';
+import { ServicesListPage } from './pages/ServicesListPage';
+import { ServiceEditorPage } from './pages/ServiceEditorPage';
 
 export const AdminApp: React.FC = () => {
   const { user, isLoading } = useAuth();
@@ -43,7 +44,8 @@ export const AdminApp: React.FC = () => {
         <Route path="/timeline/:id" element={<TimelineEditorPage />} />
         <Route path="/blog" element={<BlogListPage />} />
         <Route path="/blog/:id" element={<BlogEditorPage />} />
-        <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/services" element={<ServicesListPage />} />
+        <Route path="/services/:id" element={<ServiceEditorPage />} />
       </Route>
     </Routes>
   );

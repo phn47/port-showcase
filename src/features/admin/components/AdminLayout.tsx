@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useLocation, Outlet } from 'react-router-dom';
 import { useAuth, useSignOut } from '@/hooks/useAuth';
-import { LayoutDashboard, Image, Clock, Settings, LogOut, FileText } from 'lucide-react';
+import { LayoutDashboard, Image, Clock, Briefcase, LogOut, FileText } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export const AdminLayout: React.FC = () => {
@@ -22,7 +22,7 @@ export const AdminLayout: React.FC = () => {
     { path: '/admin/artworks', label: 'Artworks', icon: Image },
     { path: '/admin/timeline', label: 'Timeline', icon: Clock },
     { path: '/admin/blog', label: 'Blog', icon: FileText },
-    { path: '/admin/settings', label: 'Settings', icon: Settings },
+    { path: '/admin/services', label: 'Services', icon: Briefcase },
   ];
 
   const handleLogout = async () => {
@@ -61,8 +61,8 @@ export const AdminLayout: React.FC = () => {
                 <Link
                   to={item.path}
                   className={`group flex items-center gap-4 px-6 py-4 rounded-lg transition-all duration-300 relative ${isActive
-                      ? 'bg-white text-black'
-                      : 'text-gray-400 hover:text-white hover:bg-white/5'
+                    ? 'bg-white text-black'
+                    : 'text-gray-400 hover:text-white hover:bg-white/5'
                     }`}
                 >
                   <Icon size={22} className={isActive ? 'text-black' : 'text-gray-400 group-hover:text-white transition-colors'} />

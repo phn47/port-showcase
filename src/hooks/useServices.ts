@@ -49,3 +49,23 @@ export const useDeleteService = () => {
         },
     });
 };
+
+export const usePublishService = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (id: string) => services.publish(id),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['services'] });
+        },
+    });
+};
+
+export const useUnpublishService = () => {
+    const queryClient = useQueryClient();
+    return useMutation({
+        mutationFn: (id: string) => services.unpublish(id),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['services'] });
+        },
+    });
+};

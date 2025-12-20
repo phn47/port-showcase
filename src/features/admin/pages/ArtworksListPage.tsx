@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useArtworks, useDeleteArtwork, usePublishArtwork, useUnpublishArtwork } from '@/hooks/useArtworks';
 import { Plus, Search, Filter, Eye, EyeOff, Trash2, Edit } from 'lucide-react';
 import type { ArtworkCategory } from '@/services/api/types';
@@ -8,7 +8,7 @@ import { AdminButton, AdminInput, AdminSelect, AdminBadge, AdminPageHeader, Admi
 
 export const ArtworksListPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [statusFilter, setStatusFilter] = useState<'all' | 'published' | 'draft' | 'archived'>('all');
+  const [statusFilter, setStatusFilter] = useState<'all' | 'published' | 'draft'>('all');
   const [categoryFilter, setCategoryFilter] = useState<ArtworkCategory | 'all'>('all');
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [limit, setLimit] = useState<50 | 100>(50);
@@ -122,14 +122,14 @@ export const ArtworksListPage: React.FC = () => {
         }
       />
 
-      {/* Filters */}
+      {/* Filters & Bulk Actions Toolbar */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.1, duration: 0.6 }}
         className="mb-8 space-y-4"
       >
-        {/* Search */}
+        {/* Row 1: Search */}
         <AdminInput
           type="text"
           value={searchQuery}
@@ -138,91 +138,105 @@ export const ArtworksListPage: React.FC = () => {
           icon={<Search size={20} />}
         />
 
-        {/* Status & Category Filters */}
-        <div className="flex flex-wrap gap-4">
-          <AdminSelect
-            value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value as any)}
-          >
-            <option value="all">All Status</option>
-            <option value="published">Published</option>
-            <option value="draft">Draft</option>
-            <option value="archived">Archived</option>
-          </AdminSelect>
+        {/* Row 2: Selectors AND Bulk Actions */}
+        <div className="relative flex items-center justify-between gap-4 min-h-[48px]">
+          <div className="flex flex-wrap gap-4">
+            <AdminSelect
+              value={statusFilter}
+              onChange={(e) => setStatusFilter(e.target.value as any)}
+            >
+              <option value="all">All Status</option>
+              <option value="published">Published</option>
+              <option value="draft">Draft</option>
+            </AdminSelect>
 
-          <AdminSelect
-            value={categoryFilter}
-            onChange={(e) => setCategoryFilter(e.target.value as any)}
-          >
-            <option value="all">All Categories</option>
-            {categories.map(cat => (
-              <option key={cat} value={cat}>{cat}</option>
-            ))}
-          </AdminSelect>
+            <AdminSelect
+              value={categoryFilter}
+              onChange={(e) => setCategoryFilter(e.target.value as any)}
+            >
+              <option value="all">All Categories</option>
+              {categories.map(cat => (
+                <option key={cat} value={cat}>{cat}</option>
+              ))}
+            </AdminSelect>
 
-          <AdminSelect
-            value={limit}
-            onChange={(e) => {
-              setLimit(Number(e.target.value) as 50 | 100);
-              setPage(1);
-            }}
-          >
-            <option value="50">50 per page</option>
-            <option value="100">100 per page</option>
-          </AdminSelect>
+            <AdminSelect
+              value={limit}
+              onChange={(e) => {
+                setLimit(Number(e.target.value) as 50 | 100);
+                setPage(1);
+              }}
+            >
+              <option value="50">50 per page</option>
+              <option value="100">100 per page</option>
+            </AdminSelect>
+          </div>
+
+          <AnimatePresence>
+            {selectedIds.size > 0 && (
+              <motion.div
+                initial={{ opacity: 0, x: 20, filter: 'blur(10px)' }}
+                animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+                exit={{ opacity: 0, x: 20, filter: 'blur(10px)' }}
+                transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+                className="absolute right-0 flex items-center gap-4 bg-black/60 border border-white/10 rounded-lg px-4 py-2 backdrop-blur-md shadow-2xl z-20"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="font-mono text-sm uppercase tracking-wider font-bold text-white whitespace-nowrap">
+                    {selectedIds.size} selected
+                  </span>
+                  <button
+                    onClick={() => setSelectedIds(new Set())}
+                    className="text-[10px] font-mono uppercase text-gray-400 hover:text-white transition-colors"
+                  >
+                    Clear
+                  </button>
+                </div>
+
+                <div className="h-4 w-px bg-white/10" />
+
+                <div className="flex gap-2">
+                  <AdminButton
+                    variant="success"
+                    size="sm"
+                    className="h-8 px-3 text-[10px]"
+                    onClick={() => {
+                      selectedIds.forEach(id => handlePublish(id));
+                      setSelectedIds(new Set());
+                    }}
+                  >
+                    Publish
+                  </AdminButton>
+                  <AdminButton
+                    variant="warning"
+                    size="sm"
+                    className="h-8 px-3 text-[10px]"
+                    onClick={() => {
+                      selectedIds.forEach(id => handleUnpublish(id));
+                      setSelectedIds(new Set());
+                    }}
+                  >
+                    Unpublish
+                  </AdminButton>
+                  <AdminButton
+                    variant="danger"
+                    size="sm"
+                    className="h-8 px-3 text-[10px]"
+                    onClick={() => {
+                      if (confirm(`Delete ${selectedIds.size} artworks?`)) {
+                        selectedIds.forEach(id => handleDelete(id));
+                        setSelectedIds(new Set());
+                      }
+                    }}
+                  >
+                    Delete
+                  </AdminButton>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </motion.div>
-
-      {/* Bulk Actions */}
-      {selectedIds.size > 0 && (
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-6"
-        >
-          <AdminCard padding="md">
-            <div className="flex items-center justify-between">
-              <span className="font-mono text-sm uppercase tracking-wider font-bold">
-                {selectedIds.size} selected
-              </span>
-              <div className="flex gap-3">
-                <AdminButton
-                  variant="success"
-                  size="sm"
-                  onClick={() => {
-                    selectedIds.forEach(id => handlePublish(id));
-                    setSelectedIds(new Set());
-                  }}
-                >
-                  Publish Selected
-                </AdminButton>
-                <AdminButton
-                  variant="warning"
-                  size="sm"
-                  onClick={() => {
-                    selectedIds.forEach(id => handleUnpublish(id));
-                    setSelectedIds(new Set());
-                  }}
-                >
-                  Unpublish Selected
-                </AdminButton>
-                <AdminButton
-                  variant="danger"
-                  size="sm"
-                  onClick={() => {
-                    if (confirm(`Delete ${selectedIds.size} artworks?`)) {
-                      selectedIds.forEach(id => handleDelete(id));
-                      setSelectedIds(new Set());
-                    }
-                  }}
-                >
-                  Delete Selected
-                </AdminButton>
-              </div>
-            </div>
-          </AdminCard>
-        </motion.div>
-      )}
 
       {/* Table */}
       {isLoading ? (
@@ -367,12 +381,6 @@ export const ArtworksListPage: React.FC = () => {
                             title="Publish"
                           />
                         )}
-                        <AdminActionButton
-                          icon={Trash2}
-                          onClick={() => handleDelete(artwork.id)}
-                          variant="danger"
-                          title="Delete"
-                        />
                       </div>
                     </td>
                   </motion.tr>

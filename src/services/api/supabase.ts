@@ -350,12 +350,7 @@ export const artworks = {
   },
 
   async delete(id: string) {
-    // Soft delete: set status to archived
-    const { error } = await supabase
-      .from('artworks')
-      .update({ status: 'archived' })
-      .eq('id', id);
-
+    const { error } = await supabase.from('artworks').delete().eq('id', id);
     if (error) throw error;
   },
 
@@ -461,11 +456,23 @@ export const timeline = {
   },
 
   async delete(id: string) {
+    const { error } = await supabase.from('timeline_entries').delete().eq('id', id);
+    if (error) throw error;
+  },
+
+  async publish(id: string) {
     const { error } = await supabase
       .from('timeline_entries')
-      .update({ status: 'archived' })
+      .update({ status: 'published' })
       .eq('id', id);
+    if (error) throw error;
+  },
 
+  async unpublish(id: string) {
+    const { error } = await supabase
+      .from('timeline_entries')
+      .update({ status: 'draft' })
+      .eq('id', id);
     if (error) throw error;
   },
 
@@ -549,11 +556,23 @@ export const services = {
   },
 
   async delete(id: string) {
+    const { error } = await supabase.from('services').delete().eq('id', id);
+    if (error) throw error;
+  },
+
+  async publish(id: string) {
     const { error } = await supabase
       .from('services')
-      .update({ status: 'archived' })
+      .update({ status: 'published' })
       .eq('id', id);
+    if (error) throw error;
+  },
 
+  async unpublish(id: string) {
+    const { error } = await supabase
+      .from('services')
+      .update({ status: 'draft' })
+      .eq('id', id);
     if (error) throw error;
   },
 
@@ -766,6 +785,22 @@ export const blog = {
 
   async delete(id: string) {
     const { error } = await supabase.from('posts').delete().eq('id', id);
+    if (error) throw error;
+  },
+
+  async publish(id: string) {
+    const { error } = await supabase
+      .from('posts')
+      .update({ status: 'published' })
+      .eq('id', id);
+    if (error) throw error;
+  },
+
+  async unpublish(id: string) {
+    const { error } = await supabase
+      .from('posts')
+      .update({ status: 'draft' })
+      .eq('id', id);
     if (error) throw error;
   },
 };
