@@ -49,7 +49,7 @@ export const AdminLayout: React.FC = () => {
         <nav className="flex-1 p-6 space-y-1 overflow-y-auto">
           {navItems.map((item, index) => {
             const Icon = item.icon;
-            const isActive = location.pathname === item.path || 
+            const isActive = location.pathname === item.path ||
               (item.path !== '/admin' && location.pathname.startsWith(item.path));
             return (
               <motion.div
@@ -60,11 +60,10 @@ export const AdminLayout: React.FC = () => {
               >
                 <Link
                   to={item.path}
-                  className={`group flex items-center gap-4 px-6 py-4 rounded-lg transition-all duration-300 relative ${
-                    isActive
+                  className={`group flex items-center gap-4 px-6 py-4 rounded-lg transition-all duration-300 relative ${isActive
                       ? 'bg-white text-black'
                       : 'text-gray-400 hover:text-white hover:bg-white/5'
-                  }`}
+                    }`}
                 >
                   <Icon size={22} className={isActive ? 'text-black' : 'text-gray-400 group-hover:text-white transition-colors'} />
                   <span className="font-mono text-sm uppercase tracking-wider font-bold">{item.label}</span>
@@ -83,17 +82,8 @@ export const AdminLayout: React.FC = () => {
 
         {/* User Section */}
         <div className="border-t border-white/10 p-6 space-y-4 flex-shrink-0">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-            className="px-4 py-3 bg-white/5 rounded-lg border border-white/10"
-          >
-            <div className="text-xs text-gray-400 uppercase tracking-wider font-mono mb-2">Logged in as</div>
-            <div className="text-white font-bold text-sm truncate">{user?.email}</div>
-            <div className="text-gray-500 text-xs font-mono uppercase mt-1">Role: {user?.role}</div>
-          </motion.div>
-          
+
+
           <motion.button
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

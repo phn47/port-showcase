@@ -51,6 +51,12 @@ body.admin-mode::after {
 select {
   background-color: rgba(255, 255, 255, 0.05);
   color: #fff;
+  padding-top: 0.5rem;
+  /* Ensure top space */
+  padding-bottom: 0.5rem;
+  /* Ensure bottom space */
+  line-height: 1.5;
+  /* Proper line height */
 }
 
 select option {
@@ -64,7 +70,9 @@ select:focus {
 }
 
 select option:hover,
-select option:focus,
+select option:focus {
+  background-color: #333;
+}
 
 /* Lenis Smooth Scroll Recommended CSS */
 html.lenis,
