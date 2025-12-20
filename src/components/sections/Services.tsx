@@ -36,7 +36,7 @@ const Services: React.FC = () => {
 
   if (isLoading) {
     return (
-      <section className="relative w-full bg-white py-32">
+      <section className="relative w-full min-h-screen bg-white py-32">
         <div className="container mx-auto px-4 text-center text-gray-400">
           Loading services...
         </div>
@@ -46,7 +46,7 @@ const Services: React.FC = () => {
 
   if (!services || services.length === 0) {
     return (
-      <section className="relative w-full bg-white py-32">
+      <section className="relative w-full min-h-screen bg-white py-32">
         <div className="container mx-auto px-4 text-center text-gray-400">
           No services available
         </div>
@@ -59,7 +59,7 @@ const Services: React.FC = () => {
       id="services"
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      className="relative w-full bg-white py-32 overflow-hidden cursor-none"
+      className="relative w-full min-h-screen bg-white py-32 overflow-hidden cursor-none"
     >
       <div className="container mx-auto px-4">
         <div className="flex flex-col">
@@ -76,7 +76,7 @@ const Services: React.FC = () => {
               onMouseLeave={() => setHoveredService(null)}
               data-hover="true"
             >
-              <h2 className="text-6xl md:text-9xl font-black uppercase text-gray-200 transition-all duration-300 group-hover:text-black group-hover:translate-x-12 select-none">
+              <h2 className="text-5xl md:text-7xl lg:text-8xl font-black uppercase text-gray-200 transition-all duration-300 group-hover:text-black group-hover:translate-x-12 select-none">
                 {service.name}
               </h2>
               <span className="absolute top-1/2 right-4 -translate-y-1/2 font-mono text-sm opacity-0 group-hover:opacity-100 transition-opacity">

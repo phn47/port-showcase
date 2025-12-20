@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useLenis } from '@/components/common/SmoothScroll';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { X } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -16,6 +17,9 @@ const Navigation: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const lenis = useLenis();
 
   // Lock body scroll when menu is open
   useEffect(() => {
@@ -37,18 +41,36 @@ const Navigation: React.FC = () => {
       if (href.startsWith('/')) {
         navigate(href);
       } else {
-        // Internal Link
-        if (location.pathname !== '/') {
-          navigate('/');
-          setTimeout(() => {
-            const element = document.querySelector(href);
-            if (element) element.scrollIntoView({ behavior: 'smooth' });
-          }, 100);
-        } else {
-          const element = document.querySelector(href);
-          if (element) {
+        // Internal Link logic with "Chase" mechanism
+        const scrollToElement = () => {
+          const element = document.querySelector(href) as HTMLElement;
+          if (!element) return;
+
+          if (lenis) {
+            // 1. Initial Scroll
+            lenis.scrollTo(element, { offset: 0, duration: 1.6, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+
+            // 2. Chase Mechanism (Retries for layout stability)
+            // Using same long duration (1.5s) prevents "jumps" - it just smoothly updates the target trajectory
+            setTimeout(() => {
+              lenis.scrollTo(element, { offset: 0, duration: 1.5, lock: false, force: true });
+            }, 600);
+
+            setTimeout(() => {
+              lenis.scrollTo(element, { offset: 0, duration: 1.5, lock: false, force: true });
+            }, 1500);
+          } else {
+            // Fallback
             element.scrollIntoView({ behavior: 'smooth' });
           }
+        };
+
+        if (location.pathname !== '/') {
+          navigate('/');
+          // Wait for page transition then scroll
+          setTimeout(scrollToElement, 500);
+        } else {
+          scrollToElement();
         }
       }
     }, 500);
@@ -93,20 +115,21 @@ const Navigation: React.FC = () => {
         <div className="pointer-events-auto">
           <div
             className="w-16 h-16 relative cursor-pointer overflow-hidden flex items-center justify-center transform -ml-2 md:-ml-0"
-            onMouseEnter={(e) => {
-              const video = e.currentTarget.querySelector('video') as HTMLVideoElement;
-              if (video) {
-                video.currentTime = 0;
-                video.play();
+            onMouseEnter={() => {
+              if (videoRef.current && !isVideoPlaying) {
+                setIsVideoPlaying(true);
+                videoRef.current.currentTime = 0;
+                videoRef.current.play();
               }
             }}
           >
             <video
+              ref={videoRef}
               src="https://res.cloudinary.com/dpcmdnqbb/video/upload/logo_lb7ivc.mp4"
               className="w-full h-full object-contain scale-150"
               muted
               playsInline
-            // No loop, so it stops after 1 time
+              onEnded={() => setIsVideoPlaying(false)}
             />
           </div>
         </div>

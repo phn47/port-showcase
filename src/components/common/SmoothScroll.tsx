@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, createContext, useContext, useState } from 'react';
 import Lenis from 'lenis';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -6,9 +6,15 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 // Register GSAP ScrollTrigger to work with Lenis
 gsap.registerPlugin(ScrollTrigger);
 
+const SmoothScrollContext = createContext<Lenis | null>(null);
+
+export const useLenis = () => useContext(SmoothScrollContext);
+
 export const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const [lenis, setLenis] = useState<Lenis | null>(null);
+
     useEffect(() => {
-        const lenis = new Lenis({
+        const lenisInstance = new Lenis({
             duration: 1.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             orientation: 'vertical',
@@ -17,22 +23,28 @@ export const SmoothScroll: React.FC<{ children: React.ReactNode }> = ({ children
             touchMultiplier: 2,
         });
 
+        setLenis(lenisInstance);
+
         // Synchronize Lenis scroll with GSAP ScrollTrigger
-        lenis.on('scroll', ScrollTrigger.update);
+        lenisInstance.on('scroll', ScrollTrigger.update);
 
         // Add Lenis's requestAnimationFrame to GSAP's ticker for smoother sync
         gsap.ticker.add((time) => {
-            lenis.raf(time * 1000);
+            lenisInstance.raf(time * 1000);
         });
 
         // Disable GSAP's lag smoothing to prevent stuttering
         gsap.ticker.lagSmoothing(0);
 
         return () => {
-            lenis.destroy();
-            gsap.ticker.remove((time) => lenis.raf(time * 1000));
+            lenisInstance.destroy();
+            gsap.ticker.remove((time) => lenisInstance.raf(time * 1000));
         };
     }, []);
 
-    return <>{children}</>;
+    return (
+        <SmoothScrollContext.Provider value={lenis}>
+            {children}
+        </SmoothScrollContext.Provider>
+    );
 };

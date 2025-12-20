@@ -36,7 +36,7 @@ const Timeline: React.FC = () => {
   };
 
   return (
-    <section id="timeline" ref={containerRef} className="relative w-full py-32 bg-white overflow-hidden text-black">
+    <section id="timeline" ref={containerRef} className="relative w-full min-h-[200vh] py-32 bg-white overflow-hidden text-black">
 
       {/* The Timeline SVG */}
       <svg className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">

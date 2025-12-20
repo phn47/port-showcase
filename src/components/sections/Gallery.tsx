@@ -163,18 +163,18 @@ const Gallery: React.FC = () => {
 
     // --- DATA PROCESSING ---
     // Fetch from API, fallback to static data
-    const { data: artworks, isLoading: isLoadingArtworks, error: artworksError } = useArtworks({ 
-      status: 'published' 
+    const { data: artworks, isLoading: isLoadingArtworks, error: artworksError } = useArtworks({
+        status: 'published'
     });
-    
+
     // Transform API data to gallery format, or use static fallback
     const apiData = useMemo(() => {
-      if (artworks && artworks.length > 0) {
-        return artworks.map(artworkToGalleryItem);
-      }
-      return null;
+        if (artworks && artworks.length > 0) {
+            return artworks.map(artworkToGalleryItem);
+        }
+        return null;
     }, [artworks]);
-    
+
     const allWorkData = useMemo(() => apiData || galleryData, [apiData]);
 
     const processedData = useMemo(() => {
@@ -859,10 +859,7 @@ const ProjectItem: React.FC<ProjectItemProps> = ({
     const isVideoCategory = ['Animation', 'Motion & Video', 'GIF'].includes(item.category);
     const isSticker = ['Animated Sticker', 'Sticker', 'Social & Viral'].includes(item.category);
 
-    let containerStyle: React.CSSProperties = {
-        contentVisibility: 'auto',
-        containIntrinsicSize: '1px 300px',
-    };
+    let containerStyle: React.CSSProperties = {};
 
     let containerClass = aspect;
 
@@ -875,7 +872,6 @@ const ProjectItem: React.FC<ProjectItemProps> = ({
             const [w, h] = item.dimensions.split('x').map(Number);
             if (!isNaN(w) && !isNaN(h)) {
                 containerStyle.aspectRatio = `${w} / ${h}`;
-                containerStyle.containIntrinsicSize = `1px ${Math.round((h / w) * 300)}px`;
             }
         } else {
             if (isSticker) {
