@@ -394,3 +394,52 @@ export function artworkToGalleryItem(artwork: Artwork): GalleryItem {
     format: primaryMedia?.type === 'image' ? 'JPG' : primaryMedia?.type === 'video' ? 'MP4' : undefined,
   };
 }
+
+// ============================================
+// Blog Post
+// ============================================
+
+export interface BlogPost {
+  id: string;
+  title: string;
+  slug: string;
+  content?: string | null;
+  excerpt?: string | null;
+  cover_image?: string | null;
+  tags?: string[];
+  seo_title?: string | null;
+  seo_description?: string | null;
+  keywords?: string[];
+  status: 'draft' | 'published' | 'archived';
+  featured: boolean;
+  display_order: number;
+  created_at: string;
+  updated_at: string;
+  published_at?: string | null;
+  created_by?: string | null;
+  updated_by?: string | null;
+}
+
+export interface CreateBlogPostRequest {
+  title: string;
+  slug: string;
+  content?: string;
+  excerpt?: string;
+  cover_image?: string;
+  tags?: string[];
+  seo_title?: string;
+  seo_description?: string;
+  keywords?: string[];
+  status?: 'draft' | 'published' | 'archived';
+  featured?: boolean;
+  display_order?: number;
+}
+
+export interface UpdateBlogPostRequest extends Partial<CreateBlogPostRequest> { }
+
+export interface BlogFilters {
+  status?: 'all' | 'published' | 'draft' | 'archived';
+  search?: string;
+  limit?: number;
+  offset?: number;
+}

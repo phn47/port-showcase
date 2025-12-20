@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 import { X } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const menuItems = [
   { id: 1, label: 'Home', href: '#home' },
   { id: 2, label: 'Gallery', href: '#gallery' },
   { id: 3, label: 'Timeline', href: '#timeline' },
   { id: 4, label: 'Services', href: '#services' },
-  { id: 5, label: 'Contact', href: '#contact' },
+  { id: 5, label: 'Blog', href: '/blog' },
+  { id: 6, label: 'Contact', href: '#contact' },
 ];
 
 const Navigation: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   // Lock body scroll when menu is open
   useEffect(() => {
@@ -28,13 +32,26 @@ const Navigation: React.FC = () => {
     e.preventDefault();
     setIsOpen(false);
 
-    // Tiny timeout to allow the menu to start closing before the jump/scroll triggers
+    // Allow menu closing animation to start
     setTimeout(() => {
-      const element = document.querySelector(href);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+      if (href.startsWith('/')) {
+        navigate(href);
+      } else {
+        // Internal Link
+        if (location.pathname !== '/') {
+          navigate('/');
+          setTimeout(() => {
+            const element = document.querySelector(href);
+            if (element) element.scrollIntoView({ behavior: 'smooth' });
+          }, 100);
+        } else {
+          const element = document.querySelector(href);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
       }
-    }, 100);
+    }, 500);
   };
 
   // Smoother, slower animation using an exponential-like Bezier curve

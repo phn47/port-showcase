@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useLocation, Outlet } from 'react-router-dom';
 import { useAuth, useSignOut } from '@/hooks/useAuth';
-import { LayoutDashboard, Image, Clock, Settings, LogOut } from 'lucide-react';
+import { LayoutDashboard, Image, Clock, Settings, LogOut, FileText } from 'lucide-react';
 
 export const AdminLayout: React.FC = () => {
   const location = useLocation();
@@ -20,6 +20,7 @@ export const AdminLayout: React.FC = () => {
     { path: '/admin', label: 'Dashboard', icon: LayoutDashboard },
     { path: '/admin/artworks', label: 'Artworks', icon: Image },
     { path: '/admin/timeline', label: 'Timeline', icon: Clock },
+    { path: '/admin/blog', label: 'Blog', icon: FileText },
     { path: '/admin/settings', label: 'Services', icon: Settings },
   ];
 
@@ -45,8 +46,8 @@ export const AdminLayout: React.FC = () => {
                 key={item.path}
                 to={item.path}
                 className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive
-                    ? 'bg-white text-black'
-                    : 'text-gray-300 hover:bg-white/10 hover:text-white'
+                  ? 'bg-white text-black'
+                  : 'text-gray-300 hover:bg-white/10 hover:text-white'
                   }`}
               >
                 <Icon size={20} />

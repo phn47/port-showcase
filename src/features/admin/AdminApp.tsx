@@ -8,6 +8,8 @@ import { ArtworksListPage } from './pages/ArtworksListPage';
 import { ArtworkEditorPage } from './pages/ArtworkEditorPage';
 import { TimelinePage } from './pages/TimelinePage';
 import { TimelineEditorPage } from './pages/TimelineEditorPage';
+import { BlogListPage } from './pages/BlogListPage';
+import { BlogEditorPage } from './pages/BlogEditorPage';
 import { SettingsPage } from './pages/SettingsPage';
 
 export const AdminApp: React.FC = () => {
@@ -39,6 +41,8 @@ export const AdminApp: React.FC = () => {
         <Route path="/artworks/:id" element={<ArtworkEditorPage />} />
         <Route path="/timeline" element={<TimelinePage />} />
         <Route path="/timeline/:id" element={<TimelineEditorPage />} />
+        <Route path="/blog" element={<BlogListPage />} />
+        <Route path="/blog/:id" element={<BlogEditorPage />} />
         <Route path="/settings" element={<SettingsPage />} />
       </Route>
     </Routes>

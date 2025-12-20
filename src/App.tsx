@@ -11,8 +11,11 @@ import Services from '@/components/sections/Services';
 import Contact from '@/components/sections/Contact';
 import FloatingControls from '@/components/ui/FloatingControls';
 import { Preloader } from '@/components/common/Preloader';
+import { SmoothScroll } from '@/components/common/SmoothScroll';
 import { MigrateDataPage } from '@/pages/MigrateData';
 import { AdminApp } from '@/features/admin/AdminApp';
+import { PublicBlogPage } from '@/pages/PublicBlogPage';
+import { PublicBlogPostPage } from '@/pages/PublicBlogPostPage';
 
 const PublicApp: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -30,16 +33,18 @@ const PublicApp: React.FC = () => {
         {isLoading && <Preloader onComplete={handleLoadingComplete} />}
       </AnimatePresence>
 
-      <Navigation />
-      <Hero startAnimation={!isLoading} />
-      <Marquee />
-      <Gallery />
-      <Timeline />
-      <Services />
-      <Contact />
+      <SmoothScroll>
+        <Navigation />
+        <Hero startAnimation={!isLoading} />
+        <Marquee />
+        <Gallery />
+        <Timeline />
+        <Services />
+        <Contact />
 
-      {/* Floating Controls (Chat + Scroll Top) */}
-      {!isLoading && <FloatingControls />}
+        {/* Floating Controls (Chat + Scroll Top) */}
+        {!isLoading && <FloatingControls />}
+      </SmoothScroll>
     </div>
   );
 };
@@ -65,6 +70,16 @@ const App: React.FC = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/admin/*" element={<AdminApp />} />
+        <Route path="/blog" element={
+          <SmoothScroll>
+            <PublicBlogPage />
+          </SmoothScroll>
+        } />
+        <Route path="/blog/:slug" element={
+          <SmoothScroll>
+            <PublicBlogPostPage />
+          </SmoothScroll>
+        } />
         <Route path="/*" element={<PublicApp />} />
       </Routes>
     </BrowserRouter>

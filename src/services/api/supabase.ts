@@ -20,6 +20,10 @@ import type {
   SiteSettings,
   UploadMediaResponse,
   User,
+  BlogPost,
+  CreateBlogPostRequest,
+  UpdateBlogPostRequest,
+  BlogFilters,
 } from './types';
 
 // ============================================
@@ -685,6 +689,83 @@ export const media = {
       .from('artwork-media')
       .remove([storageKey]);
 
+    if (error) throw error;
+  },
+};
+
+// ============================================
+// Blog API
+// ============================================
+
+export const blog = {
+  async list(filters: BlogFilters = {}) {
+    let query = supabase.from('posts').select('*', { count: 'exact' });
+
+    if (filters.status && filters.status !== 'all') {
+      query = query.eq('status', filters.status);
+    }
+
+    if (filters.search) {
+      query = query.ilike('title', `%${filters.search}%`);
+    }
+
+    // Default order
+    query = query.order('created_at', { ascending: false });
+
+    if (filters.limit) {
+      query = query.limit(filters.limit);
+    }
+
+    if (filters.offset) {
+      query = query.range(filters.offset, filters.offset + (filters.limit || 10) - 1);
+    }
+
+    const { data, error, count } = await query;
+    if (error) throw error;
+
+    return { data: data as BlogPost[], count };
+  },
+
+  async get(slug: string) {
+    const { data, error } = await supabase
+      .from('posts')
+      .select('*')
+      .eq('slug', slug)
+      .single();
+    if (error) throw error;
+    return data as BlogPost;
+  },
+
+  async getById(id: string) {
+    const { data, error } = await supabase
+      .from('posts')
+      .select('*')
+      .eq('id', id)
+      .single();
+    if (error) throw error;
+    return data as BlogPost;
+  },
+
+  async create(payload: CreateBlogPostRequest) {
+    const { data, error } = await supabase
+      .from('posts')
+      .insert(payload)
+      .select()
+      .single();
+    if (error) throw error;
+    return data as BlogPost;
+  },
+
+  async update(id: string, payload: UpdateBlogPostRequest) {
+    const { error } = await supabase
+      .from('posts')
+      .update(payload)
+      .eq('id', id);
+    if (error) throw error;
+  },
+
+  async delete(id: string) {
+    const { error } = await supabase.from('posts').delete().eq('id', id);
     if (error) throw error;
   },
 };
