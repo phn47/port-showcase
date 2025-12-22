@@ -107,7 +107,7 @@ export const artworks = {
     // First, get artworks
     let query = supabase
       .from('artworks')
-      .select('*');
+      .select('*', { count: 'exact' });
 
     // Apply filters
     // Only filter by status if explicitly provided and not 'all'
@@ -146,7 +146,7 @@ export const artworks = {
         query = query.in('id', artworkIds);
       } else {
         // No matches, return empty
-        return [];
+        return { data: [], count: 0 };
       }
     }
 
@@ -171,11 +171,11 @@ export const artworks = {
       query = query.range(filters.offset, filters.offset + (filters.limit || 20) - 1);
     }
 
-    const { data: artworksData, error } = await query;
+    const { data: artworksData, error, count } = await query;
     console.log('artworks.list query result:', {
-      count: artworksData?.length || 0,
+      count,
+      dataLength: artworksData?.length || 0,
       error: error?.message,
-      sample: artworksData?.[0]
     });
 
     if (error) {
@@ -183,8 +183,7 @@ export const artworks = {
       throw error;
     }
     if (!artworksData || artworksData.length === 0) {
-      console.log('artworks.list: No data returned');
-      return [];
+      return { data: [], count: count || 0 };
     }
 
     // Fetch media and tags separately for better reliability
@@ -196,7 +195,7 @@ export const artworks = {
       .select('*')
       .in('artwork_id', artworkIds);
 
-    // Get tags - use simpler query to avoid nested relation issues
+    // Get tags
     let tagRelations: any[] = [];
     let tagsData: any[] = [];
 
@@ -233,7 +232,7 @@ export const artworks = {
       };
     });
 
-    return artworks as Artwork[];
+    return { data: artworks as Artwork[], count: count || 0 };
   },
 
   async get(id: string) {

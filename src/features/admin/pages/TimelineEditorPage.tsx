@@ -185,12 +185,12 @@ export const TimelineEditorPage: React.FC = () => {
                             <label className="block text-gray-400 text-xs font-mono uppercase mb-2">Media (Optional)</label>
                             <div className="bg-white/5 border border-white/10 rounded-lg p-4">
                                 {previewUrl ? (
-                                    <div className="relative aspect-video bg-black/50 rounded overflow-hidden group">
+                                    <div className="relative bg-black/50 rounded overflow-hidden group min-h-[200px] flex items-center justify-center">
                                         {/* Check media type for preview */}
                                         {(imageFile?.type.startsWith('video/') || previewUrl.match(/\.(mp4|webm|mov)$/i) || previewUrl.includes('/video/upload/')) ? (
-                                            <video src={previewUrl} className="w-full h-full object-cover" controls playsInline muted />
+                                            <video src={previewUrl} className="w-full h-auto max-h-[600px] object-contain" controls playsInline muted />
                                         ) : (
-                                            <img src={previewUrl} alt="Preview" className="w-full h-full object-cover" />
+                                            <img src={previewUrl} alt="Preview" className="w-full h-auto max-h-[600px] object-contain" />
                                         )}
 
                                         <button

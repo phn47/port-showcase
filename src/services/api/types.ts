@@ -12,7 +12,7 @@ export type ArtworkStatus = 'draft' | 'published' | 'archived';
 export type TimelineStatus = 'draft' | 'published' | 'archived';
 export type ServiceStatus = 'draft' | 'published' | 'archived';
 export type MediaType = 'image' | 'video';
-export type EntityType = 'artwork' | 'timeline_entry' | 'service' | 'site_setting';
+export type EntityType = 'artworks' | 'timeline_entries' | 'services' | 'site_settings' | 'posts';
 
 export type ArtworkCategory =
   | 'Illustration'
@@ -342,6 +342,11 @@ export interface ArtworkFilters {
   limit?: number;
   offset?: number;
   order?: 'display_order.asc' | 'display_order.desc' | 'created_at.desc' | 'created_at.asc';
+}
+
+export interface ArtworkListResponse {
+  data: Artwork[];
+  count: number;
 }
 
 export interface TimelineFilters {

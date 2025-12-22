@@ -22,10 +22,13 @@ export const ArtworksListPage: React.FC = () => {
     offset: (page - 1) * limit,
   };
 
-  const { data: artworks, isLoading, error: artworksError } = useArtworks(artworkFilters);
+  const { data, isLoading, error: artworksError } = useArtworks(artworkFilters);
+  const artworks = data?.data;
+  const totalArtworks = data?.count || 0;
 
   console.log('ArtworksListPage - useArtworks result:', {
-    artworks: artworks?.length,
+    artworksCount: artworks?.length,
+    totalCount: totalArtworks,
     isLoading,
     error: artworksError?.message,
     filters: artworkFilters
@@ -43,7 +46,7 @@ export const ArtworksListPage: React.FC = () => {
   }, [artworks, categoryFilter]);
 
   // Calculate total pages
-  const totalPages = Math.ceil((artworks?.length || 0) / limit);
+  const totalPages = Math.ceil(totalArtworks / limit);
 
   const handleDelete = async (id: string) => {
     if (confirm('Are you sure you want to delete this artwork?')) {
@@ -258,7 +261,8 @@ export const ArtworksListPage: React.FC = () => {
         <div className="text-center py-12 text-gray-400">
           <p className="text-lg mb-2">No artworks match filters</p>
           <p className="text-sm mb-4">
-            Total artworks: {artworks.length} |
+            Total match current filters: {artworks?.length || 0} |
+            Total in database: {totalArtworks} |
             Status: {statusFilter} |
             Category: {categoryFilter}
           </p>
@@ -395,7 +399,7 @@ export const ArtworksListPage: React.FC = () => {
       {filteredArtworks.length > 0 && (
         <div className="mt-8 flex items-center justify-between">
           <div className="text-sm text-gray-400 font-mono uppercase tracking-wider">
-            Showing {((page - 1) * limit) + 1}-{Math.min(page * limit, artworks?.length || 0)} of {artworks?.length || 0} artworks
+            Showing {((page - 1) * limit) + 1}-{Math.min(page * limit, totalArtworks)} of {totalArtworks} artworks
           </div>
 
           <div className="flex items-center gap-3">

@@ -1,9 +1,9 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { artworks } from '@/services/api/supabase';
-import type { ArtworkFilters, CreateArtworkRequest, UpdateArtworkRequest } from '@/services/api/types';
+import type { ArtworkFilters, CreateArtworkRequest, UpdateArtworkRequest, ArtworkListResponse } from '@/services/api/types';
 
 export const useArtworks = (filters?: ArtworkFilters) => {
-  return useQuery({
+  return useQuery<ArtworkListResponse>({
     queryKey: ['artworks', filters],
     queryFn: () => artworks.list(filters || {}),
     staleTime: 5 * 60 * 1000,
