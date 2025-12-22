@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useBlogPostById, useCreateBlogPost, useUpdateBlogPost } from '@/hooks/useBlog';
-import { AdminRichTextEditor } from '../components/ui/AdminRichTextEditor';
+import { RichTextEditor } from '../components/ui';
 import { Save, ArrowLeft, Image as ImageIcon, Eye, Globe, Sparkles, Tag } from 'lucide-react';
 import type { CreateBlogPostRequest, BlogPost } from '@/services/api/types';
 import { media } from '@/services/api/supabase';
@@ -163,7 +163,7 @@ const BlogEditorForm: React.FC<BlogEditorFormProps> = ({ initialPost, isNew, onS
                         </div>
 
                         {/* Content Editor */}
-                        <AdminRichTextEditor
+                        <RichTextEditor
                             label="Content"
                             value={formData.content || ''}
                             onChange={(content) => setFormData(prev => ({ ...prev, content }))}

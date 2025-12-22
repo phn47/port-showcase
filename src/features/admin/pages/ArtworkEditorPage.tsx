@@ -5,7 +5,7 @@ import { useTags } from '@/hooks/useTags';
 import { ArrowLeft, Save, Eye, Upload, X } from 'lucide-react';
 import type { ArtworkCategory, CreateArtworkRequest, Artwork, Tag } from '@/services/api/types';
 import { media } from '@/services/api/supabase';
-import { AdminButton, AdminPageHeader, AdminCard } from '@/features/admin/components/ui';
+import { Button, PageHeader, Card } from '../components/ui';
 
 const CATEGORIES: ArtworkCategory[] = [
   'Illustration',
@@ -141,7 +141,7 @@ const ArtworkEditorForm: React.FC<ArtworkEditorFormProps> = ({
     <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
       <div className="lg:col-span-2 space-y-8">
         {/* Media Section */}
-        <AdminCard title="Artwork Media">
+        <Card title="Artwork Media">
           <div className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {mediaFiles.map((mediaItem, index) => (
@@ -170,10 +170,10 @@ const ArtworkEditorForm: React.FC<ArtworkEditorFormProps> = ({
               </label>
             </div>
           </div>
-        </AdminCard>
+        </Card>
 
         {/* Details Section */}
-        <AdminCard title="Artwork Details">
+        <Card title="Artwork Details">
           <div className="space-y-6">
             <div>
               <label className="block text-gray-400 text-[10px] font-mono uppercase mb-2">Title *</label>
@@ -204,12 +204,12 @@ const ArtworkEditorForm: React.FC<ArtworkEditorFormProps> = ({
               />
             </div>
           </div>
-        </AdminCard>
+        </Card>
       </div>
 
       <div className="space-y-8">
         {/* Meta Settings */}
-        <AdminCard title="Classification">
+        <Card title="Classification">
           <div className="space-y-6">
             <div>
               <label className="block text-gray-400 text-[10px] font-mono uppercase mb-2">Category *</label>
@@ -253,10 +253,10 @@ const ArtworkEditorForm: React.FC<ArtworkEditorFormProps> = ({
               <label htmlFor="featured" className="text-xs uppercase font-bold text-gray-300">Feature Artwork</label>
             </div>
           </div>
-        </AdminCard>
+        </Card>
 
         {/* Tags Section */}
-        <AdminCard title="Tags">
+        <Card title="Tags">
           <div className="flex flex-wrap gap-2 max-h-64 overflow-y-auto p-2 bg-black/40 rounded-xl border border-white/10">
             {allTags?.map(tag => (
               <button
@@ -264,25 +264,25 @@ const ArtworkEditorForm: React.FC<ArtworkEditorFormProps> = ({
                 type="button"
                 onClick={() => toggleTag(tag.id)}
                 className={`px-3 py-1 rounded-full text-[10px] font-mono uppercase transition-all ${selectedTags.includes(tag.id)
-                    ? 'bg-white text-black font-black'
-                    : 'bg-white/5 text-gray-400 hover:bg-white/10'
+                  ? 'bg-white text-black font-black'
+                  : 'bg-white/5 text-gray-400 hover:bg-white/10'
                   }`}
               >
                 {tag.name}
               </button>
             ))}
           </div>
-        </AdminCard>
+        </Card>
 
         <div className="sticky bottom-8 space-y-4">
-          <AdminButton
+          <Button
             type="submit"
             disabled={isSaving || isUploading}
             className="w-full py-4 text-base"
             icon={!(isSaving || isUploading) && <Save size={20} />}
           >
             {isUploading ? 'Uploading Media...' : (isSaving ? 'Saving...' : 'Save Artwork')}
-          </AdminButton>
+          </Button>
           {!isNew && (
             <Link to={`/?artwork=${formData.slug}`} target="_blank" className="flex items-center justify-center gap-2 w-full py-3 border border-white/10 hover:bg-white/5 transition-colors text-xs font-mono uppercase font-bold text-gray-400">
               <Eye size={16} /> Preview Live
@@ -331,7 +331,7 @@ export const ArtworkEditorPage: React.FC = () => {
       <div className="p-12 text-center bg-black min-h-screen">
         <h2 className="text-2xl font-black uppercase text-white mb-6 tracking-tighter">System Error</h2>
         <p className="text-red-500 font-mono text-sm mb-8">{error instanceof Error ? error.message : 'Dữ liệu không phản hồi'}</p>
-        <AdminButton onClick={() => navigate('/admin/artworks')}>Back to Gallery</AdminButton>
+        <Button onClick={() => navigate('/admin/artworks')}>Back to Gallery</Button>
       </div>
     );
   }
@@ -343,7 +343,7 @@ export const ArtworkEditorPage: React.FC = () => {
       </Link>
 
       <div className="mb-12">
-        <AdminPageHeader
+        <PageHeader
           title={isNew ? 'New Creation' : 'Curate Artwork'}
           subtitle={isNew ? 'Add a new masterpiece to your vault' : `Editing Piece: ${artwork?.title || ''}`}
         />

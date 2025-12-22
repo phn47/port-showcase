@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useArtworks, useDeleteArtwork, usePublishArtwork, useUnpublishArtwork } from '@/hooks/useArtworks';
 import { Plus, Search, Filter, Eye, EyeOff, Trash2, Edit } from 'lucide-react';
 import type { ArtworkCategory } from '@/services/api/types';
-import { AdminButton, AdminInput, AdminSelect, AdminBadge, AdminPageHeader, AdminCard, AdminActionButton } from '@/features/admin/components/ui';
+import { Button, Input, Select, Badge, PageHeader, Card, ActionButton } from '../components/ui';
 import { useConfirm } from '../context/AdminConfirmContext';
 
 export const ArtworksListPage: React.FC = () => {
@@ -135,17 +135,17 @@ export const ArtworksListPage: React.FC = () => {
   return (
     <div className="p-12 cursor-auto">
       {/* Header */}
-      <AdminPageHeader
+      <PageHeader
         title="Artworks"
         subtitle="Manage your portfolio"
         action={
-          <AdminButton
+          <Button
             asLink
             to="/admin/artworks/new"
             icon={<Plus size={20} />}
           >
             New Artwork
-          </AdminButton>
+          </Button>
         }
       />
 
@@ -157,7 +157,7 @@ export const ArtworksListPage: React.FC = () => {
         className="mb-8 space-y-4"
       >
         {/* Row 1: Search */}
-        <AdminInput
+        <Input
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -168,16 +168,16 @@ export const ArtworksListPage: React.FC = () => {
         {/* Row 2: Selectors AND Bulk Actions */}
         <div className="relative flex items-center justify-between gap-4 min-h-[48px]">
           <div className="flex flex-wrap gap-4">
-            <AdminSelect
+            <Select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value as any)}
             >
               <option value="all">All Status</option>
               <option value="published">Published</option>
               <option value="draft">Draft</option>
-            </AdminSelect>
+            </Select>
 
-            <AdminSelect
+            <Select
               value={categoryFilter}
               onChange={(e) => setCategoryFilter(e.target.value as any)}
             >
@@ -185,9 +185,9 @@ export const ArtworksListPage: React.FC = () => {
               {categories.map(cat => (
                 <option key={cat} value={cat}>{cat}</option>
               ))}
-            </AdminSelect>
+            </Select>
 
-            <AdminSelect
+            <Select
               value={limit}
               onChange={(e) => {
                 setLimit(Number(e.target.value) as 50 | 100);
@@ -196,7 +196,7 @@ export const ArtworksListPage: React.FC = () => {
             >
               <option value="50">50 per page</option>
               <option value="100">100 per page</option>
-            </AdminSelect>
+            </Select>
           </div>
 
           <AnimatePresence>
@@ -223,7 +223,7 @@ export const ArtworksListPage: React.FC = () => {
                 <div className="h-4 w-px bg-white/10" />
 
                 <div className="flex gap-2">
-                  <AdminButton
+                  <Button
                     variant="success"
                     size="sm"
                     className="h-8 px-3 text-[10px]"
@@ -233,8 +233,8 @@ export const ArtworksListPage: React.FC = () => {
                     }}
                   >
                     Publish
-                  </AdminButton>
-                  <AdminButton
+                  </Button>
+                  <Button
                     variant="warning"
                     size="sm"
                     className="h-8 px-3 text-[10px]"
@@ -244,8 +244,8 @@ export const ArtworksListPage: React.FC = () => {
                     }}
                   >
                     Unpublish
-                  </AdminButton>
-                  <AdminButton
+                  </Button>
+                  <Button
                     variant="danger"
                     size="sm"
                     className="h-8 px-3 text-[10px]"
@@ -277,7 +277,7 @@ export const ArtworksListPage: React.FC = () => {
                     }}
                   >
                     Delete
-                  </AdminButton>
+                  </Button>
                 </div>
               </motion.div>
             )}
@@ -322,7 +322,7 @@ export const ArtworksListPage: React.FC = () => {
           </button>
         </div>
       ) : (
-        <AdminCard padding="none" className="overflow-hidden">
+        <Card padding="none" className="overflow-hidden">
           <table className="w-full">
             <thead className="bg-black/20 border-b border-white/10">
               <tr>
@@ -402,28 +402,28 @@ export const ArtworksListPage: React.FC = () => {
                       <span className="font-mono text-xs uppercase text-gray-400">{artwork.category}</span>
                     </td>
                     <td className="px-6 py-5">
-                      <AdminBadge variant={artwork.status === 'published' ? 'published' : artwork.status === 'draft' ? 'draft' : 'default'}>
+                      <Badge variant={artwork.status === 'published' ? 'published' : artwork.status === 'draft' ? 'draft' : 'default'}>
                         {artwork.status}
-                      </AdminBadge>
+                      </Badge>
                     </td>
                     <td className="px-6 py-5">
                       <span className="font-mono text-sm text-gray-400">{artwork.display_order}</span>
                     </td>
                     <td className="px-6 py-5">
                       <div className="flex items-center gap-2">
-                        <AdminActionButton
+                        <ActionButton
                           icon={Edit}
                           to={`/admin/artworks/${artwork.id}`}
                           title="Edit"
                         />
                         {artwork.status === 'published' ? (
-                          <AdminActionButton
+                          <ActionButton
                             icon={EyeOff}
                             onClick={() => handleUnpublish(artwork.id)}
                             title="Unpublish"
                           />
                         ) : (
-                          <AdminActionButton
+                          <ActionButton
                             icon={Eye}
                             onClick={() => handlePublish(artwork.id)}
                             title="Publish"
@@ -436,7 +436,7 @@ export const ArtworksListPage: React.FC = () => {
               })}
             </tbody>
           </table>
-        </AdminCard>
+        </Card>
       )}
 
       {/* Pagination Controls */}
@@ -447,14 +447,14 @@ export const ArtworksListPage: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-3">
-            <AdminButton
+            <Button
               variant="secondary"
               size="sm"
               onClick={() => setPage(p => Math.max(1, p - 1))}
               disabled={page === 1}
             >
               Previous
-            </AdminButton>
+            </Button>
 
             <div className="flex items-center gap-2">
               {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
@@ -484,14 +484,14 @@ export const ArtworksListPage: React.FC = () => {
               })}
             </div>
 
-            <AdminButton
+            <Button
               variant="secondary"
               size="sm"
               onClick={() => setPage(p => Math.min(totalPages, p + 1))}
               disabled={page === totalPages}
             >
               Next
-            </AdminButton>
+            </Button>
           </div>
         </div>
       )}

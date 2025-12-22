@@ -1,12 +1,11 @@
 import React from 'react';
-import { Search } from 'lucide-react';
 
-interface AdminInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     icon?: React.ReactNode;
     iconPosition?: 'left' | 'right';
 }
 
-export const AdminInput: React.FC<AdminInputProps> = ({
+export const Input: React.FC<InputProps> = ({
     icon,
     iconPosition = 'left',
     className = '',
@@ -35,4 +34,3 @@ export const AdminInput: React.FC<AdminInputProps> = ({
         </div>
     );
 };
-

@@ -4,7 +4,7 @@ import { useTimelineEntry, useCreateTimelineEntry, useUpdateTimelineEntry } from
 import { ArrowLeft, Save, Upload, X } from 'lucide-react';
 import { media } from '@/services/api/supabase';
 import type { CreateTimelineEntryRequest, TimelineEntry } from '@/services/api/types';
-import { AdminButton, AdminPageHeader, AdminCard } from '@/features/admin/components/ui';
+import { Button, PageHeader, Card } from '../components/ui';
 
 interface TimelineEditorFormProps {
     initialData?: TimelineEntry;
@@ -73,7 +73,7 @@ const TimelineEditorForm: React.FC<TimelineEditorFormProps> = ({
         <form onSubmit={handleSubmit} className="space-y-8">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <div className="lg:col-span-2 space-y-6">
-                    <AdminCard title="Milestone Details">
+                    <Card title="Milestone Details">
                         <div className="space-y-6">
                             <div>
                                 <label className="block text-gray-400 text-xs font-mono uppercase mb-2">Title</label>
@@ -149,11 +149,11 @@ const TimelineEditorForm: React.FC<TimelineEditorFormProps> = ({
                                 </div>
                             </div>
                         </div>
-                    </AdminCard>
+                    </Card>
                 </div>
 
                 <div className="space-y-6">
-                    <AdminCard title="Settings">
+                    <Card title="Settings">
                         <div className="space-y-6">
                             <div>
                                 <label className="block text-gray-400 text-xs font-mono uppercase mb-2">Status</label>
@@ -179,16 +179,16 @@ const TimelineEditorForm: React.FC<TimelineEditorFormProps> = ({
                                 <p className="text-[10px] text-gray-500 mt-2">Lower numbers appear first.</p>
                             </div>
 
-                            <AdminButton
+                            <Button
                                 type="submit"
                                 disabled={isSaving}
                                 className="w-full py-4 text-base"
                                 icon={!isSaving && <Save size={20} />}
                             >
                                 {isSaving ? 'Saving...' : 'Save Entry'}
-                            </AdminButton>
+                            </Button>
                         </div>
-                    </AdminCard>
+                    </Card>
                 </div>
             </div>
         </form>
@@ -231,7 +231,7 @@ export const TimelineEditorPage: React.FC = () => {
             <div className="p-8 text-center bg-black min-h-screen">
                 <h2 className="text-xl font-bold text-white mb-4 uppercase">Error loading entry</h2>
                 <p className="text-red-400 mb-6 font-mono text-sm">{error instanceof Error ? error.message : 'Unknown error'}</p>
-                <AdminButton onClick={() => navigate('/admin/timeline')}>Back to Timeline</AdminButton>
+                <Button onClick={() => navigate('/admin/timeline')}>Back to Timeline</Button>
             </div>
         );
     }
@@ -243,7 +243,7 @@ export const TimelineEditorPage: React.FC = () => {
             </Link>
 
             <div className="mb-12">
-                <AdminPageHeader
+                <PageHeader
                     title={isNew ? 'New Milestone' : 'Edit Milestone'}
                     subtitle={isNew ? 'Define a new event in your journey' : `Editing: ${entry?.title || ''}`}
                 />

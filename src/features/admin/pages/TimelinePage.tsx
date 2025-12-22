@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTimelineEntries, useDeleteTimelineEntry, usePublishTimelineEntry, useUnpublishTimelineEntry } from '@/hooks/useTimeline';
 import type { TimelineStatus } from '@/services/api/types';
-import { AdminButton, AdminSelect, AdminBadge, AdminPageHeader, AdminCard, AdminActionButton, AdminInput } from '@/features/admin/components/ui';
+import { Button, Select, Badge, PageHeader, Card, ActionButton, Input } from '../components/ui';
 import { Edit, Plus, Eye, EyeOff, Search } from 'lucide-react';
 import { useConfirm } from '../context/AdminConfirmContext';
 
@@ -141,17 +141,17 @@ export const TimelinePage: React.FC = () => {
 
   return (
     <div className="p-12 cursor-auto">
-      <AdminPageHeader
+      <PageHeader
         title="Timeline"
-        subtitle="Manage roadmap milestones"
+        subtitle="Journey & Milestones"
         action={
-          <AdminButton
+          <Button
             asLink
             to="/admin/timeline/new"
             icon={<Plus size={20} />}
           >
             New Entry
-          </AdminButton>
+          </Button>
         }
       />
 
@@ -163,31 +163,30 @@ export const TimelinePage: React.FC = () => {
         className="mb-8 space-y-4"
       >
         {/* Row 1: Search */}
-        <AdminInput
+        <Input
           type="text"
           placeholder="Search entries..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           icon={<Search size={20} />}
+          className="mb-6"
         />
 
         {/* Row 2: Selectors AND Bulk Actions */}
         <div className="relative flex items-center justify-between gap-4 min-h-[48px]">
           <div className="flex flex-wrap gap-4">
-            <AdminSelect
+            <Select
               value={statusFilter}
               onChange={(e) => {
                 setStatusFilter(e.target.value as any);
                 setPage(1);
               }}
             >
-              {STATUS_OPTIONS.map((s) => (
-                <option key={s} value={s}>
-                  {s === 'all' ? 'All Status' : s}
-                </option>
-              ))}
-            </AdminSelect>
-            <AdminSelect
+              <option value="all">All Status</option>
+              <option value="published">Published</option>
+              <option value="draft">Draft</option>
+            </Select>
+            <Select
               value={limit}
               onChange={(e) => {
                 setLimit(Number(e.target.value));
@@ -196,7 +195,7 @@ export const TimelinePage: React.FC = () => {
             >
               <option value="50">50 per page</option>
               <option value="100">100 per page</option>
-            </AdminSelect>
+            </Select>
           </div>
 
           <AnimatePresence>
@@ -223,30 +222,30 @@ export const TimelinePage: React.FC = () => {
                 <div className="h-4 w-px bg-white/10" />
 
                 <div className="flex gap-2">
-                  <AdminButton
+                  <Button
                     variant="success"
                     size="sm"
                     className="h-8 px-3 text-[10px]"
                     onClick={handleBulkPublish}
                   >
                     Publish
-                  </AdminButton>
-                  <AdminButton
+                  </Button>
+                  <Button
                     variant="warning"
                     size="sm"
                     className="h-8 px-3 text-[10px]"
                     onClick={handleBulkUnpublish}
                   >
                     Unpublish
-                  </AdminButton>
-                  <AdminButton
+                  </Button>
+                  <Button
                     variant="danger"
                     size="sm"
                     className="h-8 px-3 text-[10px]"
                     onClick={handleBulkDelete}
                   >
                     Delete
-                  </AdminButton>
+                  </Button>
                 </div>
               </motion.div>
             )}
@@ -271,7 +270,7 @@ export const TimelinePage: React.FC = () => {
         </div>
       ) : (
         <>
-          <AdminCard padding="none" className="overflow-hidden">
+          <Card padding="none" className="overflow-hidden">
             <table className="w-full">
               <thead className="bg-black/20 border-b border-white/10">
                 <tr>
@@ -291,28 +290,28 @@ export const TimelinePage: React.FC = () => {
                 </tr>
               </thead>
               <tbody>
-                {paginated.map((item, index) => (
+                {paginated.map((entry, index) => (
                   <motion.tr
-                    key={item.id}
+                    key={entry.id}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.02 }}
-                    className={`border-b border-white/5 hover:bg-white/5 transition-colors ${selectedIds.has(item.id) ? 'bg-white/10' : ''}`}
+                    className={`border-b border-white/5 hover:bg-white/5 transition-colors ${selectedIds.has(entry.id) ? 'bg-white/10' : ''}`}
                   >
                     <td className="px-6 py-5">
                       <input
                         type="checkbox"
-                        checked={selectedIds.has(item.id)}
-                        onChange={() => toggleSelect(item.id)}
+                        checked={selectedIds.has(entry.id)}
+                        onChange={() => toggleSelect(entry.id)}
                         className="w-4 h-4 cursor-pointer"
                       />
                     </td>
                     <td className="px-6 py-5">
-                      {item.media_url ? (
+                      {entry.media_url ? (
                         <div className="w-16 h-16 rounded-lg overflow-hidden bg-black/20 border border-white/10">
-                          {item.media_url.match(/\.(mp4|webm|mov)$/i) || item.media_url.includes('/video/upload/') ? (
+                          {entry.media_url.match(/\.(mp4|webm|mov)$/i) || entry.media_url.includes('/video/upload/') ? (
                             <video
-                              src={item.media_url}
+                              src={entry.media_url}
                               className="w-full h-full object-contain"
                               autoPlay
                               muted
@@ -320,7 +319,7 @@ export const TimelinePage: React.FC = () => {
                               playsInline
                             />
                           ) : (
-                            <img src={item.media_url} alt={item.title} className="w-full h-full object-contain" />
+                            <img src={entry.media_url} alt={entry.title} className="w-full h-full object-contain" />
                           )}
                         </div>
                       ) : (
@@ -328,38 +327,38 @@ export const TimelinePage: React.FC = () => {
                       )}
                     </td>
                     <td className="px-6 py-5">
-                      <div className="font-bold uppercase text-sm mb-1">{item.title}</div>
-                      {item.body && (
+                      <div className="font-bold uppercase text-sm mb-1">{entry.title}</div>
+                      {entry.body && (
                         <div className="text-xs text-gray-400 line-clamp-1 font-mono">
-                          {item.body}
+                          {entry.body}
                         </div>
                       )}
                     </td>
                     <td className="px-6 py-5">
-                      <span className="font-mono text-xs uppercase text-gray-400">{item.date_label}</span>
+                      <span className="font-mono text-xs uppercase text-gray-400">{entry.date_label}</span>
                     </td>
                     <td className="px-6 py-5">
-                      <AdminBadge variant={item.status === 'published' ? 'published' : item.status === 'archived' ? 'archived' : 'draft'}>
-                        {item.status}
-                      </AdminBadge>
+                      <Badge variant={entry.status === 'published' ? 'published' : 'draft'}>
+                        {entry.status}
+                      </Badge>
                     </td>
                     <td className="px-6 py-5">
                       <div className="flex items-center gap-2">
-                        <AdminActionButton
+                        <ActionButton
                           icon={Edit}
-                          to={`/admin/timeline/${item.id}`}
+                          to={`/admin/timeline/${entry.id}`}
                           title="Edit"
                         />
-                        {item.status === 'published' ? (
-                          <AdminActionButton
+                        {entry.status === 'published' ? (
+                          <ActionButton
                             icon={EyeOff}
-                            onClick={() => handleUnpublish(item.id)}
+                            onClick={() => handleUnpublish(entry.id)}
                             title="Unpublish"
                           />
                         ) : (
-                          <AdminActionButton
+                          <ActionButton
                             icon={Eye}
-                            onClick={() => handlePublish(item.id)}
+                            onClick={() => handlePublish(entry.id)}
                             title="Publish"
                           />
                         )}
@@ -369,7 +368,7 @@ export const TimelinePage: React.FC = () => {
                 ))}
               </tbody>
             </table>
-          </AdminCard>
+          </Card>
 
           {/* Pagination Controls */}
           {filtered.length > 0 && (
@@ -379,14 +378,14 @@ export const TimelinePage: React.FC = () => {
               </div>
 
               <div className="flex items-center gap-3">
-                <AdminButton
+                <Button
                   variant="secondary"
                   size="sm"
                   onClick={() => setPage(p => Math.max(1, p - 1))}
                   disabled={page === 1}
                 >
                   Previous
-                </AdminButton>
+                </Button>
 
                 <div className="flex items-center gap-2">
                   {Array.from({ length: totalPages }, (_, i) => i + 1)
@@ -410,14 +409,14 @@ export const TimelinePage: React.FC = () => {
                     })}
                 </div>
 
-                <AdminButton
+                <Button
                   variant="secondary"
                   size="sm"
                   onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                   disabled={page === totalPages}
                 >
                   Next
-                </AdminButton>
+                </Button>
               </div>
             </div>
           )}

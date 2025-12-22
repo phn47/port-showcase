@@ -3,23 +3,23 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Edit, Eye, EyeOff, Search } from 'lucide-react';
 import { useServices, useDeleteService, usePublishService, useUnpublishService } from '@/hooks/useServices';
 import type { ServiceStatus } from '@/services/api/types';
-import { AdminButton, AdminBadge, AdminPageHeader, AdminCard, AdminActionButton, AdminInput, AdminSelect } from '@/features/admin/components/ui';
+import { Button, Badge, PageHeader, Card, ActionButton, Input, Select } from '../components/ui';
 import { useConfirm } from '../context/AdminConfirmContext';
 
 export const ServicesListPage: React.FC = () => {
     return (
         <div className="p-12 cursor-auto">
-            <AdminPageHeader
+            <PageHeader
                 title="Services"
-                subtitle="Manage site services"
+                subtitle="What you offer"
                 action={
-                    <AdminButton
+                    <Button
                         asLink
                         to="/admin/services/new"
                         icon={<Plus size={20} />}
                     >
                         New Service
-                    </AdminButton>
+                    </Button>
                 }
             />
 
@@ -179,7 +179,7 @@ const ServicesTab: React.FC = () => {
                 className="mb-8 space-y-4"
             >
                 {/* Row 1: Search */}
-                <AdminInput
+                <Input
                     type="text"
                     placeholder="Search services..."
                     value={search}
@@ -190,7 +190,7 @@ const ServicesTab: React.FC = () => {
                 {/* Row 2: Selectors AND Bulk Actions */}
                 <div className="relative flex items-center justify-between gap-4 min-h-[48px]">
                     <div className="flex flex-wrap gap-4">
-                        <AdminSelect
+                        <Select
                             value={statusFilter}
                             onChange={(e) => {
                                 setStatusFilter(e.target.value as any);
@@ -200,8 +200,8 @@ const ServicesTab: React.FC = () => {
                             <option value="all">All Status</option>
                             <option value="published">Published</option>
                             <option value="draft">Draft</option>
-                        </AdminSelect>
-                        <AdminSelect
+                        </Select>
+                        <Select
                             value={limit}
                             onChange={(e) => {
                                 setLimit(Number(e.target.value));
@@ -210,7 +210,7 @@ const ServicesTab: React.FC = () => {
                         >
                             <option value="50">50 per page</option>
                             <option value="100">100 per page</option>
-                        </AdminSelect>
+                        </Select>
                     </div>
 
                     <AnimatePresence>
@@ -237,30 +237,30 @@ const ServicesTab: React.FC = () => {
                                 <div className="h-4 w-px bg-white/10" />
 
                                 <div className="flex gap-2">
-                                    <AdminButton
+                                    <Button
                                         variant="success"
                                         size="sm"
                                         className="h-8 px-3 text-[10px]"
                                         onClick={handleBulkPublish}
                                     >
                                         Publish
-                                    </AdminButton>
-                                    <AdminButton
+                                    </Button>
+                                    <Button
                                         variant="warning"
                                         size="sm"
                                         className="h-8 px-3 text-[10px]"
                                         onClick={handleBulkUnpublish}
                                     >
                                         Unpublish
-                                    </AdminButton>
-                                    <AdminButton
+                                    </Button>
+                                    <Button
                                         variant="danger"
                                         size="sm"
                                         className="h-8 px-3 text-[10px]"
                                         onClick={handleBulkDelete}
                                     >
                                         Delete
-                                    </AdminButton>
+                                    </Button>
                                 </div>
                             </motion.div>
                         )}
@@ -270,7 +270,7 @@ const ServicesTab: React.FC = () => {
 
             {filtered && filtered.length > 0 ? (
                 <>
-                    <AdminCard padding="none" className="overflow-hidden">
+                    <Card padding="none" className="overflow-hidden">
                         <table className="w-full">
                             <thead className="bg-black/20 border-b border-white/10">
                                 <tr>
@@ -333,28 +333,28 @@ const ServicesTab: React.FC = () => {
                                             </div>
                                         </td>
                                         <td className="px-6 py-5">
-                                            <AdminBadge variant={service.status === 'published' ? 'published' : 'default'}>
+                                            <Badge variant={service.status === 'published' ? 'published' : 'draft'}>
                                                 {service.status}
-                                            </AdminBadge>
+                                            </Badge>
                                         </td>
                                         <td className="px-6 py-5 text-xs font-mono text-gray-400">
                                             {service.display_order}
                                         </td>
                                         <td className="px-6 py-5">
                                             <div className="flex items-center gap-2">
-                                                <AdminActionButton
+                                                <ActionButton
                                                     icon={Edit}
                                                     to={`/admin/services/${service.id}`}
                                                     title="Edit"
                                                 />
                                                 {service.status === 'published' ? (
-                                                    <AdminActionButton
+                                                    <ActionButton
                                                         icon={EyeOff}
                                                         onClick={() => handleUnpublish(service.id)}
                                                         title="Unpublish"
                                                     />
                                                 ) : (
-                                                    <AdminActionButton
+                                                    <ActionButton
                                                         icon={Eye}
                                                         onClick={() => handlePublish(service.id)}
                                                         title="Publish"
@@ -366,7 +366,7 @@ const ServicesTab: React.FC = () => {
                                 ))}
                             </tbody>
                         </table>
-                    </AdminCard>
+                    </Card>
 
                     {/* Pagination Controls */}
                     {filtered.length > 0 && (
@@ -376,14 +376,14 @@ const ServicesTab: React.FC = () => {
                             </div>
 
                             <div className="flex items-center gap-3">
-                                <AdminButton
+                                <Button
                                     variant="secondary"
                                     size="sm"
                                     onClick={() => setPage(p => Math.max(1, p - 1))}
                                     disabled={page === 1}
                                 >
                                     Previous
-                                </AdminButton>
+                                </Button>
 
                                 <div className="flex items-center gap-2">
                                     {Array.from({ length: totalPages }, (_, i) => i + 1)
@@ -407,14 +407,14 @@ const ServicesTab: React.FC = () => {
                                         })}
                                 </div>
 
-                                <AdminButton
+                                <Button
                                     variant="secondary"
                                     size="sm"
                                     onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                                     disabled={page === totalPages}
                                 >
                                     Next
-                                </AdminButton>
+                                </Button>
                             </div>
                         </div>
                     )}
@@ -422,13 +422,13 @@ const ServicesTab: React.FC = () => {
             ) : (
                 <div className="text-center py-12 text-gray-400 border border-dashed border-white/10 rounded-xl">
                     <p className="mb-4 uppercase font-mono text-sm tracking-widest">No services yet</p>
-                    <AdminButton
+                    <Button
                         asLink
                         to="/admin/services/new"
                         icon={<Plus size={20} />}
                     >
                         Create your first service
-                    </AdminButton>
+                    </Button>
                 </div>
             )}
         </div>

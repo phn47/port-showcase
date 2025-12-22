@@ -2,7 +2,7 @@ import React from 'react';
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
 
-interface AdminRichTextEditorProps {
+interface RichTextEditorProps {
     label?: string;
     value: string;
     onChange: (content: string) => void;
@@ -11,7 +11,7 @@ interface AdminRichTextEditorProps {
     className?: string;
 }
 
-export const AdminRichTextEditor: React.FC<AdminRichTextEditorProps> = ({
+export const RichTextEditor: React.FC<RichTextEditorProps> = ({
     label,
     value,
     onChange,

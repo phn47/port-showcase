@@ -4,7 +4,7 @@ import { ArrowLeft, Save, Upload, X } from 'lucide-react';
 import { useServices, useService, useCreateService, useUpdateService } from '@/hooks/useServices';
 import { media } from '@/services/api/supabase';
 import type { CreateServiceRequest, ServiceStatus, Service } from '@/services/api/types';
-import { AdminButton, AdminPageHeader, AdminCard, AdminRichTextEditor } from '@/features/admin/components/ui';
+import { Button, PageHeader, Card, RichTextEditor } from '../components/ui';
 
 interface ServiceEditorFormProps {
     initialData?: Service;
@@ -71,7 +71,7 @@ const ServiceEditorForm: React.FC<ServiceEditorFormProps> = ({
     return (
         <form onSubmit={handleSubmit}>
             <div className="grid grid-cols-1 gap-8">
-                <AdminCard title="Service Information">
+                <Card title="Service Information">
                     <div className="space-y-6">
                         <div>
                             <label className="block text-xs font-mono uppercase tracking-widest text-gray-500 mb-2 text-white/60">Service Name</label>
@@ -105,7 +105,7 @@ const ServiceEditorForm: React.FC<ServiceEditorFormProps> = ({
                         </div>
 
                         <div className="min-h-[400px]">
-                            <AdminRichTextEditor
+                            <RichTextEditor
                                 label="Description"
                                 value={formData.description || ''}
                                 onChange={(content) => setFormData(prev => ({ ...prev, description: content }))}
@@ -114,9 +114,9 @@ const ServiceEditorForm: React.FC<ServiceEditorFormProps> = ({
                             />
                         </div>
                     </div>
-                </AdminCard>
+                </Card>
 
-                <AdminCard title="Media & Display">
+                <Card title="Media & Display">
                     <div className="space-y-6">
                         <div>
                             <label className="block text-xs font-mono uppercase tracking-widest text-gray-500 mb-4 text-white/60">Service Media (Image/Video)</label>
@@ -197,26 +197,26 @@ const ServiceEditorForm: React.FC<ServiceEditorFormProps> = ({
                             </div>
                         </div>
                     </div>
-                </AdminCard>
+                </Card>
             </div>
 
             <div className="mt-12 flex gap-4">
-                <AdminButton
+                <Button
                     type="submit"
                     disabled={isSaving}
                     className="flex-1 py-4"
                     icon={isSaving ? undefined : <Save size={20} />}
                 >
                     {isSaving ? 'Saving Changes...' : 'Save Service'}
-                </AdminButton>
-                <AdminButton
+                </Button>
+                <Button
                     variant="secondary"
                     onClick={() => window.history.back()}
                     type="button"
                     className="px-8"
                 >
                     Cancel
-                </AdminButton>
+                </Button>
             </div>
         </form>
     );
@@ -268,7 +268,7 @@ export const ServiceEditorPage: React.FC = () => {
             <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-8 text-center">
                 <h2 className="text-2xl font-bold mb-4 uppercase tracking-tighter">Error loading service</h2>
                 <p className="text-red-400 mb-6 max-w-md font-mono text-sm">{error instanceof Error ? error.message : 'Unknown error'}</p>
-                <AdminButton onClick={() => navigate('/admin/services')}>Return to Services</AdminButton>
+                <Button onClick={() => navigate('/admin/services')}>Return to Services</Button>
             </div>
         );
     }
@@ -283,7 +283,7 @@ export const ServiceEditorPage: React.FC = () => {
                     <ArrowLeft size={14} className="group-hover:-translate-x-1 transition-transform" />
                     Back to Services
                 </button>
-                <AdminPageHeader
+                <PageHeader
                     title={isNew ? 'Create Service' : 'Edit Service'}
                     subtitle={isNew ? 'Define a new service offering' : `Editing: ${service?.name || ''}`}
                 />

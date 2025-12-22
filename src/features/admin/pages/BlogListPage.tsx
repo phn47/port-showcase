@@ -4,7 +4,7 @@ import { useBlogPosts, useDeleteBlogPost, usePublishBlogPost, useUnpublishBlogPo
 import { format } from 'date-fns';
 import { Edit, Plus, Search, ExternalLink, Eye, EyeOff } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { AdminButton, AdminInput, AdminSelect, AdminBadge, AdminPageHeader, AdminCard, AdminActionButton } from '@/features/admin/components/ui';
+import { Button, Input, Select, Badge, PageHeader, Card, ActionButton } from '../components/ui';
 import { useConfirm } from '../context/AdminConfirmContext';
 
 export const BlogListPage: React.FC = () => {
@@ -132,17 +132,17 @@ export const BlogListPage: React.FC = () => {
 
     return (
         <div className="p-12">
-            <AdminPageHeader
+            <PageHeader
                 title="Blog"
-                subtitle="Manage your articles"
+                subtitle="Stories & Thoughts"
                 action={
-                    <AdminButton
+                    <Button
                         asLink
                         to="/admin/blog/new"
                         icon={<Plus size={20} />}
                     >
                         New Post
-                    </AdminButton>
+                    </Button>
                 }
             />
 
@@ -155,7 +155,7 @@ export const BlogListPage: React.FC = () => {
                 className="mb-8 space-y-4"
             >
                 {/* Row 1: Search */}
-                <AdminInput
+                <Input
                     type="text"
                     placeholder="Search posts..."
                     value={search}
@@ -166,7 +166,7 @@ export const BlogListPage: React.FC = () => {
                 {/* Row 2: Selectors AND Bulk Actions */}
                 <div className="relative flex items-center justify-between gap-4 min-h-[48px]">
                     <div className="flex flex-wrap gap-4">
-                        <AdminSelect
+                        <Select
                             value={statusFilter}
                             onChange={(e) => {
                                 setStatusFilter(e.target.value as any);
@@ -176,8 +176,8 @@ export const BlogListPage: React.FC = () => {
                             <option value="all">All Status</option>
                             <option value="published">Published</option>
                             <option value="draft">Draft</option>
-                        </AdminSelect>
-                        <AdminSelect
+                        </Select>
+                        <Select
                             value={limit}
                             onChange={(e) => {
                                 setLimit(Number(e.target.value));
@@ -186,7 +186,7 @@ export const BlogListPage: React.FC = () => {
                         >
                             <option value="50">50 per page</option>
                             <option value="100">100 per page</option>
-                        </AdminSelect>
+                        </Select>
                     </div>
 
                     <AnimatePresence>
@@ -213,30 +213,30 @@ export const BlogListPage: React.FC = () => {
                                 <div className="h-4 w-px bg-white/10" />
 
                                 <div className="flex gap-2">
-                                    <AdminButton
+                                    <Button
                                         variant="success"
                                         size="sm"
                                         className="h-8 px-3 text-[10px]"
                                         onClick={handleBulkPublish}
                                     >
                                         Publish
-                                    </AdminButton>
-                                    <AdminButton
+                                    </Button>
+                                    <Button
                                         variant="warning"
                                         size="sm"
                                         className="h-8 px-3 text-[10px]"
                                         onClick={handleBulkUnpublish}
                                     >
                                         Unpublish
-                                    </AdminButton>
-                                    <AdminButton
+                                    </Button>
+                                    <Button
                                         variant="danger"
                                         size="sm"
                                         className="h-8 px-3 text-[10px]"
                                         onClick={handleBulkDelete}
                                     >
                                         Delete
-                                    </AdminButton>
+                                    </Button>
                                 </div>
                             </motion.div>
                         )}
@@ -254,7 +254,7 @@ export const BlogListPage: React.FC = () => {
                 </div>
             ) : (
                 <>
-                    <AdminCard padding="none" className="overflow-hidden">
+                    <Card padding="none" className="overflow-hidden">
                         <table className="w-full">
                             <thead className="bg-black/20 border-b border-white/10">
                                 <tr>
@@ -317,9 +317,9 @@ export const BlogListPage: React.FC = () => {
                                             </div>
                                         </td>
                                         <td className="px-6 py-5">
-                                            <AdminBadge variant={post.status === 'published' ? 'published' : post.status === 'archived' ? 'archived' : 'draft'}>
+                                            <Badge variant={post.status === 'published' ? 'published' : post.status === 'archived' ? 'archived' : 'draft'}>
                                                 {post.status}
-                                            </AdminBadge>
+                                            </Badge>
                                         </td>
                                         <td className="px-6 py-5">
                                             <span className="text-xs font-mono text-gray-400 uppercase">
@@ -329,37 +329,42 @@ export const BlogListPage: React.FC = () => {
                                         <td className="px-6 py-5">
                                             <div className="flex items-center gap-2">
                                                 {post.status === 'published' && (
-                                                    <AdminActionButton
+                                                    <ActionButton
                                                         icon={ExternalLink}
                                                         onClick={() => window.open(`/blog/${post.slug}`, '_blank')}
                                                         title="View Live"
                                                     />
                                                 )}
-                                                <AdminActionButton
+                                                <ActionButton
                                                     icon={Edit}
                                                     to={`/admin/blog/${post.id}`}
                                                     title="Edit"
                                                 />
                                                 {post.status === 'published' ? (
-                                                    <AdminActionButton
+                                                    <ActionButton
                                                         icon={EyeOff}
                                                         onClick={() => handleUnpublish(post.id)}
                                                         title="Unpublish"
                                                     />
                                                 ) : (
-                                                    <AdminActionButton
+                                                    <ActionButton
                                                         icon={Eye}
                                                         onClick={() => handlePublish(post.id)}
                                                         title="Publish"
                                                     />
                                                 )}
+                                                <ActionButton
+                                                    icon={ExternalLink}
+                                                    to={`/blog/${post.slug}`}
+                                                    title="View"
+                                                />
                                             </div>
                                         </td>
                                     </motion.tr>
                                 ))}
                             </tbody>
                         </table>
-                    </AdminCard>
+                    </Card>
 
                     {/* Pagination Controls */}
                     {posts.length > 0 && (
@@ -369,14 +374,14 @@ export const BlogListPage: React.FC = () => {
                             </div>
 
                             <div className="flex items-center gap-3">
-                                <AdminButton
+                                <Button
                                     variant="secondary"
                                     size="sm"
                                     onClick={() => setPage(p => Math.max(1, p - 1))}
                                     disabled={page === 1}
                                 >
                                     Previous
-                                </AdminButton>
+                                </Button>
 
                                 <div className="flex items-center gap-2">
                                     {Array.from({ length: totalPages }, (_, i) => i + 1)
@@ -400,14 +405,14 @@ export const BlogListPage: React.FC = () => {
                                         })}
                                 </div>
 
-                                <AdminButton
+                                <Button
                                     variant="secondary"
                                     size="sm"
                                     onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                                     disabled={page === totalPages}
                                 >
                                     Next
-                                </AdminButton>
+                                </Button>
                             </div>
                         </div>
                     )}
