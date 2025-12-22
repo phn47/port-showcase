@@ -200,11 +200,11 @@ export const ArtworkEditorPage: React.FC = () => {
             <div className="space-y-4">
               {mediaFiles.map((media, index) => (
                 <div key={index} className="relative group">
-                  <div className="aspect-video bg-white/5 rounded overflow-hidden">
+                  <div className="bg-black/40 rounded overflow-hidden flex items-center justify-center min-h-[300px]">
                     {(media.file?.type.startsWith('video/') || media.url.match(/\.(mp4|webm|mov)$/i) || media.url.includes('/video/upload/')) ? (
-                      <video src={media.url} className="w-full h-full object-cover" controls playsInline muted />
+                      <video src={media.url} className="w-full h-auto object-contain" controls playsInline muted />
                     ) : (
-                      <img src={media.url} alt={`Media ${index + 1}`} className="w-full h-full object-cover" />
+                      <img src={media.url} alt={`Media ${index + 1}`} className="w-full h-auto object-contain" />
                     )}
                   </div>
                   <button

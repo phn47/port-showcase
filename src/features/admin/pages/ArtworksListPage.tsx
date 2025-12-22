@@ -317,11 +317,11 @@ export const ArtworksListPage: React.FC = () => {
                     </td>
                     <td className="px-6 py-5">
                       {primaryMedia ? (
-                        <div className="w-20 h-20 bg-white/5 rounded-lg overflow-hidden relative border border-white/10">
+                        <div className="w-24 h-24 bg-white/5 rounded-lg overflow-hidden relative border border-white/10">
                           {(primaryMedia.type === 'video' || primaryMedia.url.match(/\.(mp4|webm|mov)$/i) || primaryMedia.url.includes('/video/upload/')) ? (
                             <video
                               src={primaryMedia.url}
-                              className="w-full h-full object-cover"
+                              className="w-full h-full object-contain"
                               muted
                               playsInline
                               onMouseOver={e => e.currentTarget.play()}
@@ -334,7 +334,7 @@ export const ArtworksListPage: React.FC = () => {
                             <img
                               src={primaryMedia.url}
                               alt={artwork.title}
-                              className="w-full h-full object-cover"
+                              className="w-full h-full object-contain"
                             />
                           )}
                         </div>
