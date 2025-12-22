@@ -5,6 +5,8 @@ body {
   background-color: #FAFAFA;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
 /* Show cursor in admin area and ensure clean background */
 body.admin-mode,
 body.admin-mode *,
@@ -17,6 +19,20 @@ body.admin-mode::after {
   /* Prevent any diagonal gradient artifacts */
   mask-image: none !important;
   -webkit-mask-image: none !important;
+}
+
+/* Admin typography: softer, more editorial tone */
+body.admin-mode {
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color: #f8f8f8;
+}
+
+body.admin-mode h1,
+body.admin-mode h2,
+body.admin-mode h3,
+body.admin-mode h4 {
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  letter-spacing: -0.01em;
 }
 
 /* Re-enable borders that are intentional (using tailwind classes) */
