@@ -4,7 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTimelineEntries, useDeleteTimelineEntry, usePublishTimelineEntry, useUnpublishTimelineEntry } from '@/hooks/useTimeline';
 import type { TimelineStatus } from '@/services/api/types';
 import { AdminButton, AdminSelect, AdminBadge, AdminPageHeader, AdminCard, AdminActionButton, AdminInput } from '@/features/admin/components/ui';
-import { Edit, Trash2, Plus, Eye, EyeOff, Search } from 'lucide-react';
+import { Edit, Plus, Eye, EyeOff, Search } from 'lucide-react';
+import { useConfirm } from '../context/AdminConfirmContext';
 
 const STATUS_OPTIONS: Array<TimelineStatus | 'all'> = ['all', 'published', 'draft'];
 
@@ -21,6 +22,7 @@ export const TimelinePage: React.FC = () => {
   const deleteMutation = useDeleteTimelineEntry();
   const publishMutation = usePublishTimelineEntry();
   const unpublishMutation = useUnpublishTimelineEntry();
+  const confirm = useConfirm();
 
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 
@@ -58,12 +60,50 @@ export const TimelinePage: React.FC = () => {
   };
 
   const handleBulkDelete = async () => {
-    if (confirm(`Are you sure you want to PERMANENTLY delete ${selectedIds.size} selected entries? This action CANNOT be undone.`)) {
+    let proceed = await confirm({
+      title: 'Bulk Delete Entries',
+      message: `Delete ${selectedIds.size} selected entries?`,
+      confirmText: 'Next',
+      variant: 'danger'
+    });
+
+    if (proceed) {
+      proceed = await confirm({
+        title: 'Confirm Bulk Action',
+        message: `Are you sure you want to PERMANENTLY delete all ${selectedIds.size} selected entries?`,
+        confirmText: 'Delete All',
+        variant: 'danger'
+      });
+    }
+
+    if (proceed) {
       const idsToDelete = Array.from(selectedIds);
       for (const id of idsToDelete) {
         await deleteMutation.mutateAsync(id);
       }
       setSelectedIds(new Set());
+    }
+  };
+
+  const handleDelete = async (id: string, title?: string) => {
+    let proceed = await confirm({
+      title: 'Delete Entry',
+      message: title ? `Are you sure you want to delete "${title}"?` : 'Are you sure you want to delete this entry?',
+      confirmText: 'Delete',
+      variant: 'danger'
+    });
+
+    if (proceed) {
+      proceed = await confirm({
+        title: 'Final Warning',
+        message: 'This action is PERMANENT and cannot be undone. Do you really want to proceed?',
+        confirmText: 'Yes, Delete Permanently',
+        variant: 'danger'
+      });
+    }
+
+    if (proceed) {
+      await deleteMutation.mutateAsync(id);
     }
   };
 

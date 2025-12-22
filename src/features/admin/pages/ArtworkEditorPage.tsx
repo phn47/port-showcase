@@ -3,8 +3,9 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useArtwork, useCreateArtwork, useUpdateArtwork } from '@/hooks/useArtworks';
 import { useTags } from '@/hooks/useTags';
 import { ArrowLeft, Save, Eye, Upload, X } from 'lucide-react';
-import type { ArtworkCategory, CreateArtworkRequest } from '@/services/api/types';
+import type { ArtworkCategory, CreateArtworkRequest, Artwork, Tag } from '@/services/api/types';
 import { media } from '@/services/api/supabase';
+import { AdminButton, AdminPageHeader, AdminCard } from '@/features/admin/components/ui';
 
 const CATEGORIES: ArtworkCategory[] = [
   'Illustration',
@@ -20,124 +21,52 @@ const CATEGORIES: ArtworkCategory[] = [
   'Comic',
 ];
 
-export const ArtworkEditorPage: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
-  const isNew = id === 'new';
+interface ArtworkEditorFormProps {
+  initialData?: Artwork;
+  isNew: boolean;
+  allTags?: Tag[];
+  onSave: (payload: CreateArtworkRequest) => void;
+  isSaving: boolean;
+}
 
-  const { data: artwork, isLoading: isLoadingArtwork } = useArtwork(id || '');
-  const { data: tags } = useTags();
-  const createMutation = useCreateArtwork();
-  const updateMutation = useUpdateArtwork();
-
+const ArtworkEditorForm: React.FC<ArtworkEditorFormProps> = ({
+  initialData,
+  isNew,
+  allTags,
+  onSave,
+  isSaving
+}) => {
   const [formData, setFormData] = useState<Partial<CreateArtworkRequest>>({
-    title: '',
-    slug: '',
-    description: '',
-    category: 'Illustration',
-    medium: 'Digital',
-    dimensions: '',
-    status: 'draft',
-    featured: false,
-    display_order: 0,
-    tags: [],
+    title: initialData?.title || '',
+    slug: initialData?.slug || '',
+    description: initialData?.description || '',
+    category: (initialData?.category as ArtworkCategory) || 'Illustration',
+    medium: initialData?.medium || 'Digital',
+    dimensions: initialData?.dimensions || '',
+    status: initialData?.status || 'draft',
+    featured: initialData?.featured || false,
+    display_order: initialData?.display_order || 0,
   });
 
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [mediaFiles, setMediaFiles] = useState<Array<{ url: string; file?: File }>>([]);
+  // Supabase returns tags nested: { tag: { id, name } }. Map to string IDs
+  const initialTagIds = initialData?.tags?.map((t: any) => t.tag?.id || t.id).filter(Boolean) || [];
+  const [selectedTags, setSelectedTags] = useState<string[]>(initialTagIds);
+
+  const [mediaFiles, setMediaFiles] = useState<Array<{ url: string; file?: File }>>(
+    initialData?.media?.map(m => ({ url: m.url })) || []
+  );
+
   const [isUploading, setIsUploading] = useState(false);
 
-  useEffect(() => {
-    if (artwork && !isNew) {
-      setFormData({
-        title: artwork.title,
-        slug: artwork.slug,
-        description: artwork.description || '',
-        category: artwork.category,
-        medium: artwork.medium || 'Digital',
-        dimensions: artwork.dimensions || '',
-        status: artwork.status,
-        featured: artwork.featured,
-        display_order: artwork.display_order,
-      });
-      // Supabase returns tags nested in the join table: { tag: { id, name, ... } }
-      // But the type expectation is Tag[]
-      // We need to handle both cases to be safe
-      const tagIds = artwork.tags?.map((t: any) => t.tag?.id || t.id).filter(Boolean) || [];
-      console.log('Loading artwork tags:', { tags: artwork.tags, tagIds });
-      setSelectedTags(tagIds);
-      setMediaFiles(
-        artwork.media?.map(m => ({ url: m.url })) || []
-      );
-    }
-  }, [artwork, isNew]);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (isUploading) return;
-
-    try {
-      setIsUploading(true);
-      // Filter out any null/undefined tags
-      const validTags = selectedTags.filter(tagId => tagId != null && tagId !== '');
-
-      console.log('Saving artwork with tags:', { selectedTags, validTags });
-
-      // Clean up Display Order (ensure it's a number and non-negative)
-      const cleanDisplayOrder = Math.max(0, Number(formData.display_order) || 0);
-
-      // Process media files (upload if new)
-      const processedMedia = await Promise.all(mediaFiles.map(async (m, idx) => {
-        let finalUrl = m.url;
-        let finalType = 'image';
-
-        // Check type from file if available, otherwise guess from extension
-        if (m.file) {
-          console.log('Starting upload for:', m.file.name);
-          finalType = m.file.type.startsWith('video/') ? 'video' : 'image';
-          // Upload new file
-          try {
-            const { url } = await media.upload(m.file);
-            console.log('Upload success:', url);
-            finalUrl = url;
-          } catch (uploadError) {
-            console.error('Failed to upload file:', m.file.name, uploadError);
-            throw new Error(`Failed to upload ${m.file.name}`);
-          }
-        } else {
-          finalType = finalUrl.match(/\.(mp4|webm|mov)(\?.*)?$/i) ? 'video' : 'image';
-        }
-
-        return {
-          url: finalUrl,
-          storage_key: finalUrl,
-          type: finalType,
-          is_primary: idx === 0,
-          display_order: idx,
-          alt_text: formData.description || '',
-        };
-      }));
-
-      const payload: CreateArtworkRequest = {
-        ...formData,
-        display_order: cleanDisplayOrder,
-        tags: validTags,
-        media: processedMedia,
-      } as CreateArtworkRequest;
-
-      if (isNew) {
-        await createMutation.mutateAsync(payload);
-      } else {
-        await updateMutation.mutateAsync({ id: id!, payload });
-      }
-
-      navigate('/admin/artworks');
-    } catch (error: any) {
-      console.error('Save error:', error);
-      alert(`Failed to save: ${error.message}`);
-    } finally {
-      setIsUploading(false);
-    }
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const title = e.target.value;
+    const slug = title
+      .toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      .replace(/[đĐ]/g, 'd')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+    setFormData(prev => ({ ...prev, title, slug }));
   };
 
   const handleAddMedia = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -161,282 +90,273 @@ export const ArtworkEditorPage: React.FC = () => {
 
   const toggleTag = (tagId: string) => {
     setSelectedTags(prev =>
-      prev.includes(tagId)
-        ? prev.filter(id => id !== tagId)
-        : [...prev, tagId]
+      prev.includes(tagId) ? prev.filter(id => id !== tagId) : [...prev, tagId]
     );
   };
 
-  if (!isNew && isLoadingArtwork) {
-    return (
-      <div className="p-8">
-        <div className="text-center py-12 text-gray-400">Loading...</div>
-      </div>
-    );
-  }
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (isUploading) return;
+
+    try {
+      setIsUploading(true);
+
+      // Process media files (upload new ones)
+      const processedMedia = await Promise.all(mediaFiles.map(async (m, idx) => {
+        let finalUrl = m.url;
+        let finalType = 'image';
+
+        if (m.file) {
+          finalType = m.file.type.startsWith('video/') ? 'video' : 'image';
+          const { url } = await media.upload(m.file);
+          finalUrl = url;
+        } else {
+          finalType = finalUrl.match(/\.(mp4|webm|mov)(\?.*)?$/i) ? 'video' : 'image';
+        }
+
+        return {
+          url: finalUrl,
+          storage_key: finalUrl,
+          type: finalType,
+          is_primary: idx === 0,
+          display_order: idx,
+          alt_text: formData.description || '',
+        };
+      }));
+
+      onSave({
+        ...formData,
+        tags: selectedTags.filter(Boolean),
+        media: processedMedia,
+      } as CreateArtworkRequest);
+
+    } catch (error: any) {
+      alert(`Failed to save: ${error.message}`);
+    } finally {
+      setIsUploading(false);
+    }
+  };
 
   return (
-    <div className="p-8 cursor-auto">
-      {/* Header */}
-      <div className="mb-8">
-        <Link
-          to="/admin/artworks"
-          className="inline-flex items-center gap-2 text-gray-400 hover:text-white mb-4 transition-colors"
-        >
-          <ArrowLeft size={20} />
-          <span className="font-mono text-sm uppercase">Back to Artworks</span>
-        </Link>
-        <h1 className="text-5xl font-black uppercase tracking-tighter">
-          {isNew ? 'New Artwork' : 'Edit Artwork'}
-        </h1>
-      </div>
-
-      <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Left Column - Media */}
-        <div className="lg:col-span-2 space-y-6">
-          {/* Media Upload */}
-          <div className="bg-white/5 border border-white/10 rounded-lg p-6">
-            <h2 className="text-xl font-bold uppercase mb-4">Media</h2>
-            <div className="space-y-4">
-              {mediaFiles.map((media, index) => (
-                <div key={index} className="relative group">
-                  <div className="bg-black/40 rounded overflow-hidden flex items-center justify-center min-h-[300px]">
-                    {(media.file?.type.startsWith('video/') || media.url.match(/\.(mp4|webm|mov)$/i) || media.url.includes('/video/upload/')) ? (
-                      <video src={media.url} className="w-full h-auto object-contain" controls playsInline muted />
-                    ) : (
-                      <img src={media.url} alt={`Media ${index + 1}`} className="w-full h-auto object-contain" />
-                    )}
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveMedia(index)}
-                    className="absolute top-2 right-2 p-2 bg-black/80 text-white rounded hover:bg-black transition-colors opacity-0 group-hover:opacity-100"
-                  >
-                    <X size={16} />
-                  </button>
-                  {index === 0 && (
-                    <div className="absolute bottom-2 left-2 px-2 py-1 bg-black/80 text-white text-xs font-mono uppercase">
-                      Primary
-                    </div>
+    <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="lg:col-span-2 space-y-8">
+        {/* Media Section */}
+        <AdminCard title="Artwork Media">
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {mediaFiles.map((mediaItem, index) => (
+                <div key={index} className="relative group aspect-square bg-black rounded-xl border border-white/10 overflow-hidden flex items-center justify-center">
+                  {(mediaItem.file?.type.startsWith('video/') || mediaItem.url.match(/\.(mp4|webm|mov)$/i)) ? (
+                    <video src={mediaItem.url} className="w-full h-full object-contain" />
+                  ) : (
+                    <img src={mediaItem.url} alt="" className="w-full h-full object-contain" />
                   )}
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveMedia(index)}
+                      className="p-3 bg-red-500 rounded-full text-white hover:bg-red-600 transition-colors"
+                    >
+                      <X size={20} />
+                    </button>
+                  </div>
+                  {index === 0 && <span className="absolute top-2 left-2 px-2 py-0.5 bg-white text-[10px] font-black text-black uppercase rounded">Primary</span>}
                 </div>
               ))}
-              <label className="block">
-                <input
-                  type="file"
-                  multiple
-                  accept="image/*,video/*"
-                  onChange={handleAddMedia}
-                  className="hidden"
-                />
-                <div className="border-2 border-dashed border-white/20 rounded-lg p-8 text-center cursor-pointer hover:border-white/40 transition-colors">
-                  <Upload size={32} className="mx-auto mb-2 text-gray-400" />
-                  <div className="font-mono text-sm uppercase text-gray-400">
-                    Click to upload media
-                  </div>
-                </div>
+              <label className="aspect-square border-2 border-dashed border-white/10 rounded-xl flex flex-col items-center justify-center cursor-pointer hover:border-white/40 hover:bg-white/5 transition-all text-gray-500">
+                <input type="file" multiple accept="image/*,video/*" onChange={handleAddMedia} className="hidden" />
+                <Upload size={32} className="mb-2" />
+                <span className="text-[10px] font-mono uppercase font-bold">Add Media</span>
               </label>
             </div>
           </div>
-        </div>
+        </AdminCard>
 
-        {/* Right Column - Form */}
-        <div className="space-y-6">
-          {/* Basic Info */}
-          <div className="bg-white/5 border border-white/10 rounded-lg p-6 space-y-4">
-            <h2 className="text-xl font-bold uppercase mb-4">Details</h2>
-
+        {/* Details Section */}
+        <AdminCard title="Artwork Details">
+          <div className="space-y-6">
             <div>
-              <label className="block text-sm uppercase tracking-wider mb-2">Title *</label>
+              <label className="block text-gray-400 text-[10px] font-mono uppercase mb-2">Title *</label>
               <input
                 type="text"
                 value={formData.title}
-                onChange={(e) => {
-                  const title = e.target.value;
-                  const slug = title
-                    .toLowerCase()
-                    .replace(/[^a-z0-9]+/g, '-')
-                    .replace(/^-+|-+$/g, '');
-                  setFormData({ ...formData, title, slug });
-                }}
+                onChange={handleTitleChange}
                 required
-                className="w-full bg-white/5 border border-white/10 px-4 py-2 focus:border-white focus:outline-none"
+                className="w-full bg-white/5 border border-white/10 px-4 py-3 rounded-lg focus:border-white focus:outline-none uppercase font-bold text-white"
               />
             </div>
-
             <div>
-              <label className="block text-sm uppercase tracking-wider mb-2">
-                Slug *
-                <span className="text-xs text-gray-400 normal-case ml-2">(Auto-generated from title)</span>
-              </label>
+              <label className="block text-gray-400 text-[10px] font-mono uppercase mb-2">Slug</label>
               <input
                 type="text"
                 value={formData.slug}
                 readOnly
-                className="w-full bg-black/50 border border-white/20 px-4 py-2 font-mono text-sm rounded cursor-not-allowed opacity-75"
+                className="w-full bg-black/50 border border-white/10 px-4 py-3 rounded-lg text-gray-500 font-mono text-sm opacity-75"
               />
             </div>
-
             <div>
-              <label className="block text-sm uppercase tracking-wider mb-2">Category *</label>
+              <label className="block text-gray-400 text-[10px] font-mono uppercase mb-2">Description</label>
+              <textarea
+                value={formData.description}
+                onChange={e => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                rows={4}
+                className="w-full bg-white/5 border border-white/10 px-4 py-3 rounded-lg focus:border-white focus:outline-none text-white"
+              />
+            </div>
+          </div>
+        </AdminCard>
+      </div>
+
+      <div className="space-y-8">
+        {/* Meta Settings */}
+        <AdminCard title="Classification">
+          <div className="space-y-6">
+            <div>
+              <label className="block text-gray-400 text-[10px] font-mono uppercase mb-2">Category *</label>
               <select
                 value={formData.category}
-                onChange={(e) => setFormData({ ...formData, category: e.target.value as ArtworkCategory })}
-                className="w-full bg-black border border-white/20 px-4 py-2 focus:border-white focus:outline-none uppercase rounded"
+                onChange={e => setFormData(prev => ({ ...prev, category: e.target.value as ArtworkCategory }))}
+                className="w-full bg-black border border-white/20 px-4 py-2 text-white uppercase rounded-lg"
               >
                 {CATEGORIES.map(cat => (
                   <option key={cat} value={cat}>{cat}</option>
                 ))}
               </select>
             </div>
-
             <div>
-              <label className="block text-sm uppercase tracking-wider mb-2">Description</label>
-              <textarea
-                value={formData.description}
-                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                rows={4}
-                className="w-full bg-white/5 border border-white/10 px-4 py-2 focus:border-white focus:outline-none resize-none"
+              <label className="block text-gray-400 text-[10px] font-mono uppercase mb-2">Medium</label>
+              <input
+                type="text"
+                value={formData.medium}
+                onChange={e => setFormData(prev => ({ ...prev, medium: e.target.value }))}
+                className="w-full bg-black border border-white/20 px-4 py-2 text-white rounded-lg"
+                placeholder="e.g. Digital, Oil, Pencil"
               />
             </div>
-
             <div>
-              <label className="block text-sm uppercase tracking-wider mb-2">
-                Display Order
-                <span className="text-xs text-gray-400 normal-case ml-2">(Lower numbers appear first)</span>
-              </label>
+              <label className="block text-gray-400 text-[10px] font-mono uppercase mb-2">Display Order</label>
               <input
                 type="number"
-                min="0"
                 value={formData.display_order}
-                onChange={(e) => setFormData({ ...formData, display_order: Math.max(0, parseInt(e.target.value) || 0) })}
-                className="w-full bg-black border border-white/20 px-4 py-2 focus:border-white focus:outline-none rounded"
+                onChange={e => setFormData(prev => ({ ...prev, display_order: parseInt(e.target.value) || 0 }))}
+                className="w-full bg-black border border-white/20 px-4 py-2 text-white font-mono rounded-lg"
               />
             </div>
-
-            <div>
-              <label className="block text-sm uppercase tracking-wider mb-2">
-                Status
-                <span className="text-xs text-gray-400 normal-case ml-2">(Draft/Published/Archived)</span>
-              </label>
-              <select
-                value={formData.status}
-                onChange={(e) => setFormData({ ...formData, status: e.target.value as any })}
-                className="w-full bg-black border border-white/20 px-4 py-2 focus:border-white focus:outline-none uppercase rounded"
-              >
-                <option value="draft">Draft</option>
-                <option value="published">Published</option>
-                <option value="archived">Archived</option>
-              </select>
-            </div>
-
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <input
                 type="checkbox"
                 id="featured"
                 checked={formData.featured}
-                onChange={(e) => setFormData({ ...formData, featured: e.target.checked })}
-                className="w-4 h-4"
+                onChange={e => setFormData(prev => ({ ...prev, featured: e.target.checked }))}
+                className="w-4 h-4 rounded bg-black border-white/20"
               />
-              <label htmlFor="featured" className="text-sm uppercase tracking-wider">
-                Featured
-                <span className="text-xs text-gray-400 normal-case ml-2">(Highlight this artwork)</span>
-              </label>
+              <label htmlFor="featured" className="text-xs uppercase font-bold text-gray-300">Feature Artwork</label>
             </div>
           </div>
+        </AdminCard>
 
-          {/* Tags */}
-          {tags && tags.length > 0 && (
-            <div className="bg-white/5 border border-white/10 rounded-lg p-6">
-              <h2 className="text-xl font-bold uppercase mb-4">
-                Tags
-                {selectedTags.length > 0 && (
-                  <span className="text-sm text-gray-400 ml-2">({selectedTags.length} selected)</span>
-                )}
-              </h2>
-
-              {/* Search */}
-              <input
-                type="text"
-                placeholder="Search tags..."
-                onChange={(e) => {
-                  const search = e.target.value.toLowerCase();
-                  const container = document.getElementById('tags-container');
-                  if (container) {
-                    const buttons = container.querySelectorAll('button');
-                    buttons.forEach(btn => {
-                      const text = btn.textContent?.toLowerCase() || '';
-                      (btn as HTMLElement).style.display = text.includes(search) ? '' : 'none';
-                    });
-                  }
-                }}
-                className="w-full bg-black border border-white/20 px-4 py-2 mb-4 focus:border-white focus:outline-none font-mono text-sm rounded"
-              />
-
-              {/* Selected Tags */}
-              {selectedTags.length > 0 && (
-                <div className="mb-4 p-3 bg-black/50 border border-white/10 rounded">
-                  <div className="text-xs uppercase tracking-wider text-gray-400 mb-2">Selected:</div>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedTags.map(tagId => {
-                      const tag = tags.find(t => t.id === tagId);
-                      return tag ? (
-                        <button
-                          key={tag.id}
-                          type="button"
-                          onClick={() => toggleTag(tag.id)}
-                          className="px-2 py-1 bg-white text-black rounded text-xs font-mono uppercase hover:bg-gray-200 transition-colors"
-                        >
-                          {tag.name} ×
-                        </button>
-                      ) : null;
-                    })}
-                  </div>
-                </div>
-              )}
-
-              {/* All Tags */}
-              <div id="tags-container" className="flex flex-wrap gap-2 max-h-64 overflow-y-auto p-2 bg-black/30 rounded">
-                {tags.map(tag => (
-                  <button
-                    key={tag.id}
-                    type="button"
-                    onClick={() => toggleTag(tag.id)}
-                    className={`px-3 py-1 rounded text-sm font-mono uppercase transition-colors ${selectedTags.includes(tag.id)
-                      ? 'bg-white text-black'
-                      : 'bg-white/10 text-gray-300 hover:bg-white/20'
-                      }`}
-                  >
-                    {tag.name}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Actions */}
-          <div className="flex gap-4">
-            <button
-              type="submit"
-              disabled={createMutation.isPending || updateMutation.isPending || isUploading}
-              className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-white text-black font-bold uppercase tracking-wider hover:bg-gray-200 disabled:opacity-50 transition-colors"
-            >
-              <Save size={20} />
-              {isUploading ? 'Uploading Media...' : (createMutation.isPending || updateMutation.isPending ? 'Saving...' : 'Save')}
-            </button>
-            {!isNew && formData.status === 'published' && (
-              <Link
-                to={`/?artwork=${formData.slug}`}
-                target="_blank"
-                className="px-6 py-3 border border-white/20 hover:bg-white/10 transition-colors flex items-center gap-2"
+        {/* Tags Section */}
+        <AdminCard title="Tags">
+          <div className="flex flex-wrap gap-2 max-h-64 overflow-y-auto p-2 bg-black/40 rounded-xl border border-white/10">
+            {allTags?.map(tag => (
+              <button
+                key={tag.id}
+                type="button"
+                onClick={() => toggleTag(tag.id)}
+                className={`px-3 py-1 rounded-full text-[10px] font-mono uppercase transition-all ${selectedTags.includes(tag.id)
+                    ? 'bg-white text-black font-black'
+                    : 'bg-white/5 text-gray-400 hover:bg-white/10'
+                  }`}
               >
-                <Eye size={20} />
-                Preview
-              </Link>
-            )}
+                {tag.name}
+              </button>
+            ))}
           </div>
+        </AdminCard>
+
+        <div className="sticky bottom-8 space-y-4">
+          <AdminButton
+            type="submit"
+            disabled={isSaving || isUploading}
+            className="w-full py-4 text-base"
+            icon={!(isSaving || isUploading) && <Save size={20} />}
+          >
+            {isUploading ? 'Uploading Media...' : (isSaving ? 'Saving...' : 'Save Artwork')}
+          </AdminButton>
+          {!isNew && (
+            <Link to={`/?artwork=${formData.slug}`} target="_blank" className="flex items-center justify-center gap-2 w-full py-3 border border-white/10 hover:bg-white/5 transition-colors text-xs font-mono uppercase font-bold text-gray-400">
+              <Eye size={16} /> Preview Live
+            </Link>
+          )}
         </div>
-      </form>
+      </div>
+    </form>
+  );
+};
+
+export const ArtworkEditorPage: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const isNew = id === 'new';
+
+  const { data: artwork, isLoading, error } = useArtwork(id && !isNew ? id : '');
+  const { data: tags } = useTags();
+  const createMutation = useCreateArtwork();
+  const updateMutation = useUpdateArtwork();
+
+  const [isSaving, setIsSaving] = useState(false);
+
+  const handleSave = async (payload: CreateArtworkRequest) => {
+    try {
+      setIsSaving(true);
+      if (isNew) {
+        await createMutation.mutateAsync(payload);
+      } else if (id) {
+        await updateMutation.mutateAsync({ id, payload });
+      }
+      navigate('/admin/artworks');
+    } catch (err: any) {
+      alert(`Save Error: ${err.message}`);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  if (isLoading && !isNew) {
+    return <div className="p-12 text-center font-mono text-gray-500 animate-pulse">LOADING PROJECT DATA...</div>;
+  }
+
+  if (error && !isNew) {
+    return (
+      <div className="p-12 text-center bg-black min-h-screen">
+        <h2 className="text-2xl font-black uppercase text-white mb-6 tracking-tighter">System Error</h2>
+        <p className="text-red-500 font-mono text-sm mb-8">{error instanceof Error ? error.message : 'Dữ liệu không phản hồi'}</p>
+        <AdminButton onClick={() => navigate('/admin/artworks')}>Back to Gallery</AdminButton>
+      </div>
+    );
+  }
+
+  return (
+    <div className="p-8 pb-32 max-w-7xl mx-auto">
+      <Link to="/admin/artworks" className="inline-flex items-center gap-2 text-gray-500 hover:text-white mb-10 transition-colors uppercase font-mono text-xs tracking-[0.2em]">
+        <ArrowLeft size={16} /> Museum Gallery
+      </Link>
+
+      <div className="mb-12">
+        <AdminPageHeader
+          title={isNew ? 'New Creation' : 'Curate Artwork'}
+          subtitle={isNew ? 'Add a new masterpiece to your vault' : `Editing Piece: ${artwork?.title || ''}`}
+        />
+      </div>
+
+      <ArtworkEditorForm
+        key={artwork?.id || 'new'}
+        initialData={artwork}
+        isNew={isNew}
+        allTags={tags}
+        onSave={handleSave}
+        isSaving={isSaving}
+      />
     </div>
   );
 };

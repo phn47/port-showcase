@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useBlogPosts, useDeleteBlogPost, usePublishBlogPost, useUnpublishBlogPost } from '@/hooks/useBlog';
 import { format } from 'date-fns';
-import { Edit, Trash2, Plus, Search, ExternalLink, Eye, EyeOff } from 'lucide-react';
+import { Edit, Plus, Search, ExternalLink, Eye, EyeOff } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AdminButton, AdminInput, AdminSelect, AdminBadge, AdminPageHeader, AdminCard, AdminActionButton } from '@/features/admin/components/ui';
+import { useConfirm } from '../context/AdminConfirmContext';
 
 export const BlogListPage: React.FC = () => {
     const [statusFilter, setStatusFilter] = useState<'all' | 'published' | 'draft'>('all');
@@ -20,9 +21,30 @@ export const BlogListPage: React.FC = () => {
     const deleteMutation = useDeleteBlogPost();
     const publishMutation = usePublishBlogPost();
     const unpublishMutation = useUnpublishBlogPost();
+    const confirm = useConfirm();
 
-    const handleDelete = async (id: string, title: string) => {
-        if (confirm(`Delete post "${title}"? This cannot be undone.`)) {
+    const handleDelete = async (id: string, title?: string, skipConfirm = false) => {
+        let proceed = skipConfirm;
+
+        if (!proceed) {
+            proceed = await confirm({
+                title: 'Delete Post',
+                message: title ? `Are you sure you want to delete post "${title}"?` : 'Are you sure you want to delete this post?',
+                confirmText: 'Delete',
+                variant: 'danger'
+            });
+
+            if (proceed) {
+                proceed = await confirm({
+                    title: 'Final Warning',
+                    message: 'This action is PERMANENT and cannot be undone. Do you really want to proceed?',
+                    confirmText: 'Yes, Delete Permanently',
+                    variant: 'danger'
+                });
+            }
+        }
+
+        if (proceed) {
             await deleteMutation.mutateAsync(id);
         }
     };
@@ -51,10 +73,26 @@ export const BlogListPage: React.FC = () => {
     };
 
     const handleBulkDelete = async () => {
-        if (confirm(`Are you sure you want to PERMANENTLY delete ${selectedIds.size} selected posts? This action CANNOT be undone.`)) {
+        let proceed = await confirm({
+            title: 'Bulk Delete Posts',
+            message: `Delete ${selectedIds.size} selected posts?`,
+            confirmText: 'Next',
+            variant: 'danger'
+        });
+
+        if (proceed) {
+            proceed = await confirm({
+                title: 'Confirm Bulk Action',
+                message: `Are you sure you want to PERMANENTLY delete all ${selectedIds.size} selected posts?`,
+                confirmText: 'Delete All',
+                variant: 'danger'
+            });
+        }
+
+        if (proceed) {
             const idsToDelete = Array.from(selectedIds);
             for (const id of idsToDelete) {
-                await deleteMutation.mutateAsync(id);
+                await handleDelete(id, undefined, true);
             }
             setSelectedIds(new Set());
         }

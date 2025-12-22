@@ -1,9 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, Edit, Trash2, Eye, EyeOff, Search } from 'lucide-react';
+import { Plus, Edit, Eye, EyeOff, Search } from 'lucide-react';
 import { useServices, useDeleteService, usePublishService, useUnpublishService } from '@/hooks/useServices';
 import type { ServiceStatus } from '@/services/api/types';
 import { AdminButton, AdminBadge, AdminPageHeader, AdminCard, AdminActionButton, AdminInput, AdminSelect } from '@/features/admin/components/ui';
+import { useConfirm } from '../context/AdminConfirmContext';
 
 export const ServicesListPage: React.FC = () => {
     return (
@@ -37,6 +38,7 @@ const ServicesTab: React.FC = () => {
     const deleteMutation = useDeleteService();
     const publishMutation = usePublishService();
     const unpublishMutation = useUnpublishService();
+    const confirm = useConfirm();
 
     const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 
@@ -57,12 +59,50 @@ const ServicesTab: React.FC = () => {
     const paginated = filtered.slice((page - 1) * limit, page * limit);
 
     const handleBulkDelete = async () => {
-        if (confirm(`Are you sure you want to PERMANENTLY delete ${selectedIds.size} selected services? This action CANNOT be undone.`)) {
+        let proceed = await confirm({
+            title: 'Bulk Delete Services',
+            message: `Delete ${selectedIds.size} selected services?`,
+            confirmText: 'Next',
+            variant: 'danger'
+        });
+
+        if (proceed) {
+            proceed = await confirm({
+                title: 'Confirm Bulk Action',
+                message: `Are you sure you want to PERMANENTLY delete all ${selectedIds.size} selected services?`,
+                confirmText: 'Delete All',
+                variant: 'danger'
+            });
+        }
+
+        if (proceed) {
             const idsToDelete = Array.from(selectedIds);
             for (const id of idsToDelete) {
                 await deleteMutation.mutateAsync(id);
             }
             setSelectedIds(new Set());
+        }
+    };
+
+    const handleDelete = async (id: string, name?: string) => {
+        let proceed = await confirm({
+            title: 'Delete Service',
+            message: name ? `Are you sure you want to delete service "${name}"?` : 'Are you sure you want to delete this service?',
+            confirmText: 'Delete',
+            variant: 'danger'
+        });
+
+        if (proceed) {
+            proceed = await confirm({
+                title: 'Final Warning',
+                message: 'This action is PERMANENT and cannot be undone. Do you really want to proceed?',
+                confirmText: 'Yes, Delete Permanently',
+                variant: 'danger'
+            });
+        }
+
+        if (proceed) {
+            await deleteMutation.mutateAsync(id);
         }
     };
 

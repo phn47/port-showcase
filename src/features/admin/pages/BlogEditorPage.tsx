@@ -1,63 +1,54 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { useBlogPostById, useCreateBlogPost, useUpdateBlogPost } from '@/hooks/useBlog';
+import { AdminRichTextEditor } from '../components/ui/AdminRichTextEditor';
+import { Save, ArrowLeft, Image as ImageIcon, Eye, Globe, Sparkles, Tag } from 'lucide-react';
+import type { CreateBlogPostRequest, BlogPost } from '@/services/api/types';
 import { media } from '@/services/api/supabase';
-import { ArrowLeft, Save, Upload, X, Globe, Eye } from 'lucide-react';
-import { CreateBlogPostRequest } from '@/services/api/types';
 
-export const BlogEditorPage: React.FC = () => {
-    const { id } = useParams<{ id: string }>();
-    const navigate = useNavigate();
-    const isNew = id === 'new';
+// Sub-component to manage the form state, isolated from loading logic
+interface BlogEditorFormProps {
+    initialPost?: BlogPost;
+    isNew: boolean;
+    onSave: (data: CreateBlogPostRequest) => void;
+    isSaving: boolean;
+}
 
-    const { data: post, isLoading } = useBlogPostById(id && !isNew ? id : '');
-    const createMutation = useCreateBlogPost();
-    const updateMutation = useUpdateBlogPost();
-
-    const [formData, setFormData] = useState<Partial<CreateBlogPostRequest>>({
-        title: '',
-        slug: '',
-        content: '',
-        excerpt: '',
-        status: 'draft',
-        seo_title: '',
-        seo_description: '',
-        keywords: [],
-        tags: [],
-        cover_image: '',
+const BlogEditorForm: React.FC<BlogEditorFormProps> = ({ initialPost, isNew, onSave, isSaving }) => {
+    const [formData, setFormData] = useState<CreateBlogPostRequest>({
+        title: initialPost?.title || '',
+        slug: initialPost?.slug || '',
+        content: initialPost?.content || '',
+        excerpt: initialPost?.excerpt || '',
+        status: (initialPost?.status as any) || 'draft',
+        seo_title: initialPost?.seo_title || '',
+        seo_description: initialPost?.seo_description || '',
+        keywords: Array.isArray(initialPost?.keywords) ? initialPost.keywords : [],
+        tags: Array.isArray(initialPost?.tags) ? initialPost.tags : [],
+        featured: initialPost?.featured || false,
+        display_order: initialPost?.display_order || 0,
+        cover_image: initialPost?.cover_image || '',
     });
 
-    const [keywordInput, setKeywordInput] = useState('');
+    const [coverPreview, setCoverPreview] = useState<string | null>(initialPost?.cover_image || null);
     const [coverFile, setCoverFile] = useState<File | null>(null);
-    const [coverPreview, setCoverPreview] = useState<string | null>(null);
-    const [isUploading, setIsUploading] = useState(false);
+    const [isManualSlug, setIsManualSlug] = useState(!isNew);
+    const [keywordInput, setKeywordInput] = useState('');
 
-    // Initialize form
-    useEffect(() => {
-        if (post && !isNew) {
-            setFormData({
-                title: post.title,
-                slug: post.slug,
-                content: post.content || '',
-                excerpt: post.excerpt || '',
-                status: post.status,
-                seo_title: post.seo_title || '',
-                seo_description: post.seo_description || '',
-                keywords: post.keywords || [],
-                tags: post.tags || [],
-                cover_image: post.cover_image || '',
-            });
-            if (post.cover_image) setCoverPreview(post.cover_image);
-        }
-    }, [post, isNew]);
-
-    // Auto-generate slug from title if new
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const title = e.target.value;
+        const generatedSlug = title.toLowerCase()
+            .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+            .replace(/[đĐ]/g, 'd')
+            .replace(/[^a-z0-9\s-]/g, '')
+            .replace(/\s+/g, '-')
+            .replace(/-+/g, '-')
+            .replace(/^-|-$/g, '');
+
         setFormData(prev => ({
             ...prev,
             title,
-            slug: isNew && !prev.slug ? title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') : prev.slug
+            slug: isManualSlug ? prev.slug : generatedSlug
         }));
     };
 
@@ -66,84 +57,82 @@ export const BlogEditorPage: React.FC = () => {
             const file = e.target.files[0];
             setCoverFile(file);
             setCoverPreview(URL.createObjectURL(file));
-            // Clear URL so we know to upload
-            setFormData(prev => ({ ...prev, cover_image: '' }));
         }
+    };
+
+    const addKeyword = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter' && keywordInput.trim()) {
+            e.preventDefault();
+            if (!formData.keywords?.includes(keywordInput.trim())) {
+                setFormData(prev => ({
+                    ...prev,
+                    keywords: [...(prev.keywords || []), keywordInput.trim()]
+                }));
+            }
+            setKeywordInput('');
+        }
+    };
+
+    const removeKeyword = (word: string) => {
+        setFormData(prev => ({
+            ...prev,
+            keywords: prev.keywords?.filter(k => k !== word)
+        }));
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (isUploading) return;
 
-        try {
-            setIsUploading(true);
-            let finalCoverUrl = formData.cover_image;
-
-            if (coverFile) {
-                const { url } = await media.upload(coverFile, 'blog-covers');
-                finalCoverUrl = url;
+        // Handle image upload first if there's a new file
+        let uploadedUrl = formData.cover_image;
+        if (coverFile) {
+            try {
+                const result = await media.upload(coverFile, 'blog');
+                uploadedUrl = result.url;
+            } catch (err) {
+                console.error('Upload failed:', err);
+                alert('Failed to upload cover image');
+                return;
             }
-
-            const payload: CreateBlogPostRequest = {
-                title: formData.title!,
-                slug: formData.slug || formData.title!.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-                content: formData.content,
-                excerpt: formData.excerpt,
-                status: formData.status as any,
-                cover_image: finalCoverUrl,
-                seo_title: formData.seo_title,
-                seo_description: formData.seo_description,
-                keywords: formData.keywords,
-                tags: formData.tags, // Can add tag input later
-                featured: false,
-                display_order: 0,
-            };
-
-            if (isNew) {
-                await createMutation.mutateAsync(payload);
-            } else {
-                await updateMutation.mutateAsync({ id: id!, payload });
-            }
-
-            navigate('/admin/blog');
-        } catch (error: any) {
-            alert('Error saving post: ' + error.message);
-        } finally {
-            setIsUploading(false);
         }
+
+        onSave({
+            ...formData,
+            cover_image: uploadedUrl
+        });
     };
 
-    if (isLoading && !isNew) return <div>Loading...</div>;
-
     return (
-        <div className="p-8 pb-32 max-w-6xl mx-auto">
-            <Link to="/admin/blog" className="inline-flex items-center text-gray-400 hover:text-white mb-6">
-                <ArrowLeft size={16} className="mr-2" />
-                Back to Blog
-            </Link>
-
-            <form onSubmit={handleSubmit}>
-                <div className="flex items-center justify-between mb-8">
-                    <h1 className="text-4xl font-black uppercase tracking-tighter">
-                        {isNew ? 'New Post' : 'Edit Post'}
-                    </h1>
-                    <div className="flex gap-4">
-                        <button
-                            type="submit"
-                            disabled={createMutation.isPending || updateMutation.isPending || isUploading}
-                            className="flex items-center gap-2 px-6 py-3 bg-white text-black font-bold uppercase tracking-wider hover:bg-gray-200 disabled:opacity-50 transition-colors"
+        <form onSubmit={handleSubmit} className="space-y-8">
+            <div className="flex items-center justify-between mb-8">
+                <h1 className="text-4xl font-black uppercase tracking-tighter text-white">
+                    {isNew ? 'New Post' : 'Edit Post'}
+                </h1>
+                <div className="flex gap-4">
+                    {!isNew && (
+                        <Link
+                            to={`/blog/${formData.slug}`}
+                            target="_blank"
+                            className="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 transition-colors text-sm font-mono uppercase tracking-widest text-white"
                         >
-                            <Save size={20} />
-                            {isUploading ? 'Uploading...' : 'Save Post'}
-                        </button>
-                    </div>
+                            <Eye size={16} /> Preview
+                        </Link>
+                    )}
+                    <button
+                        type="submit"
+                        disabled={isSaving}
+                        className="flex items-center gap-2 px-6 py-2 bg-white text-black font-bold uppercase text-sm hover:bg-gray-200 transition-colors disabled:opacity-50"
+                    >
+                        <Save size={16} /> {isSaving ? 'Saving...' : 'Save Post'}
+                    </button>
                 </div>
+            </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
-                    {/* Main Content */}
-                    <div className="lg:col-span-2 space-y-6">
-
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                {/* Main Content Areas */}
+                <div className="lg:col-span-2 space-y-8">
+                    {/* Header Info */}
+                    <div className="bg-white/5 border border-white/10 p-8 rounded-2xl space-y-6">
                         {/* Title */}
                         <div>
                             <input
@@ -151,173 +140,235 @@ export const BlogEditorPage: React.FC = () => {
                                 placeholder="Post Title"
                                 value={formData.title}
                                 onChange={handleTitleChange}
-                                className="w-full bg-transparent border-b border-white/20 py-4 text-4xl font-bold focus:border-white focus:outline-none placeholder-gray-700"
+                                className="w-full bg-transparent border-b border-white/20 py-4 text-4xl font-bold focus:border-white focus:outline-none placeholder-gray-700 text-white"
                                 required
                             />
                         </div>
 
-                        {/* Slug */}
-                        <div className="flex items-center gap-2 text-sm text-gray-500 font-mono">
+                        {/* Slug Link */}
+                        <div className="flex items-center gap-2 text-sm font-mono text-gray-500">
                             <Globe size={14} />
                             <span>/blog/</span>
                             <input
                                 type="text"
-                                placeholder="url-slug"
+                                placeholder="url-slug-placeholder"
                                 value={formData.slug}
-                                onChange={e => setFormData({ ...formData, slug: e.target.value })}
+                                onChange={e => {
+                                    const val = e.target.value;
+                                    setFormData(prev => ({ ...prev, slug: val }));
+                                    setIsManualSlug(true);
+                                }}
                                 className="bg-transparent border-b border-white/10 focus:border-white focus:outline-none text-gray-300"
                             />
                         </div>
 
-                        {/* Content Editor (Simple Textarea for now) */}
-                        <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-                            <div className="flex justify-between mb-2 text-xs text-gray-400 uppercase font-mono">
-                                <span>Markdown Content</span>
-                                <span>{formData.content?.length || 0} chars</span>
-                            </div>
-                            <textarea
-                                value={formData.content}
-                                onChange={e => setFormData({ ...formData, content: e.target.value })}
-                                className="w-full h-[600px] bg-transparent border-none focus:ring-0 resize-none font-mono text-sm leading-relaxed"
-                                placeholder="# Write your masterpiece..."
-                            />
-                        </div>
+                        {/* Content Editor */}
+                        <AdminRichTextEditor
+                            label="Content"
+                            value={formData.content || ''}
+                            onChange={(content) => setFormData(prev => ({ ...prev, content }))}
+                            placeholder="Write your masterpiece..."
+                            height="600px"
+                        />
 
                         {/* Excerpt */}
-                        <div>
-                            <label className="block text-gray-400 text-xs font-mono uppercase mb-2">Excerpt (Short Summary)</label>
+                        <div className="space-y-2">
+                            <label className="block text-gray-400 text-xs font-mono uppercase tracking-widest">Excerpt (Short Summary)</label>
                             <textarea
-                                value={formData.excerpt}
-                                onChange={e => setFormData({ ...formData, excerpt: e.target.value })}
-                                className="w-full bg-white/5 border border-white/10 rounded p-4 h-24 focus:border-white focus:outline-none"
+                                value={formData.excerpt || ''}
+                                onChange={e => {
+                                    const val = e.target.value;
+                                    setFormData(prev => ({ ...prev, excerpt: val }));
+                                }}
+                                placeholder="Briefly describe what this post is about..."
+                                className="w-full bg-white/5 border border-white/10 rounded-xl p-4 h-24 focus:border-white focus:outline-none text-white font-serif text-lg leading-relaxed"
                             />
                         </div>
                     </div>
+                </div>
 
-                    {/* Sidebar Controls */}
-                    <div className="space-y-6">
-
-                        {/* Status */}
-                        <div className="bg-white/5 border border-white/10 p-6 rounded-lg">
-                            <label className="block text-gray-400 text-xs font-mono uppercase mb-2">Status</label>
-                            <select
-                                value={formData.status}
-                                onChange={e => setFormData({ ...formData, status: e.target.value as any })}
-                                className="w-full bg-black border border-white/20 px-3 py-2 focus:border-white focus:outline-none mb-4"
-                            >
-                                <option value="draft">Draft</option>
-                                <option value="published">Published</option>
-                                <option value="archived">Archived</option>
-                            </select>
+                {/* Sidebar Controls */}
+                <div className="space-y-6">
+                    {/* Status Card */}
+                    <div className="bg-white/5 border border-white/10 p-6 rounded-2xl">
+                        <label className="block text-gray-400 text-xs font-mono uppercase tracking-widest mb-4">Post Status</label>
+                        <select
+                            value={formData.status}
+                            onChange={e => {
+                                const val = e.target.value as any;
+                                setFormData(prev => ({ ...prev, status: val }));
+                            }}
+                            className="w-full bg-black border border-white/20 px-3 py-3 text-white focus:border-white focus:outline-none mb-4 rounded-lg"
+                        >
+                            <option value="draft">Draft</option>
+                            <option value="published">Published</option>
+                            <option value="archived">Archived</option>
+                        </select>
+                        <div className="flex items-center gap-3 px-1">
+                            <input
+                                type="checkbox"
+                                id="featured"
+                                checked={formData.featured}
+                                onChange={e => setFormData(prev => ({ ...prev, featured: e.target.checked }))}
+                                className="w-4 h-4 rounded border-white/20 bg-black text-white"
+                            />
+                            <label htmlFor="featured" className="text-sm font-medium text-gray-300">Feature this post</label>
                         </div>
+                    </div>
 
-                        {/* Cover Image */}
-                        <div className="bg-white/5 border border-white/10 p-6 rounded-lg">
-                            <label className="block text-gray-400 text-xs font-mono uppercase mb-2">Cover Image</label>
-                            <div className="aspect-video bg-black/50 rounded overflow-hidden relative group border border-dashed border-white/10 hover:border-white/30 transition-colors">
-                                {coverPreview ? (
-                                    <>
-                                        {coverPreview.match(/\.(mp4|webm|mov)$/i) || coverPreview.includes('/video/upload/') || coverFile?.type.startsWith('video/') ? (
-                                            <video
-                                                src={coverPreview}
-                                                className="w-full h-full object-cover"
-                                                autoPlay
-                                                muted
-                                                loop
-                                                playsInline
-                                            />
-                                        ) : (
-                                            <img src={coverPreview} alt="Cover" className="w-full h-full object-cover" />
-                                        )}
-                                        <button
-                                            type="button"
-                                            onClick={() => { setCoverFile(null); setCoverPreview(null); setFormData(p => ({ ...p, cover_image: '' })) }}
-                                            className="absolute top-2 right-2 p-1 bg-red-500 rounded text-white opacity-0 group-hover:opacity-100"
-                                        >
-                                            <X size={14} />
-                                        </button>
-                                    </>
-                                ) : (
-                                    <div className="flex flex-col items-center justify-center h-full text-gray-500 pointer-events-none">
-                                        <Upload size={24} className="mb-2" />
-                                        <span className="text-xs">Upload Cover</span>
-                                    </div>
-                                )}
-                                <input
-                                    type="file"
-                                    className="absolute inset-0 opacity-0 cursor-pointer"
-                                    onChange={handleImageSelect}
-                                    accept="image/*,video/*"
-                                />
+                    {/* Cover Image Card */}
+                    <div className="bg-white/5 border border-white/10 p-6 rounded-2xl">
+                        <label className="block text-gray-400 text-xs font-mono uppercase tracking-widest mb-4">Cover Image</label>
+                        <div
+                            className="aspect-video bg-black/40 rounded-xl border border-dashed border-white/20 overflow-hidden relative group cursor-pointer"
+                            onClick={() => document.getElementById('cover-upload')?.click()}
+                        >
+                            {coverPreview ? (
+                                <img src={coverPreview} alt="Cover Preview" className="w-full h-full object-cover transition-transform group-hover:scale-105" />
+                            ) : (
+                                <div className="absolute inset-0 flex flex-col items-center justify-center text-gray-600 gap-2">
+                                    <ImageIcon size={32} />
+                                    <span className="text-xs font-mono uppercase">Upload Image</span>
+                                </div>
+                            )}
+                            <div className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                <span className="text-white text-xs font-bold uppercase tracking-widest">Change Image</span>
                             </div>
                         </div>
+                        <input
+                            id="cover-upload"
+                            type="file"
+                            className="hidden"
+                            accept="image/*"
+                            onChange={handleImageSelect}
+                        />
+                    </div>
 
-                        {/* SEO Settings */}
-                        <div className="bg-white/5 border border-white/10 p-6 rounded-lg space-y-4">
-                            <h3 className="font-bold uppercase text-sm border-b border-white/10 pb-2">SEO Settings</h3>
+                    {/* SEO Settings Card */}
+                    <div className="bg-white/5 border border-white/10 p-6 rounded-2xl space-y-4">
+                        <div className="flex items-center gap-2 mb-2">
+                            <Sparkles size={16} className="text-pink-500" />
+                            <label className="block text-gray-400 text-xs font-mono uppercase tracking-widest">SEO Optimization</label>
+                        </div>
 
+                        <div className="space-y-4">
                             <div>
-                                <label className="block text-gray-400 text-xs font-mono uppercase mb-1">SEO Title</label>
+                                <label className="block text-[10px] text-gray-500 uppercase mb-1">Meta Title</label>
                                 <input
                                     type="text"
-                                    value={formData.seo_title}
-                                    onChange={e => setFormData({ ...formData, seo_title: e.target.value })}
-                                    className="w-full bg-black border border-white/20 px-3 py-2 text-sm focus:border-white focus:outline-none"
+                                    value={formData.seo_title || ''}
+                                    onChange={e => {
+                                        const val = e.target.value;
+                                        setFormData(prev => ({ ...prev, seo_title: val }));
+                                    }}
+                                    className="w-full bg-black border border-white/20 px-3 py-2 text-sm text-white focus:border-white focus:outline-none rounded"
                                     placeholder="Meta Title"
                                 />
                             </div>
 
                             <div>
-                                <label className="block text-gray-400 text-xs font-mono uppercase mb-1">SEO Description</label>
+                                <label className="block text-[10px] text-gray-500 uppercase mb-1">Meta Description</label>
                                 <textarea
-                                    value={formData.seo_description}
-                                    onChange={e => setFormData({ ...formData, seo_description: e.target.value })}
-                                    className="w-full bg-black border border-white/20 px-3 py-2 text-sm focus:border-white focus:outline-none h-20"
+                                    value={formData.seo_description || ''}
+                                    onChange={e => {
+                                        const val = e.target.value;
+                                        setFormData(prev => ({ ...prev, seo_description: val }));
+                                    }}
+                                    className="w-full bg-black border border-white/20 px-3 py-2 text-sm text-white focus:border-white focus:outline-none h-20 rounded"
                                     placeholder="Meta Description"
                                 />
                             </div>
 
                             <div>
-                                <label className="block text-gray-400 text-xs font-mono uppercase mb-1">Keywords</label>
-                                <div className="flex flex-wrap gap-2 mb-2">
-                                    {formData.keywords?.map((kw, i) => (
-                                        <span key={i} className="bg-white/10 px-2 py-1 text-xs rounded flex items-center gap-1">
-                                            {kw}
-                                            <button type="button" onClick={() => {
-                                                const newKw = [...(formData.keywords || [])];
-                                                newKw.splice(i, 1);
-                                                setFormData({ ...formData, keywords: newKw });
-                                            }}>
-                                                <X size={10} />
-                                            </button>
-                                        </span>
-                                    ))}
-                                </div>
+                                <label className="block text-[10px] text-gray-500 uppercase mb-1 flex items-center gap-2">
+                                    Keywords <span className="text-[9px] lowercase opacity-50">(Press Enter)</span>
+                                </label>
                                 <input
                                     type="text"
                                     value={keywordInput}
                                     onChange={e => setKeywordInput(e.target.value)}
-                                    onKeyDown={e => {
-                                        if (e.key === 'Enter') {
-                                            e.preventDefault();
-                                            if (keywordInput.trim()) {
-                                                setFormData(prev => ({
-                                                    ...prev,
-                                                    keywords: [...(prev.keywords || []), keywordInput.trim()]
-                                                }));
-                                                setKeywordInput('');
-                                            }
-                                        }
-                                    }}
-                                    className="w-full bg-black border border-white/20 px-3 py-2 text-sm focus:border-white focus:outline-none"
-                                    placeholder="Add keyword + Enter"
+                                    onKeyDown={addKeyword}
+                                    className="w-full bg-black border border-white/20 px-3 py-2 text-sm text-white focus:border-white focus:outline-none rounded mb-2"
+                                    placeholder="Add keyword..."
                                 />
+                                <div className="flex flex-wrap gap-1">
+                                    {formData.keywords?.map(word => (
+                                        <span key={word} className="bg-white/10 text-[10px] px-2 py-1 flex items-center gap-1 rounded text-white group">
+                                            {word}
+                                            <button type="button" onClick={() => removeKeyword(word)} className="opacity-50 group-hover:opacity-100 hover:text-red-400">×</button>
+                                        </span>
+                                    ))}
+                                </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
-            </form>
+            </div>
+        </form>
+    );
+};
+
+// Main Page Component
+export const BlogEditorPage: React.FC = () => {
+    const { id } = useParams<{ id: string }>();
+    const navigate = useNavigate();
+    const isNew = id === 'new';
+
+    const { data: post, isLoading, error } = useBlogPostById(id && !isNew ? id : '');
+    const createMutation = useCreateBlogPost();
+    const updateMutation = useUpdateBlogPost();
+
+    const [isSaving, setIsSaving] = useState(false);
+
+    const handleSave = async (payload: CreateBlogPostRequest) => {
+        setIsSaving(true);
+        try {
+            if (isNew) {
+                await createMutation.mutateAsync(payload);
+            } else {
+                await updateMutation.mutateAsync({ id: id!, payload });
+            }
+            navigate('/admin/blog');
+        } catch (err) {
+            console.error('Save failed:', err);
+            alert('Failed to save post');
+        } finally {
+            setIsSaving(false);
+        }
+    };
+
+    if (isLoading && !isNew) return (
+        <div className="min-h-screen bg-black text-white flex items-center justify-center p-8">
+            <div className="text-center">
+                <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+                <p className="text-sm font-mono uppercase tracking-[0.2em] text-gray-400">Loading masterwork...</p>
+            </div>
+        </div>
+    );
+
+    if (error && !isNew) return (
+        <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center p-8 text-center">
+            <h2 className="text-2xl font-bold mb-4">Error loading post</h2>
+            <p className="text-red-400 mb-6 max-w-md">{error instanceof Error ? error.message : 'Unknown error'}</p>
+            <Link to="/admin/blog" className="px-6 py-2 bg-white text-black font-bold uppercase text-sm">Return to Blog</Link>
+        </div>
+    );
+
+    return (
+        <div className="p-8 pb-32 max-w-6xl mx-auto">
+            <Link to="/admin/blog" className="inline-flex items-center gap-2 text-gray-500 hover:text-white mb-8 transition-colors text-xs font-mono uppercase tracking-widest">
+                <ArrowLeft size={14} /> Back to Blog
+            </Link>
+
+            {/* We use the post.id as a key to ensure the form is completely re-created 
+                when the data changes or we load a new post. This is the ultimate fix for stale state. */}
+            <BlogEditorForm
+                key={post?.id || 'new'}
+                initialPost={post}
+                isNew={isNew}
+                onSave={handleSave}
+                isSaving={isSaving}
+            />
         </div>
     );
 };

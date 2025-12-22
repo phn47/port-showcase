@@ -3,6 +3,7 @@ import { Link, useLocation, Outlet } from 'react-router-dom';
 import { useAuth, useSignOut } from '@/hooks/useAuth';
 import { LayoutDashboard, Image, Clock, Briefcase, LogOut, FileText } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { AdminConfirmProvider } from '../context/AdminConfirmContext';
 
 export const AdminLayout: React.FC = () => {
   const location = useLocation();
@@ -100,7 +101,9 @@ export const AdminLayout: React.FC = () => {
       {/* Main Content */}
       <main className="ml-72 min-h-screen bg-black overflow-auto">
         <div className="max-w-[1600px] mx-auto">
-          <Outlet />
+          <AdminConfirmProvider>
+            <Outlet />
+          </AdminConfirmProvider>
         </div>
       </main>
     </div>

@@ -5,6 +5,7 @@ import { useArtworks, useDeleteArtwork, usePublishArtwork, useUnpublishArtwork }
 import { Plus, Search, Filter, Eye, EyeOff, Trash2, Edit } from 'lucide-react';
 import type { ArtworkCategory } from '@/services/api/types';
 import { AdminButton, AdminInput, AdminSelect, AdminBadge, AdminPageHeader, AdminCard, AdminActionButton } from '@/features/admin/components/ui';
+import { useConfirm } from '../context/AdminConfirmContext';
 
 export const ArtworksListPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -37,6 +38,7 @@ export const ArtworksListPage: React.FC = () => {
   const deleteMutation = useDeleteArtwork();
   const publishMutation = usePublishArtwork();
   const unpublishMutation = useUnpublishArtwork();
+  const confirm = useConfirm();
 
   // Filter by category (client-side)
   const filteredArtworks = useMemo(() => {
@@ -48,8 +50,30 @@ export const ArtworksListPage: React.FC = () => {
   // Calculate total pages
   const totalPages = Math.ceil(totalArtworks / limit);
 
-  const handleDelete = async (id: string) => {
-    if (confirm('Are you sure you want to delete this artwork?')) {
+  const handleDelete = async (id: string, skipConfirm = false) => {
+    let proceed = skipConfirm;
+
+    if (!proceed) {
+      // Step 1: Initial confirmation
+      proceed = await confirm({
+        title: 'Delete Artwork',
+        message: 'Are you sure you want to delete this artwork?',
+        confirmText: 'Delete',
+        variant: 'danger'
+      });
+
+      // Step 2: Final confirmation
+      if (proceed) {
+        proceed = await confirm({
+          title: 'Final Warning',
+          message: 'This action is PERMANENT and cannot be undone. Do you really want to proceed?',
+          confirmText: 'Yes, Delete Permanently',
+          variant: 'danger'
+        });
+      }
+    }
+
+    if (proceed) {
       try {
         await deleteMutation.mutateAsync(id);
       } catch (error) {
@@ -225,9 +249,29 @@ export const ArtworksListPage: React.FC = () => {
                     variant="danger"
                     size="sm"
                     className="h-8 px-3 text-[10px]"
-                    onClick={() => {
-                      if (confirm(`Delete ${selectedIds.size} artworks?`)) {
-                        selectedIds.forEach(id => handleDelete(id));
+                    onClick={async () => {
+                      // Step 1: Bulk confirm
+                      let proceed = await confirm({
+                        title: 'Bulk Delete',
+                        message: `Delete ${selectedIds.size} artworks?`,
+                        confirmText: 'Next',
+                        variant: 'danger'
+                      });
+
+                      // Step 2: Final bulk confirm
+                      if (proceed) {
+                        proceed = await confirm({
+                          title: 'Confirm Bulk Action',
+                          message: `Are you sure you want to PERMANENTLY delete all ${selectedIds.size} selected items?`,
+                          confirmText: 'Delete All',
+                          variant: 'danger'
+                        });
+                      }
+
+                      if (proceed) {
+                        for (const id of Array.from(selectedIds)) {
+                          await handleDelete(id, true);
+                        }
                         setSelectedIds(new Set());
                       }
                     }}
